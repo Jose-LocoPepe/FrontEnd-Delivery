@@ -17,12 +17,18 @@ const Loginstyles = StyleSheet.create({
         borderTopRightRadius: 30,
         padding: 50,
         position: 'absolute',
-        bottom: -200,
+        bottom: -50,
         width: '100%'
     },
     formText: {
         fontWeight: 'bold',
-        fontSize: 30,
+        fontSize: 20,
+        textAlign: 'center',
+        marginTop: -2
+    },
+    formTextSub: {
+        fontWeight: 'normal',
+        fontSize: 13,
         textAlign: 'center'
     },
     formInput: {
@@ -32,13 +38,13 @@ const Loginstyles = StyleSheet.create({
     formTextInput: {
         flex: 1,
         borderBottomWidth: 1,
-        borderBottomColor: '#EBEBEB',
+        borderBottomColor: 'black',
         marginLeft: 15
     },
     formLogin: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 10
+        marginTop: 30
     },
     formRegisterText: {
         borderBottomColor: 'orange',
@@ -49,8 +55,8 @@ const Loginstyles = StyleSheet.create({
         marginLeft: 10
     },
     formIcon: {
-        width: 30,
-        height: 30,
+        width: 50,
+        height: 50,
         marginTop: 10
     },
     logoContainer: {
@@ -60,6 +66,7 @@ const Loginstyles = StyleSheet.create({
         top: '15%'
     },
     logo: {
+        bottom:30,
         width: 300,
         height: 300
     },

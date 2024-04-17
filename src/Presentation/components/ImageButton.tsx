@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { CustomColors } from "../Presentation/theme/AppTheme";
+import { CustomColors } from "../theme/AppTheme";
 
 interface Props {
     text: string,
@@ -10,7 +10,7 @@ interface Props {
 export const ImageButton = ({ text, onPress }: Props) => {
 
     const images = {
-        back: require('../../assets/back.png'),
+        back: require('../../../assets/back.png'),
     };
     return (
         <TouchableOpacity
