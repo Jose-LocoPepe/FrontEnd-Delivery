@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { RegisterAuthUseCase } from '../../../Domain/useCases/Auth/RegisterAuth';
 import { SaveUserUseCase } from '../../../Domain/useCases/UserLocal/SaveUserLocal';
 import { useUserLocal } from '../../hooks/useUserLocal';
-<<<<<<< HEAD
-=======
 import { Alert } from 'react-native';
->>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
 
 const RegisterViewModel = () => {
     const [errorMessage, setErrorMessage] = useState('');
@@ -33,19 +30,12 @@ const RegisterViewModel = () => {
             if(response.success){
                 await SaveUserUseCase(response.data);
                 getUserSession();
-<<<<<<< HEAD
-                //setErrorMessage(response.message);
-            } else {
-                console.log(response.message);
-                //setErrorMessage(response.message);
-=======
                 Alert.alert('Usuario registrado');
                 //setErrorMessage(''+response.message);
             } else {
                 //console.log(response.message);
                 setErrorMessage(''+response.message);
                 Alert.alert(''+response.message);
->>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
             }
         }
     }

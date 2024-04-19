@@ -17,8 +17,6 @@ interface Props extends StackScreenProps<RootStackParamsList, 'Register'> {}
 export const RegisterScreen = ({navigation, route}:Props) => {
 
   const { name, lastname, email, image, phone, password, confirmPassword, loading, errorMessage, user, onChange, register } = useViewModel();
-<<<<<<< HEAD
-=======
   
   useEffect(() => { 
     if(errorMessage!= ''){
@@ -33,7 +31,6 @@ export const RegisterScreen = ({navigation, route}:Props) => {
   }, [user])
   
   
->>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
   return (
         <View style={styles.container}>
             <Image
