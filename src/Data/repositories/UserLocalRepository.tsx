@@ -7,6 +7,10 @@ export class UserLocalRepositoryImpl implements UserLocalRepository {
 
     async save(user: User): Promise<void> {
         const { save } = LocalStorage();
+<<<<<<< HEAD
+=======
+        console.log('Saved to storage');
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
         await save('user', JSON.stringify(user));
     }
 

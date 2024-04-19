@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
 
 import styles from './Styles';
 import { RoundedButton } from '../../components/RoundedButton';
@@ -13,17 +13,43 @@ import { AxiosError } from 'axios';
 
 
 interface Props extends StackScreenProps<RootStackParamsList, 'Login'> { }
+<<<<<<< HEAD
 // Logica y Presentacion de LoginScreen
 const LoginScreen = ({ navigation, route }: Props) => {
 
   const {email, password, onChange, login } = useViewModel();
+=======
+// Logica y Presentacion de homeScreen
+const LoginScreen = ({ navigation, route }: Props) => {
+
+  const {email, password, errorMessage, onChange, login, user } = useViewModel();
+  useEffect(() => {
+    if(errorMessage !== ''){
+    Alert.alert(errorMessage);
+    }
+    //ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+  }, [errorMessage])
+
+  useEffect(() => {
+
+    if(user?.session_token !== null && user?.session_token!== undefined && user?.session_token!== ''){
+      navigation.replace('ProfileInfoScreen');
+    }
+  }, [user])
+  
+  
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
 /*const sendBackend = async () => {
   try {
     const userData = {
       email: "prueba@test.cl",
       password: "test"
     }
+<<<<<<< HEAD
     const response = await ApiDelivery.post('auth/login',userData);
+=======
+    const response = await ApiDelivery.post('auth/home',userData);
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
     //console.log("xd", response.data);
     
   } catch (error) {
@@ -47,7 +73,11 @@ const LoginScreen = ({ navigation, route }: Props) => {
 
       <View style={{ ...styles.form, height: '55%' }}>
 
+<<<<<<< HEAD
         
+=======
+        <ScrollView>
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
           <View>
             <Text style={styles.formText}>¡Bienvenido!</Text>
             <Text style={styles.formTextSub}>Ingrese su correo y contraseña para continuar</Text>
@@ -81,7 +111,11 @@ const LoginScreen = ({ navigation, route }: Props) => {
               onPress={login}
             />
 
+<<<<<<< HEAD
             <View style={styles.formLogin}>
+=======
+            <View style={styles.formhome}>
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
               <Text style={{ fontWeight: '700' }}>No tienes cuenta?</Text>
               <TouchableOpacity
                 activeOpacity={0.6}
@@ -89,6 +123,10 @@ const LoginScreen = ({ navigation, route }: Props) => {
               >
                 <Text style={styles.formRegisterText}>Registrate</Text>
               </TouchableOpacity>
+<<<<<<< HEAD
+=======
+          </View>
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
           </View>
           </View>
       </View>

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const Loginstyles = StyleSheet.create({
+const LoginStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#000',
@@ -41,7 +41,7 @@ const Loginstyles = StyleSheet.create({
         borderBottomColor: 'black',
         marginLeft: 15
     },
-    formLogin: {
+    formhome: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop: 30
@@ -79,4 +79,4 @@ const Loginstyles = StyleSheet.create({
     }
 });
 
-export default Loginstyles;
+export default LoginStyles;

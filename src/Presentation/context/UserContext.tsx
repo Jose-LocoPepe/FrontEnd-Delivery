@@ -14,7 +14,11 @@ export const userInitialState: User = {
     confirmPassword: '',
     image:           '',
     session_token:   '',
+<<<<<<< HEAD
     role_id:           [],
+=======
+    rol_id:           [],
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
 }
 
 export interface UserContextProps {
@@ -35,6 +39,10 @@ export const UserProvider = ( {children}: any ) => {
     }, [])
 
     const saveUserSession = async (user: User) => {
+<<<<<<< HEAD
+=======
+        console.log('Paso');
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
         await SaveUserUseCase(user);
         setUser(user);
     }

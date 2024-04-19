@@ -1,6 +1,6 @@
 
-import React, { useState } from "react";
-import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 
 import { RoundedButton } from "../../components/RoundedButton";
 import { ImageButton } from "../../components/ImageButton";
@@ -17,6 +17,23 @@ interface Props extends StackScreenProps<RootStackParamsList, 'Register'> {}
 export const RegisterScreen = ({navigation, route}:Props) => {
 
   const { name, lastname, email, image, phone, password, confirmPassword, loading, errorMessage, user, onChange, register } = useViewModel();
+<<<<<<< HEAD
+=======
+  
+  useEffect(() => { 
+    if(errorMessage!= ''){
+        Alert.alert(errorMessage);
+    }
+  }, [errorMessage])
+
+  useEffect(() => {      
+    if (user?.id !== null && user?.id !== undefined) {
+        navigation.replace('ProfileInfoScreen');
+    }
+  }, [user])
+  
+  
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
   return (
         <View style={styles.container}>
             <Image

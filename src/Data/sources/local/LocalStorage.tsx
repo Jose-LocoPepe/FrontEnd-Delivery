@@ -5,9 +5,17 @@ export const LocalStorage = () => {
 
     const save = async (key: string, value: string) => {
         try {
+<<<<<<< HEAD
             await AsyncStorage.setItem(key, value);
         } catch (error) {
             console.log("ERROR to local storage ", error);
+=======
+            console.log('Saved to storage');
+            await AsyncStorage.setItem(key, value);
+            
+        } catch (error) {
+            console.log("ERROR Guardado ", error);
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
         }
     }
 
@@ -16,7 +24,11 @@ export const LocalStorage = () => {
             const item = AsyncStorage.getItem(key);
             return item;
         } catch (error) {
+<<<<<<< HEAD
             console.log("ERROR to local storage ", error);
+=======
+            console.log("ERROR Get ", error);
+>>>>>>> 6c24dde (Se arreglan las vistas, tiene comunicacion con el servidor backend haciendo funciones principales como "Loguear" y "Registrar")
         }
     }
 
