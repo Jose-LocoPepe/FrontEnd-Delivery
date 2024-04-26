@@ -6,7 +6,7 @@ import { SaveUserUseCase } from '../../../Domain/useCases/UserLocal/SaveUserLoca
 import { GetUserUseCase } from '../../../Domain/useCases/UserLocal/GetUserLocal'
 import { useUserLocal } from '../../hooks/useUserLocal'
 import { UserContext } from '../../context/UserContext';
-const LoginViewModel = ()  => {
+const HomeViewModel = ()  => {
     const [errorMessage, setErrorMessage] = useState('');
     const [values, setValues] = useState({
         email: "",
@@ -15,7 +15,7 @@ const LoginViewModel = ()  => {
 
     //const { user } = useUserLocal();
     const { user, saveUserSession } = useContext (UserContext);
-    //console.log('usuario:' + JSON.stringify(user));
+    console.log('usuario:' + JSON.stringify(user));
 
     const suma = () => {
 
@@ -66,4 +66,4 @@ const LoginViewModel = ()  => {
 
 }
 
-export default LoginViewModel;
+export default HomeViewModel;

@@ -41,7 +41,7 @@ export const RegisterScreen = ({navigation, route}:Props) => {
             <View style={{ top: '1%', left: '3%', position: 'absolute', marginTop: 35 }}>
                 <ImageButton
                     text='back'
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.navigate('Home')}
                 />
             </View>
 

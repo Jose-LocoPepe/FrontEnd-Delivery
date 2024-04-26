@@ -12,14 +12,14 @@ import useViewModel from './ViewModel';
 import { AxiosError } from 'axios';
 
 
-interface Props extends StackScreenProps<RootStackParamsList, 'Login'> { }
+interface Props extends StackScreenProps<RootStackParamsList, 'Home'> { }
 // Logica y Presentacion de homeScreen
-const LoginScreen = ({ navigation, route }: Props) => {
+export const HomeScreen = ({ navigation, route }: Props) => {
 
   const {email, password, errorMessage, onChange, login, user } = useViewModel();
   useEffect(() => {
     if(errorMessage !== ''){
-    Alert.alert(errorMessage);
+      Alert.alert(errorMessage);
     }
     //ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
   }, [errorMessage])
@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
 
     if(user?.session_token !== null && user?.session_token!== undefined && user?.session_token!== ''){
-      navigation.replace('ProfileInfoScreen');
+      navigation.replace('AdminBottomTabs');
     }
   }, [user])
   
@@ -112,4 +112,3 @@ const LoginScreen = ({ navigation, route }: Props) => {
   )
 }
 
-export default LoginScreen;

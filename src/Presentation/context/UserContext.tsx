@@ -35,7 +35,6 @@ export const UserProvider = ( {children}: any ) => {
     }, [])
 
     const saveUserSession = async (user: User) => {
-        console.log('Paso');
         await SaveUserUseCase(user);
         setUser(user);
     }
