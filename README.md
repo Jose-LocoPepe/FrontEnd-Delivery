@@ -32,13 +32,12 @@ Ejecuta el siguiente comando para poder instalar las dependencias en el proyecto
 npm install
 ```
 
+
+
 ```bash
 copy .env.example .env
 ```
-Es necesario tener instaladas estas librerías:
-```bash
-npx install-expo-modules@latest
-```
+
 
 ## Versionado 📌
 
