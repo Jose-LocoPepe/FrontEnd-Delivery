@@ -26,11 +26,19 @@ Esta aplicación es un proyecto para el ramo de "Desarrollo de soluciones móvil
 ## Instalacion inicial 💿
 El proyecto esta hecho en base a React Native, programado en TypeScript.
 
+
+Ejecuta el siguiente comando para poder instalar las dependencias en el proyecto.
+```bash
+npm install
+```
+
+```bash
+copy .env.example .env
+```
 Es necesario tener instaladas estas librerías:
 ```bash
 npx install-expo-modules@latest
 ```
-
 
 ## Versionado 📌
 
