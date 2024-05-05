@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen }        from "../screens/home/Home";
 import  { RegisterScreen } from "../screens/register/Register";
-import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfo';
+import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
 import { UserProvider } from '../context/UserContext';
 import { AdminBottomTabs } from './tabs/admin/AdminBottomTabs';
 
