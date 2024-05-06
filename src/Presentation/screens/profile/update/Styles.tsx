@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const LoginStyles = StyleSheet.create({
+const ProfileUpdateStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#000',
@@ -9,27 +9,27 @@ const LoginStyles = StyleSheet.create({
         bottom: 30,
         width: '100%',
         height: '70%',
-        opacity: 0.3,
+        opacity: 0.4,
     },
     form: {
         backgroundColor: '#FFF',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        padding: 50,
+        height: '70%',
+        padding: 30,
         position: 'absolute',
-        bottom: -50,
-        width: '100%'
+        bottom: 0,
+        width: '100%',
+    },
+    formContent: {
+        marginLeft: 15
+    },
+    formInfo: {
+        flexDirection: 'row'
     },
     formText: {
         fontWeight: 'bold',
-        fontSize: 20,
-        textAlign: 'center',
-        marginTop: -2
-    },
-    formTextSub: {
-        fontWeight: 'normal',
-        fontSize: 13,
-        textAlign: 'center'
+        fontSize: 16
     },
     formInput: {
         flexDirection: 'row',
@@ -38,10 +38,10 @@ const LoginStyles = StyleSheet.create({
     formTextInput: {
         flex: 1,
         borderBottomWidth: 1,
-        borderBottomColor: 'black',
+        borderBottomColor: '#EBEBEB',
         marginLeft: 15
     },
-    formhome: {
+    formRegister: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop: 30
@@ -55,20 +55,20 @@ const LoginStyles = StyleSheet.create({
         marginLeft: 10
     },
     formIcon: {
-        width: 50,
-        height: 50,
+        width: 30,
+        height: 30,
         marginTop: 10
     },
     logoContainer: {
         alignSelf: 'center',
         alignItems: 'center',
         position: 'absolute',
-        top: '15%'
+        top: '5%'
     },
     logo: {
-        bottom:30,
-        width: 300,
-        height: 300
+        marginTop: 50,
+        width: 120,
+        height: 120,
     },
     logoText: {
         color: '#FFF',
@@ -77,10 +77,21 @@ const LoginStyles = StyleSheet.create({
         textTransform: 'uppercase',
         textAlign: 'center'
     },
+    logoBack: {
+        width: 80,
+        height: 80,
+    },
+    loading: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+    },
     errorText: {
-        backgroundColor: '#ff8800',
+        backgroundColor: '#ff7f7f',
         borderLeftWidth: 3,
-        borderColor: '#a26c00',
+        borderColor: '#993235',
         color: 'white',
         fontSize: 14,
         fontWeight: '600',
@@ -96,4 +107,4 @@ const LoginStyles = StyleSheet.create({
     }
 });
 
-export default LoginStyles;
+export default ProfileUpdateStyles;

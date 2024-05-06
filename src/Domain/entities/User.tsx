@@ -8,8 +8,8 @@ export interface User {
     phone:           string;
     email:           string;
     password:        string;
-    confirmPassword: string;
-    image?:          string;
+    confirmPassword?: string;
+    imagen?:          string;
     session_token?:  string;
     rol_id?:        Rol[];
     //address:         Address;

@@ -1,29 +1,34 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react'
+
+import { FontAwesome } from '@expo/vector-icons';
+
 import { ProfileInfoScreen } from '../../../screens/profile/info/ProfileInfoScreen';
 
-export type RootBottomTabParamsList = {
-    ProfileInfoScreen: undefined,
+
+export type RootClientBottomTabParamsList = {
+    ProfileInfoScreen: undefined
 }
 
-const Tab = createBottomTabNavigator<RootBottomTabParamsList>();
 
+const Tab = createBottomTabNavigator<RootClientBottomTabParamsList>();
 
 export const ClientBottomTabs = () => {
-  return (
-    <Tab.Navigator
-        initialRouteName='ProfileInfoScreen'
-        screenOptions={{
-            headerShown: false
-        }}
-    >
-        <Tab.Screen
-            name="ProfileInfoScreen"
-            component={ProfileInfoScreen}
-            options={{
-                tabBarShowLabel: false,
+    return (
+        <Tab.Navigator
+            initialRouteName='ProfileInfoScreen'
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveBackgroundColor: '#fff', // Aquí defines el color negro
             }}
-        />
-    </Tab.Navigator>
-  );
+        >
+            <Tab.Screen
+                name="ProfileInfoScreen"
+                component={ProfileInfoScreen}
+                options={{
+                    title: 'Perfil',
+                    tabBarIcon: ({ size, color }) => <FontAwesome name="user" size={size} color={'#000'} />,
+                }}
+            />
+        </Tab.Navigator>
+    );
 }

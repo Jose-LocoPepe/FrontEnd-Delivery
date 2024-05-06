@@ -3,6 +3,6 @@ import { User } from "../../entities/User";
 
 const {verifyToken} = new UserLocalRepositoryImpl();
 
-export const VerifyTokenUseCase  = async(token: string) => {
+export const VerifyTokenUseCase  = async(token: any) => {
     return verifyToken(token);
 }

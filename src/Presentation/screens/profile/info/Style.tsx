@@ -52,6 +52,11 @@ const ProfileInfoStyles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 2
     },
+    formIcon: {
+        width: 30,
+        height: 30,
+        marginTop: 10
+    },
     logoText: {
         color: 'white',
         textAlign: 'center',

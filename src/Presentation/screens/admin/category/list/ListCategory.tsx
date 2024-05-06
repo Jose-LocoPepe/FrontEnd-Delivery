@@ -5,7 +5,17 @@ import { CustomTextInput } from "../../../../components/CustomTextInput";
 
 export const AdminCategoryListScreen = () => {
     return (
+
+        
     <View>
+
+        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <TouchableOpacity>
+            
+                                <Text>Cerrar Sesion</Text>
+            </TouchableOpacity>
+        </View>    
+        
     </View>
     )
 }

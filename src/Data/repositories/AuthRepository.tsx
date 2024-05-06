@@ -8,12 +8,12 @@ import { ResponseAPIDelivery } from "../sources/remote/api/models/ResponseAPIDel
 export class AuthRepositoryImpl implements AuthRepository {
     async register(user: User): Promise<ResponseAPIDelivery> {
         try {
-            const { data } = await ApiDelivery.post<ResponseAPIDelivery>('/auth/register', user);
+            const { data } = await ApiDelivery.post<ResponseAPIDelivery>('auth/register', user);
             return Promise.resolve(data)
 
         } catch (error) {
             let e = (error as AxiosError);
-            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            console.log('ERROR REG : ', JSON.stringify(e.response?.data));
             const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
             return Promise.reject(apiError)
         }
@@ -21,11 +21,11 @@ export class AuthRepositoryImpl implements AuthRepository {
 
     async login(email: string, password: string): Promise<ResponseAPIDelivery> {
         try {
-            const { data } = await ApiDelivery.post<ResponseAPIDelivery>('/auth/login', { email, password });
+            const { data } = await ApiDelivery.post<ResponseAPIDelivery>('auth/login', { email, password });
             return Promise.resolve(data);
         } catch (error) {
             let e = (error as AxiosError);
-            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            console.log('ERROR LOG : ', JSON.stringify(e.response?.data));
             return Promise.reject(e.response?.data);
         }
     }

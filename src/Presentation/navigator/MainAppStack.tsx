@@ -1,50 +1,68 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen }        from "../screens/home/Home";
 import  { RegisterScreen } from "../screens/register/Register";
 import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
-import { UserProvider } from '../context/UserContext';
+import { UserContext, UserProvider } from '../context/auth/UserContext';
 import { AdminBottomTabs } from './tabs/admin/AdminBottomTabs';
+import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
+import { useContext } from 'react';
+import LoadingScreen from '../screens/LoadingScreen';
 import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
-import { ProfileUpdateScreen } from '../screens/profile/update/ProfileUpdateScreen';
+import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
+import HomeScreen from '../screens/home/Home';
 
 export type RootStackParamsList = {
     Home: undefined,
-    Register: undefined,
-
+    RegisterScreen: undefined,
     ProfileInfoScreen: undefined,
-
-    AdminBottomTabs: undefined,
-    ClientBottomTabs: undefined,
     ProfileUpdateScreen: undefined,
+    AdminBottomTabs: undefined,
+    ClientBottomTabs: undefined
 }
 
 
 const Stack = createStackNavigator<RootStackParamsList>();
 
 export const MainAppStack = () => {
+    const { user, status } = useContext(UserContext);
+
+
+    if (status === 'checking') return <LoadingScreen />
+    const renderRoleScreen = () => {
+        if (user.rol_id === 3) {
+            // This Client
+            return <>
+                <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
+                <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
+            </>
+        } else if (user.rol_id === 2) {
+            // This Delivery
+        } else {
+            // This Admin
+            return <>
+                <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
+                <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
+            </>
+        }
+    }
+
     return (
-        <UserState>
         <Stack.Navigator
-            initialRouteName="AdminBottomTabs"
+        
             screenOptions={{ 
                 headerShown: false
-             }}
-        >
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="ProfileInfoScreen" component={ProfileInfoScreen} />
-            <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
-            <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
-            <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
-        </Stack.Navigator>
-        </UserState>
+             }}>
+           {
+                (status !== 'authenticated')
+                    ? (
+                        <>
+                            <Stack.Screen name="Home" component={HomeScreen} />
+                            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                        </>
+                    )
+                    :
+                    renderRoleScreen()
+            }
+            </Stack.Navigator>
     );
 }
 
-const UserState = ({children}: any) => {
-    return (
-      <UserProvider>
-        { children }
-      </UserProvider>
-    )
-  }

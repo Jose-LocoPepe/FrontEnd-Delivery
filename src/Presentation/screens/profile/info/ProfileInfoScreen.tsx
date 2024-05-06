@@ -1,92 +1,84 @@
-import React, { useContext } from "react";
-import { View, Text,Image, Pressable, Button } from 'react-native'
-import { UserContext } from "../../../context/UserContext";
+import { View, Text, Image, TouchableOpacity } from 'react-native'
+import React from 'react'
+
+import { StackScreenProps } from '@react-navigation/stack'
+import { RootClientBottomTabParamsList } from '../../../navigator/tabs/client/ClientBottomTabs'
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import styles from './Style'
-import useViewModel from './ViewModel'
-
-import { StackScreenProps } from "@react-navigation/stack";
-import { RoundedButton } from "../../../components/RoundedButton";
-import { RootStackParamsList } from "../../../navigator/MainAppStack";
+import useViewModel from './ViewModel';
+import { RoundedButton } from '../../../components/RoundedButton';
+import { RootStackParamsList } from '../../../navigator/MainAppStack';
 
 
-interface Props extends StackScreenProps<RootStackParamsList, 'ProfileInfoScreen'> {}
+interface Props extends StackScreenProps<RootStackParamsList, 'AdminBottomTabs'> { };
 
-export const ProfileInfoScreen = ({navigation, route}: Props) => {
-    const { user, removeUserSession } = useContext (UserContext);
+export const ProfileInfoScreen = ({ navigation, route }: Props) => {
+
+    const { user, logoutUser } = useViewModel();
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
-            <View>
-                <Button
-                    onPress={()=>{
-                        removeUserSession();
-                        navigation.navigate('Home');
-                    }}
-                    title='Cerrar Sesion'
-                />
+        <View style={styles.container}>
+            <Image
+                style={styles.imageBackground}
+                source={require('../../../../../assets/comidas-rapidas.jpeg')}
+            />
+
+            <View style={{ backgroundColor: '#fff', borderRadius: 100, top: '3%', right: '6%', position: 'absolute', marginTop: 35 }}>
+                <TouchableOpacity
+                    activeOpacity={0.2}
+                    onPress={logoutUser}
+                >
+                    <MaterialCommunityIcons style={{ padding: 8 }} name="logout" size={36} color="gray" />
+                </TouchableOpacity>
             </View>
-            <Pressable 
-                style={ styles.logout }
-                onPress={() => {
-                    removeUserSession();
-                    navigation.navigate('Home');
-                }}
-            >
+
+            <View style={styles.logoContainer}>
                 <Image
-                    source={ require('../../../../../assets/logout.png') } 
-                    style={ styles.logoutImage }/>
-            </Pressable>
-        
-            {/* User Image */}
-            <View style= {styles.logoContainer}>
-                <Image
-                    // source={}
+                    source={{ uri: user?.imagen
+                     }}
                     style={styles.logoImage}
                 />
             </View>
 
             <View style={styles.form}>
-                {/* Names */}
-                <View style={styles.formInfo}>
-                    <Image 
+                <View style={{ ...styles.formInfo, marginTop: 20 }}>
+                    <Image
                         source={require('../../../../../assets/user.png')}
-                        style={styles.formImage}
+                        style={styles.formIcon}
                     />
                     <View style={styles.formContent}>
-                        <Text >Nombre y apellidos</Text>
-                        <Text >{user?.name} {user?.lastname}</Text>
+                        <Text>Nombres</Text>
+                        <Text>{user?.name} {user?.lastname}</Text>
                     </View>
                 </View>
 
-                {/* Email */}
-                <View style={styles.formInfo}>
-                    <Image 
+                <View style={{ ...styles.formInfo, marginTop: 20 }}>
+                    <Image
                         source={require('../../../../../assets/email.png')}
-                        style={styles.formImage}
+                        style={styles.formIcon}
                     />
                     <View style={styles.formContent}>
-                        <Text >Correo electrónico</Text>
-                        <Text >{user?.email}</Text>
+                        <Text>Correo electrónico</Text>
+                        <Text>{user?.email}</Text>
                     </View>
                 </View>
-
-                {/* Phone */}
-                <View style={{...styles.formInfo, marginBottom: 50}}>
-                    <Image 
+                <View style={{ ...styles.formInfo, marginTop: 20, marginBottom: 50 }}>
+                    <Image
                         source={require('../../../../../assets/phone.png')}
-                        style={styles.formImage}
+                        style={styles.formIcon}
                     />
                     <View style={styles.formContent}>
-                        <Text >Teléfono</Text>
-                        <Text >{user?.phone}</Text>
+                        <Text>Teléfono</Text>
+                        <Text>{user?.phone}</Text>
                     </View>
                 </View>
 
                 <RoundedButton
-                    text="Actualizar perfil"
-                    onPress={() => navigation.navigate('ProfileUpdateScreen')
-                    }
+                    text="Actualizar Perfil"
+                    onPress={() => navigation.navigate('ProfileUpdateScreen')}
                 />
-
             </View>
         </View>
     )

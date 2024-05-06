@@ -1,21 +1,33 @@
-import React,  { useState, useContext, useEffect } from 'react'
-import { AxiosError } from "axios"
-import { ApiDelivery } from "../../../Data/sources/remote/api/ApiDelivery"
+import { useState, useContext, useEffect } from 'react'
+import * as yup from 'yup'
+import { Error, ResponseAPIDelivery } from "../../../Data/sources/remote/api/models/ResponseAPIDelivery";
 import { LoginAuthUseCase } from "../../../Domain/useCases/Auth/LoginAuth"
-import { SaveUserUseCase } from '../../../Domain/useCases/UserLocal/SaveUserLocal'
-import { GetUserUseCase } from '../../../Domain/useCases/UserLocal/GetUserLocal'
-import { useUserLocal } from '../../hooks/useUserLocal'
-import { UserContext } from '../../context/UserContext';
+import { showMessage } from "react-native-flash-message";
+import { UserContext } from '../../context/auth/UserContext'
+import { SaveUserUseCase } from '../../../Domain/useCases/UserLocal/SaveUserLocal';
+interface Values {
+    email: string;
+    password: string;
+}
+interface ResponseErrorData {
+    path: string;
+    value: string;
+}
+const validationLoginSchrema = yup.object().shape({
+    email: yup.string().email('Ingrese un correo electrónico válido').required('El correo electrónico es requerido'),
+    password: yup.string().required('La contraseña es requerida'),
+});
+
 const HomeViewModel = ()  => {
-    const [errorMessage, setErrorMessage] = useState('');
-    const [values, setValues] = useState({
+    const [errorMessages, setErrorMessages] = useState<Record<string,string>>({});
+    const [errorsResponse, setErrorResponses] = useState<ResponseErrorData[]>([]);
+
+    const [values, setValues] = useState<Values>({
         email: "",
         password: ""
     });
 
-    //const { user } = useUserLocal();
-    const { user, saveUserSession } = useContext (UserContext);
-    console.log('usuario:' + JSON.stringify(user));
+    const { auth } = useContext (UserContext);
 
     const suma = () => {
 
@@ -26,44 +38,62 @@ const HomeViewModel = ()  => {
     }
 
     const login = async () => {
-        if(isValidForm()){
-            try {
-            const response = await LoginAuthUseCase(values.email, values.password);
-            console.log('response: ' +JSON.stringify(response));
 
-            
-            if(!response.success){
-                setErrorMessage('Usuario o contraseña incorrectos');
-            } else {
-                saveUserSession(response.data);
-            }
-            } catch (error) {
-                console.log(error);
-                setErrorMessage('Usuario o contraseña incorrectos');
+        const isValid = await isValidForm();
+        if(isValid){
+            setErrorMessages({});
+            try {
+                const response = await LoginAuthUseCase(values.email, values.password);
+                console.log('response: ' +JSON.stringify(response));
+                if(response.success){
+                    await SaveUserUseCase(response.data);
+                    auth(response.data);
+                }
+            } catch (error:any) {
+                const rejectErrors: ResponseAPIDelivery = error;
+                if (rejectErrors.error) {
+                    setErrorResponses([]);
+                    showMessage({
+                        message: rejectErrors.message ?? "",
+                        type: 'danger',
+                        icon: 'danger',
+                    });
+                } else {
+                    
+                        // Convert JSON to Array
+                        const errorsArray = Object.values(rejectErrors.errors);
+
+                        // Filter array with msg and path
+                        const errorsArrayFilter = errorsArray.map(({ msg, path }) => ({ value: msg, path }))
+                        setErrorResponses(errorsArrayFilter);
+
+                }
             }
             
         }
     }
 
-    const isValidForm = (): boolean => {
-        if (values.email === '') {
-            setErrorMessage('Ingresa el correo electronico');
+    const isValidForm = async(): Promise<boolean> => {
+        try {
+            await validationLoginSchrema.validate(values, { abortEarly: false });
+            return true;
+        } catch (error:any) {
+            const errors: Record<string,string> = {};
+            error.inner.forEach((err:any) => {
+                errors[err.path] = err.message;
+            });
+            setErrorMessages(error);
+            console.log(errorMessages);
             return false;
         }
-        if (values.password === '') {
-            setErrorMessage('Ingresa la contraseña');
-            return false;
-        }
-        return true;
     }
     return {
         ...values,
-        user,
         login,
         onChange,
-        errorMessage,
+        errorMessages,
+        errorsResponse
     }
-
 }
 
 export default HomeViewModel;

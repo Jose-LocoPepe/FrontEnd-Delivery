@@ -20,8 +20,9 @@ export class UserUpdateRepositoryImpl implements UserUpdateRepository {
             return Promise.resolve(data);
         } catch (error) {
             let e = (error as AxiosError);
+            console.log('ERROR Upd: ', JSON.stringify(e.response?.data));
             const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
-            return Promise.reject(apiError);
+            return Promise.reject(apiError)
         }
     }
 }
