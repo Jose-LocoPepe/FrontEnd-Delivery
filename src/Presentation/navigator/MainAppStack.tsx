@@ -4,12 +4,18 @@ import  { RegisterScreen } from "../screens/register/Register";
 import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
 import { UserProvider } from '../context/UserContext';
 import { AdminBottomTabs } from './tabs/admin/AdminBottomTabs';
+import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
+import { ProfileUpdateScreen } from '../screens/profile/update/ProfileUpdateScreen';
 
 export type RootStackParamsList = {
     Home: undefined,
     Register: undefined,
+
     ProfileInfoScreen: undefined,
-    AdminBottomTabs: undefined
+
+    AdminBottomTabs: undefined,
+    ClientBottomTabs: undefined,
+    ProfileUpdateScreen: undefined,
 }
 
 
@@ -28,6 +34,8 @@ export const MainAppStack = () => {
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="ProfileInfoScreen" component={ProfileInfoScreen} />
             <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
+            <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
+            <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
         </Stack.Navigator>
         </UserState>
     );

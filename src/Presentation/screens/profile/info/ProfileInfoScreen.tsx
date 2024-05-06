@@ -5,11 +5,11 @@ import styles from './Style'
 import useViewModel from './ViewModel'
 
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootBottomTabParamsList } from "../../../navigator/tabs/client/ClientBottomTabs";
 import { RoundedButton } from "../../../components/RoundedButton";
+import { RootStackParamsList } from "../../../navigator/MainAppStack";
 
 
-interface Props extends StackScreenProps<RootBottomTabParamsList, 'ProfileInfoScreen'> {}
+interface Props extends StackScreenProps<RootStackParamsList, 'ProfileInfoScreen'> {}
 
 export const ProfileInfoScreen = ({navigation, route}: Props) => {
     const { user, removeUserSession } = useContext (UserContext);
@@ -36,7 +36,7 @@ export const ProfileInfoScreen = ({navigation, route}: Props) => {
                     style={ styles.logoutImage }/>
             </Pressable>
         
-
+            {/* User Image */}
             <View style= {styles.logoContainer}>
                 <Image
                     // source={}

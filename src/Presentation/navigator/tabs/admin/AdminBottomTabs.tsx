@@ -9,13 +9,15 @@ const Tab = createBottomTabNavigator();
 export const AdminBottomTabs = () => {
   return (
     <Tab.Navigator
-    screenOptions={{
-      headerShown: false
-    }}>
+      initialRouteName='Profile'
+      screenOptions={{
+        headerShown: false
+      }}
+    >
       <Tab.Screen
         name="AdminCategoryNavigator"
         component={AdminCategoryNavigator}>
-        </Tab.Screen>
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
