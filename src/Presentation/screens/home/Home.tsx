@@ -16,12 +16,7 @@ interface Props extends StackScreenProps<RootStackParamsList, 'Home'> { }
 const HomeScreen = ({ navigation, route }: Props) => {
 
   const {email, password, errorMessages, errorsResponse, onChange, login  } = useViewModel();
-  useEffect(() => {
-    //if(errorMessage !== ''){
-      //Alert.alert(errorMessage);
-    //}
-    //ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
-  }, [errorMessages])
+
   return (
     <View style={styles.container}>
       <Image
@@ -39,7 +34,7 @@ const HomeScreen = ({ navigation, route }: Props) => {
       <View style={{ ...styles.form, height: '55%' }}>
 
         <ScrollView
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
         showsHorizontalScrollIndicator={false}>
           
           <View>

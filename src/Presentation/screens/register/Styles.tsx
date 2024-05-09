@@ -15,7 +15,7 @@ const RegisterStyles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        height: '80%',
+        height: '100%',
         padding: 30,
         position: 'absolute',
         bottom: 0,

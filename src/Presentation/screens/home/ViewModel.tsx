@@ -19,8 +19,6 @@ const validationLoginSchrema = yup.object().shape({
 });
 
 const HomeViewModel = ()  => {
-    const [errorMessages, setErrorMessages] = useState<Record<string,string>>({});
-    const [errorsResponse, setErrorResponses] = useState<ResponseErrorData[]>([]);
 
     const [values, setValues] = useState<Values>({
         email: "",
@@ -29,9 +27,8 @@ const HomeViewModel = ()  => {
 
     const { auth } = useContext (UserContext);
 
-    const suma = () => {
-
-    }
+    const [errorMessages, setErrorMessages] = useState<Record<string,string>>({});
+    const [errorsResponse, setErrorResponses] = useState<ResponseErrorData[]>([]);
 
     const onChange = (property: string, value: any) => {
         setValues({...values, [property]: value });
@@ -49,27 +46,21 @@ const HomeViewModel = ()  => {
                     await SaveUserUseCase(response.data);
                     auth(response.data);
                 }
-            } catch (error:any) {
+            } catch (error) {
                 const rejectErrors: ResponseAPIDelivery = error;
-                if (rejectErrors.error) {
+                if (rejectErrors.error) {            
                     setErrorResponses([]);
                     showMessage({
-                        message: rejectErrors.message ?? "",
+                        message: rejectErrors.message,
                         type: 'danger',
                         icon: 'danger',
                     });
-                } else {
                     
-                        // Convert JSON to Array
-                        const errorsArray = Object.values(rejectErrors.errors);
-
-                        // Filter array with msg and path
-                        const errorsArrayFilter = errorsArray.map(({ msg, path }) => ({ value: msg, path }))
-                        setErrorResponses(errorsArrayFilter);
-
+                } else {
+                    const errorsArray = Object.values(rejectErrors.errors);
+                    const errorsArrayFilter = errorsArray.map(({ msg, path }) => ({ value: msg, path }))
                 }
             }
-            
         }
     }
 
@@ -77,12 +68,12 @@ const HomeViewModel = ()  => {
         try {
             await validationLoginSchrema.validate(values, { abortEarly: false });
             return true;
-        } catch (error:any) {
+        } catch (error) {
             const errors: Record<string,string> = {};
-            error.inner.forEach((err:any) => {
+            error.inner.forEach((err) => {
                 errors[err.path] = err.message;
             });
-            setErrorMessages(error);
+            setErrorMessages(errors);
             console.log(errorMessages);
             return false;
         }

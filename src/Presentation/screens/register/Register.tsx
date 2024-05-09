@@ -96,7 +96,9 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                         image={require('../../../../assets/user.png')}     
                         property='name'
                         onChangeText={onChange}
+                        editable={(loading)? false : true}
                         value={name}/>
+                    {errorMessages.name && <Text style={styles.errorText}>{errorMessages.name}</Text>}
 
                     <CustomTextInput
                         placeholder='Apellido'
@@ -104,7 +106,9 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                         image={require('../../../../assets/user.png')}
                         property='lastname'
                         onChangeText={onChange}
+                        editable={(loading)? false : true}
                         value={lastname}/>
+                    {errorMessages.lastName && <Text style={styles.errorText}>{errorMessages.lastName}</Text>}
 
                     <CustomTextInput 
                         placeholder='Correo electronico'
@@ -112,7 +116,9 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                         image={ require('../../../../assets/email.png') }
                         property='email'
                         onChangeText={ onChange }
+                        editable={(loading)? false : true}
                         value={ email }/>
+                    {errorMessages.email && <Text style={styles.errorText}>{errorMessages.email}</Text>}
 
                     <CustomTextInput 
                         placeholder='Telefono'
@@ -120,16 +126,20 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                         image={ require('../../../../assets/phone.png') }
                         property='phone'
                         onChangeText={ onChange }
+                        editable={(loading)? false : true}
                         value={ phone }/>
+                    {errorMessages.phone && <Text style={styles.errorText}>{errorMessages.phone}</Text>}
                     
                     <CustomTextInput 
                         placeholder='Contraseña'
                         keyboardType='default'
                         image={ require('../../../../assets/password.png') }
                         property='password'
+                        editable={(loading)? false : true}
                         onChangeText={ onChange }
                         value={ password }
                         secureTextEntry={ true }/>
+                    {errorMessages.password && <Text style={styles.errorText}>{errorMessages.password}</Text>}
                     
                     <CustomTextInput 
                         placeholder='Confirmar Contraseña'
@@ -137,8 +147,10 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                         image={ require('../../../../assets/confirm_password.png') }
                         property='confirmPassword'
                         onChangeText={ onChange }
+                        editable={(loading)? false : true}
                         value={ confirmPassword }
                         secureTextEntry={ true }/>
+                    {errorMessages.confirmPassword && <Text style={styles.errorText}>{errorMessages.confirmPassword}</Text>}
 
                     <View style={{ marginTop: 10 }}>
                 

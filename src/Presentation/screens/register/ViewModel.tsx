@@ -3,6 +3,7 @@ import { RegisterAuthUseCase } from '../../../Domain/useCases/Auth/RegisterAuth'
 import { SaveUserUseCase } from '../../../Domain/useCases/UserLocal/SaveUserLocal';
 import { useUserLocal } from '../../hooks/useUserLocal';
 import { Alert } from 'react-native';
+import * as yup from 'yup';
 import * as ImagePicker from'expo-image-picker';
 import { showMessage } from "react-native-flash-message";
 import { UserContext } from '../../context/auth/UserContext';
@@ -21,6 +22,16 @@ interface ResponseErrorData {
     path: string;
     value: string;
 }
+
+const validationRegisterSchema = yup.object().shape({
+    image: yup.string().required('La imagen es requerida'),
+    name: yup.string().required('El nombre es requerido'),
+    lastName: yup.string().required('El apellido es requerido'),
+    email: yup.string().email('Ingrese un correo electrónico válido').required('El correo electrónico es requerido'),
+    phone: yup.string().required('El teléfono es requerido'),
+    password: yup.string().required('La contraseña es requerida'),
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden').required('La confirmación de la contraseña es requerida')
+});
 
 const RegisterViewModel = () => {
     const { auth } = useContext(UserContext);
@@ -125,43 +136,19 @@ const RegisterViewModel = () => {
     }
 
   
-    const isValidForm = (): boolean => {
-        if (values.name === '') {
-            setErrorMessage('Ingresa tu nombre');
-            console.log('Ingresa tu nombre');
+    const isValidForm = async (): Promise<boolean> => {
+        try {
+            await validationRegisterSchema.validate(values, { abortEarly: false });
+            return true;
+        } catch (error) {
+            const errors: Record<string, string> = {};
+            error.inner.forEach((err) => {
+                errors[err.path] = err.message;
+            });
+            setErrorMessages(errors);
+            console.log(errorMessages);
             return false;
         }
-        if (values.lastname === '') {
-            setErrorMessage('Ingresa tu apellido');
-            console.log('Ingresa tu apellido');
-            return false;
-        }
-        if (values.email === '') {
-            setErrorMessage('Ingresa tu correo electronico');
-            console.log('Ingresa tu correo electronico');
-            return false;
-        }
-        if (values.phone === '') {
-            setErrorMessage('Ingresa tu telefono');
-            console.log('Ingresa tu telefono');
-            return false;
-        }
-        if (values.password === '') {
-            setErrorMessage('Ingresa la contraseña');
-            console.log('Ingresa la contraseña');
-            return false;
-        }
-        if (values.confirmPassword === '') {
-            setErrorMessage('Ingresa la confirmacion de la contraseña');
-            console.log('Ingresa la confirmacion de la contraseña');
-            return false;
-        }
-        if (values.password !== values.confirmPassword) {
-            setErrorMessage('Las contraseñas no coinciden');
-            console.log('Las contraseñas no coinciden');
-            return false;
-        }
-        return true;
     }
 
 

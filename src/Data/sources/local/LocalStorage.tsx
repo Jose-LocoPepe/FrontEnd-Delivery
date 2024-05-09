@@ -5,7 +5,7 @@ export const LocalStorage = () => {
 
     const save = async (key: string, value: string) => {
         try {
-            console.log('Saved to storage');
+            console.log('Guardado en el local storage.');
             await AsyncStorage.setItem(key, value);
             
         } catch (error) {

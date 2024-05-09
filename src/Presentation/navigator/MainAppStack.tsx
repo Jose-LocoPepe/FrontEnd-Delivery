@@ -47,7 +47,7 @@ export const MainAppStack = () => {
 
     return (
         <Stack.Navigator
-        
+            initialRouteName='Home'
             screenOptions={{ 
                 headerShown: false
              }}>
