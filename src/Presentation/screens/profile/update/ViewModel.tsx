@@ -29,7 +29,7 @@ const ProfileUpdateViewModel = () => {
         name: user.name,
         lastname: user.lastname,
         phone: user.phone,
-        session_token: user.session_token || '',
+        session_token: user.session_token,
         imagen: ''
     });
     const [file, setFile] = useState<ImagePicker.ImageInfo>();

@@ -87,8 +87,9 @@ export const RegisterScreen = ({navigation, route}:Props) => {
 
             <View style={{ ...styles.form, height: '80%' }}>
                 <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}>
+                    showsVerticalScrollIndicator={true}
+                    showsHorizontalScrollIndicator={true}
+                    automaticallyAdjustKeyboardInsets={true}>
                     <Text style={styles.formText}>Registrarse</Text>
                     <CustomTextInput
                         placeholder='Nombre'
@@ -157,18 +158,15 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                     <RoundedButton text='CONFIRMAR' onPress={ register} />
 
                     </View>
+                    <ModalPickImage
+                        modalUseState={modalVisible}
+                        setModalUseState={setModalVisible}
+                        openGallery={pickImage}
+                        openCamera={takePhoto}/>
+                        {loading && (
+                        <ActivityIndicator style={styles.loading} size={"large"} color={"red"} />)}
                 </ScrollView>
             </View>
-
-            <ModalPickImage
-                modalUseState={modalVisible}
-                setModalUseState={setModalVisible}
-                openGallery={pickImage}
-                openCamera={takePhoto}/>
-                {loading && (
-                <ActivityIndicator style={styles.loading} size={"large"} color={"red"} />
-            )
-        }
         </View>
     )
 }

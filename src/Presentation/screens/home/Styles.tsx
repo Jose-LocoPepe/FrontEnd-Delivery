@@ -16,8 +16,9 @@ const LoginStyles = StyleSheet.create({
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         padding: 50,
+
         position: 'absolute',
-        bottom: -50,
+        bottom: 0,
         width: '100%'
     },
     formText: {

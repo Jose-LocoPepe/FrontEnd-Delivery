@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert,FlatList } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert,FlatList, KeyboardAvoidingView, Platform } from 'react-native'
 
 import styles from './Styles';
 import { RoundedButton } from '../../components/RoundedButton';
@@ -18,7 +18,8 @@ const HomeScreen = ({ navigation, route }: Props) => {
   const {email, password, errorMessages, errorsResponse, onChange, login  } = useViewModel();
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}>
       <Image
         style={styles.imageBackground}
         source={require('../../../../assets/comidas-rapidas.jpeg')}
@@ -34,8 +35,9 @@ const HomeScreen = ({ navigation, route }: Props) => {
       <View style={{ ...styles.form, height: '55%' }}>
 
         <ScrollView
-        showsVerticalScrollIndicator={true}
-        showsHorizontalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets={true}>
           
           <View>
             <Text style={styles.formText}>¡Bienvenido!</Text>

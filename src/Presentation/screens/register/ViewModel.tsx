@@ -24,9 +24,9 @@ interface ResponseErrorData {
 }
 
 const validationRegisterSchema = yup.object().shape({
-    image: yup.string().required('La imagen es requerida'),
+    imagen: yup.string().required('La imagen es requerida'),
     name: yup.string().required('El nombre es requerido'),
-    lastName: yup.string().required('El apellido es requerido'),
+    lastname: yup.string().required('El apellido es requerido'),
     email: yup.string().email('Ingrese un correo electrónico válido').required('El correo electrónico es requerido'),
     phone: yup.string().required('El teléfono es requerido'),
     password: yup.string().required('La contraseña es requerida'),
@@ -34,6 +34,7 @@ const validationRegisterSchema = yup.object().shape({
 });
 
 const RegisterViewModel = () => {
+    const phoneNumber = '';
     const { auth } = useContext(UserContext);
     const [errorMessages, setErrorMessages] = useState<Record<string,string>>({});
     const [errorsResponse, setErrorResponses] = useState<ResponseErrorData[]>([]);
@@ -150,7 +151,13 @@ const RegisterViewModel = () => {
             return false;
         }
     }
-
+    const isChileanPhoneNumber = (phoneNumber) => {
+        // Expresión regular para números de teléfono chilenos
+        const chileanPhoneNumberRegex = /^(?:\+?56)?(?:(9\d{8}))$/;
+      
+        // Verifica si el número coincide con el formato chileno
+        return chileanPhoneNumberRegex.test(phoneNumber);
+      };
 
     return {
         ...values,
@@ -160,6 +167,7 @@ const RegisterViewModel = () => {
         takePhoto,
         errorMessages,
         errorsResponse,
+        isChileanPhoneNumber,
         loading
     }
 }

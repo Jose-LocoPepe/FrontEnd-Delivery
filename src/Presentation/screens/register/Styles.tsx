@@ -38,7 +38,7 @@ const RegisterStyles = StyleSheet.create({
     formRegister: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 30
+        marginTop: 0
     },
     formRegisterText: {
         borderBottomColor: 'orange',
@@ -82,9 +82,9 @@ const RegisterStyles = StyleSheet.create({
         left: 0,
     },
     errorText: {
-        backgroundColor: '#ff7f7f',
+        backgroundColor: '#ff8800',
         borderLeftWidth: 3,
-        borderColor: '#993235',
+        borderColor: '#a26c00',
         color: 'white',
         fontSize: 14,
         fontWeight: '600',
