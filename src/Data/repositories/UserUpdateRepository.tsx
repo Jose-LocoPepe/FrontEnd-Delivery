@@ -13,10 +13,10 @@ export class UserUpdateRepositoryImpl implements UserUpdateRepository {
             
             const {data} = await ApiDelivery.put<ResponseAPIDelivery>(path,{name,lastname,phone},{
                 headers: {
-                    'Authorization': `Bearer ${session_token}`
+                    Authorization: `Bearer ${session_token}`
                 }
             });
-
+        
             return Promise.resolve(data);
         } catch (error) {
             let e = (error as AxiosError);

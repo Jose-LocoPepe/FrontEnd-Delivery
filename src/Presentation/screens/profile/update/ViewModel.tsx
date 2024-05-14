@@ -6,12 +6,14 @@ import * as yup from "yup";
 import { RemoveUserUseCase } from "../../../../Domain/useCases/UserLocal/RemoveUserLocal";
 import { UpdateUserUseCase } from "../../../../Domain/useCases/User/UpdateUserUseCase";
 import { UpdateFileUseCase } from "../../../../Domain/useCases/File/UpdateFileUseCase";
-import { UserContext } from "../../../context/auth/UserContext";
+import { UserContext, UserContextProps } from "../../../context/auth/UserContext";
 
 interface Values {
+    id: string;
     name: string;
     lastname: string;
     phone: string;
+    session_token: string;
     imagen: string;
 }
 
@@ -23,9 +25,10 @@ const validationSchema = yup.object().shape({
 
 const ProfileUpdateViewModel = () => {
 
-    const { user, updateUser: updateUserContext } = useContext(UserContext);
+    const { user, updateUser: updateUserContext } = useContext<UserContextProps> (UserContext);
 
     const [values, setValues] = useState<Values>({
+        id: user.id,
         name: user.name,
         lastname: user.lastname,
         phone: user.phone,
@@ -74,14 +77,15 @@ const ProfileUpdateViewModel = () => {
             try {
                 setLoading(true);
 
-                const { image, ...data } = values;
+                const { imagen, ...data } = values;
                 // Call to use case
-                const response = await UpdateUserUseCase(user.id, data.name, data.lastname, data.phone, user.session_token);
+                const response = await UpdateUserUseCase(data.id, data.name, data.lastname, data.phone, user.session_token);
 
                 if (response.success) {
+
                     const dataUser = response.data;
                     dataUser.session_token = user.session_token;
-
+             
                     if (file !== undefined) {
                         const responseImage = await UpdateFileUseCase(file!, 'users', dataUser.id);
                         dataUser.image = responseImage.data;
@@ -92,7 +96,7 @@ const ProfileUpdateViewModel = () => {
                 }
 
             } catch (error) {
-                console.log(error);
+                console.log("Hubo un error: "+error);
                 setLoading(false);
                 return false;
             }

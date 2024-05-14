@@ -8,7 +8,7 @@ import { VerifyTokenUseCase } from "../../../Domain/useCases/UserLocal/VerifyTok
 
 
 export interface UserContextProps {
-    user: User | null;
+    user: User;
     status: 'checking' | 'authenticated' | 'not-authenticated';
     auth(user: User): void;
     logout: () => void;
@@ -32,7 +32,6 @@ export const UserProvider = ( {children}: any ) => {
         const user = await GetUserUseCase();
 
         if (!user) return dispatch({ type: 'not-authenticated' });
-        console.log(user);
 
         try {
             const response = await VerifyTokenUseCase(user.session_token);
