@@ -1,9 +1,10 @@
 import axios from "axios";
 
-import { HOST_LOCAL, HOST_EMULATOR} from '@env';
+import { HOST_LOCAL_ENV, HOST_EMULATOR} from '@env';
 
 const ApiDelivery = axios.create({
-    baseURL: HOST_EMULATOR,
+    baseURL: 'http://192.168.0.2:3312/api'
+    ,
     headers: {
         'Content-Type': 'application/json',
     }
