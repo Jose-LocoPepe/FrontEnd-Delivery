@@ -3,12 +3,18 @@ import  { RegisterScreen } from "../screens/register/Register";
 import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
 import { UserContext, UserProvider } from '../context/auth/UserContext';
 import { AdminBottomTabs } from './tabs/admin/AdminBottomTabs';
+
 import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
 import { useContext } from 'react';
 import LoadingScreen from '../screens/LoadingScreen';
 import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
 import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
+
+//
+import React from 'react';
+//import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
+//import { CreateCategoryScreen } from '../screens/admin/category/create/CreateCategory';
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -17,6 +23,10 @@ export type RootStackParamsList = {
     ProfileUpdateScreen: undefined,
     AdminBottomTabs: undefined,
     ClientBottomTabs: undefined
+
+    //
+    CategoryMenuScreen: undefined,
+    CreateCategoryScreen: undefined,
 }
 
 

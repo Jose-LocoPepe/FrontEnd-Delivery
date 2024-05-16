@@ -3,10 +3,15 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../navigator/MainAppStack";
 
-                                                    
+import { useNavigation } from '@react-navigation/native';
+
+//import { createStackNavigator } from '@react-navigation/stack';   
+//import { CategoryMenuScreen } from '../../../../Presentation/navigator/tabs/admin/AdminCategoryNavigator';     
+
+
 type Props = StackScreenProps<RootStackParamsList, 'CategoryMenuScreen'>;
 
-export const CategoryMenuScreen: React.FC<Props> = ({ navigation }) => {
+    export const CategoryMenuScreen: React.FC<Props> = ({ navigation }) => {
     const navigateToCreateCategory = () => {
         navigation.navigate('CreateCategoryScreen');
     }
@@ -20,8 +25,9 @@ export const CategoryMenuScreen: React.FC<Props> = ({ navigation }) => {
                 This is the profile screen.
             </Text>
             <View style={styles.header}>
+                <Text style={styles.headerTitle}>Categorías</Text>
                 <View style={styles.headerLine}></View>
-                <Text style={styles.headerTitle}>Categoria</Text>
+
             </View>
             <TouchableOpacity style={styles.button} onPress={navigateToCreateCategory}>
                 <Image source={require('../../../../../assets/add.png')} style={styles.buttonImage} />
@@ -54,24 +60,30 @@ const styles = StyleSheet.create({
         right: 20,
     },
     buttonImage: {
-        width: 30,
-        height: 30,
+        width: 36,
+        height: 36,
     },
+
     header: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        
+        //alignItems: 'center',
         position: 'absolute',
-        top: 20,
-        left: 20,
+        top: 51, //posicon del contenedor (titulo "Categoria" y de la Linea)
+        left: 0,
+  
+        width: '110%', // Ancho del contenedor
+        height: 50, // Alto del contenedor
     },
     headerTitle: {
-        fontSize: 16,
+        fontSize: 22.5, // Ajusta el tamaño del texto 
         fontWeight: 'bold',
+        marginBottom: 11, // Añade espacio en la parte inferior del título
+        left: 26, // Distacia del título hacia la DERECHA
     },
     headerLine: {
         borderBottomColor: 'black',
-        borderBottomWidth: 1,
-        width: 50,
+        borderBottomWidth: 0.5, //Grosor de la linea
+        width: '100%',
         marginRight: 5,
     },
 });
