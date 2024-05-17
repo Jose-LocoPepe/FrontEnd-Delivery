@@ -32,8 +32,10 @@ async getProducts(): Promise<Product[]> {
 
 async createProduct(Product: Product): Promise<void> {
     try {
+        console.log("Products data:", Product);
         // Realizar una solicitud al backend para crear el producto
         const response = await ApiDelivery.post<{ success: boolean }>('user/createProduct', Product);
+        console.log("Products data:", Product);
 
         if (response.data.success) {
             console.log("Product created successfully");
