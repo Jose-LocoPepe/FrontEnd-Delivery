@@ -5,6 +5,7 @@ import { LocalStorage } from '../sources/local/LocalStorage';
 import { ApiDelivery } from '../sources/remote/api/ApiDelivery';
 import { ResponseVerifyTokenAPIDelivery } from '../sources/remote/api/models/ResponseVerifyTokenApiDelivery';
 
+
 export class UserLocalRepositoryImpl implements UserLocalRepository {
 
 
@@ -42,5 +43,6 @@ export class UserLocalRepositoryImpl implements UserLocalRepository {
         }
 
     }
+    
 
 }
