@@ -30,7 +30,7 @@ async getProducts(): Promise<Product[]> {
 
 
 
-async createProduct(Product: Product): Promise<void> {
+async createProduct(Product: Product): Promise<boolean> {
     try {
         console.log("Products data:", Product);
         // Realizar una solicitud al backend para crear el producto
@@ -39,9 +39,11 @@ async createProduct(Product: Product): Promise<void> {
 
         if (response.data.success) {
             console.log("Product created successfully");
+            return true;
         } else {
             // Handle unsuccessful response
             throw new Error("Failed to create product");
+            return false;
         }
     } catch (error) {
         // Handle network errors or other issues
