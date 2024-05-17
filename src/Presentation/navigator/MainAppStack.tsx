@@ -3,18 +3,15 @@ import  { RegisterScreen } from "../screens/register/Register";
 import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
 import { UserContext, UserProvider } from '../context/auth/UserContext';
 import { AdminBottomTabs } from './tabs/admin/AdminBottomTabs';
-
 import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
 import { useContext } from 'react';
 import LoadingScreen from '../screens/LoadingScreen';
 import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
 import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
+import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
+import { CategoryCreateScreen } from '../screens/admin/category/create/CreateCategory';
 
-//
-import React from 'react';
-//import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
-//import { CreateCategoryScreen } from '../screens/admin/category/create/CreateCategory';
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -22,16 +19,16 @@ export type RootStackParamsList = {
     ProfileInfoScreen: undefined,
     ProfileUpdateScreen: undefined,
     AdminBottomTabs: undefined,
+    
     ClientBottomTabs: undefined
+    AdminCategoryBottomTabs: undefined,
+    AdminCategoryMenu: undefined,
+    CategoryCreateScreen: undefined,
 
-    //
-    CategoryMenuScreen: undefined,
-    CreateCategoryScreen: undefined,
 }
 
 
 const Stack = createStackNavigator<RootStackParamsList>();
-
 export const MainAppStack = () => {
     const { user, status } = useContext(UserContext);
 
@@ -49,8 +46,12 @@ export const MainAppStack = () => {
         } else {
             // This Admin
             return <>
-                <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
+                <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />  
+                <Stack.Screen name="AdminCategoryBottomTabs" component={AdminCategoryBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
+                <Stack.Screen name="CategoryCreateScreen" component={CategoryCreateScreen} />
+                
+                
             </>
         }
     }
@@ -75,4 +76,3 @@ export const MainAppStack = () => {
             </Stack.Navigator>
     );
 }
-

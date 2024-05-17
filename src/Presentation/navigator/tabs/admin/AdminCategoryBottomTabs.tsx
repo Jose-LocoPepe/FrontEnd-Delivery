@@ -4,16 +4,19 @@ import { FontAwesome } from '@expo/vector-icons';
 import { ProfileInfoScreen } from '../../../screens/profile/info/ProfileInfoScreen';
 import { CategoryMenuScreen } from '../../../screens/admin/category/CategoryMenu';
 import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu';
+import { CategoryCreateScreen } from '../../../screens/admin/category/create/CreateCategory';
 
 export type RootAdminBottomTabParamsList = {
   ProfileInfoScreen: undefined,
   CategoryMenuScreen: undefined,
   ProductsMenuScreen: undefined,
+  CreateCategoryScreen: undefined,
 }
 
 const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
 
-export const AdminBottomTabs = () => {
+//
+export const AdminCategoryBottomTabs = () => {
   return (
     <Tab.Navigator
     initialRouteName='CategoryMenuScreen'
