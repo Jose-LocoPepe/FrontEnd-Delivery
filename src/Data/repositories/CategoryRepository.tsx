@@ -9,11 +9,11 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         console.log("Estmoas ahi");
 
         try {
-            const { data } = await ApiDelivery.get<{ success: boolean, category: Category[] }>('user/getCategory');
+            const { data } = await ApiDelivery.get<{  categories: Category[],success: boolean }>('user/getCategory');
             console.log("Data:", data);
             if (data.success) {
-                console.log("Category data:", data.category); // Add this line to log the Category data
-                return Promise.resolve(data.category);
+                console.log("Category data:", data.categories); // Add this line to log the Category data
+                return Promise.resolve(data.categories);
             } else {
                 // Handle unsuccessful response
                 return Promise.reject("Failed to fetch Category");
