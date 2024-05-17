@@ -15,7 +15,7 @@ async getProducts(): Promise<Product[]> {
         const { data } = await ApiDelivery.get<{ success: boolean, products: Product[] }>('user/getProducts');
 
         if (data.success) {
-            console.log("Products data:", data.products); // Add this line to log the products data
+             console.log("Products data:", data.products); // Add this line to log the products data
             return Promise.resolve(data.products);
         } else {
             // Handle unsuccessful response
@@ -28,8 +28,25 @@ async getProducts(): Promise<Product[]> {
 }
 
 
-async CreateProduct(): Promise<void> {
-    
+
+
+async createProduct(Product: Product): Promise<void> {
+    try {
+        console.log("Products data:", Product);
+        // Realizar una solicitud al backend para crear el producto
+        const response = await ApiDelivery.post<{ success: boolean }>('user/createProduct', Product);
+        console.log("Products data:", Product);
+
+        if (response.data.success) {
+            console.log("Product created successfully");
+        } else {
+            // Handle unsuccessful response
+            throw new Error("Failed to create product");
+        }
+    } catch (error) {
+        // Handle network errors or other issues
+        throw new Error("Failed to create product");
+    }
 }
 
 }
