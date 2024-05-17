@@ -25,4 +25,22 @@ export class UserUpdateRepositoryImpl implements UserUpdateRepository {
             return Promise.reject(apiError)
         }
     }
+
+    async changePassword(id: string, currentPassword: string, newPassword: string, session_token: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `user/${id}/password`;
+
+            const {data} = await ApiDelivery.put<ResponseAPIDelivery>(path,{currentPassword,newPassword},{
+                headers: {
+                    'Authorization': `Bearer ${session_token}`
+                }
+            });
+
+            return Promise.resolve(data);
+        } catch (error) {
+            let e = (error as AxiosError);
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
 }
