@@ -1,23 +1,28 @@
 import { useState, useEffect } from 'react';
-import { GetProductsUseCase } from '../../../../../Domain/useCases/Product/GetProductsUseCase';
+import { GetProductsAndPicturesUseCase } from '../../../../../Domain/useCases/Product/GetProductsAndPicturesUseCase';
 import { Product } from '../../../../../Domain/entities/Product';
+import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
 
 export enum SortBy {
     NAME = "NAME",
     PRICE = "PRICE"
 }
 
+export interface ProductWithPictures extends Product {
+    pictures: ProductPictures[];
+}
+
 interface ProductViewModel {
-    products: Product[];
+    products: ProductWithPictures[];
     loading: boolean;
     error: string | null;
-    fetchProducts: () => void; // Define fetchProducts function
+    fetchProducts: () => void;
     sortBy: SortBy;
     setSortBy: (sortBy: SortBy) => void;
 }
 
 export const useProductViewModel = (): ProductViewModel => {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<ProductWithPictures[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState<SortBy>(SortBy.NAME);
@@ -25,7 +30,7 @@ export const useProductViewModel = (): ProductViewModel => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const productList = await GetProductsUseCase();
+            const productList = await GetProductsAndPicturesUseCase();
             setProducts(productList);
             setLoading(false);
         } catch (error) {

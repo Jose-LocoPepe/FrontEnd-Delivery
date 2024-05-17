@@ -39,13 +39,6 @@ export const AdminProductBottomTabs = () => {
             title:"Listar",
             tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
           }}/>
-        <Tab.Screen
-          name="ProfileInfoScreen"
-          component={ProfileInfoScreen}
-          options={{
-              title: 'Perfil',
-              tabBarIcon: ({ size, color }) => <FontAwesome name="user" size={size} color={color} />
-          }}/>
     </Tab.Navigator>
   );
 }

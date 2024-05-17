@@ -1,20 +1,30 @@
 import React from "react";
-import { View, Text, Button, FlatList } from 'react-native';
+import { View, Text, Button, FlatList, Image } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
-import { useProductViewModel, SortBy } from './ViewModel'; // Import the hook
-import { Product } from '../../../../../Domain/entities/Product'; // Import Product entit
+import { useProductViewModel, SortBy } from './ViewModel';
+import { ProductWithPictures } from './ViewModel';
+import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
+
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
 
 export const ProductsListScreen = ({ navigation }: Props) => {
-    const { products, loading, fetchProducts, sortBy, setSortBy } = useProductViewModel(); // Call the hook to get products and loading state
+    const { products, loading, fetchProducts, sortBy, setSortBy } = useProductViewModel();
 
-    const renderProductItem = ({ item }: { item: Product }) => (
+    const renderProductItem = ({ item }: { item: ProductWithPictures }) => (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
             <Text>Nombre: {item.name}</Text>
             <Text>Descripcion: {item.description}</Text>
             <Text>Precio: {item.price}</Text>
             <Text>Categoria: {item.categoryid}</Text>
+            <Text>Pictures:</Text>
+             {item.pictures.length > 0 ? (
+              item.pictures.map((picture: ProductPictures) => (
+            <Text key={picture.id}>Imagen: {picture.image}</Text> // Display the imagen string as text
+    ))
+) : (
+    <Text>No pictures available</Text>
+)}
             <Text>-------------</Text>
         </View>
     );
@@ -26,8 +36,8 @@ export const ProductsListScreen = ({ navigation }: Props) => {
             </Text>
             <Button
                 title="Listar Productos"
-                onPress={fetchProducts} // Invoke the function directly
-                />
+                onPress={fetchProducts}
+            />
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <Button
                     title="Ordenar por Nombre"
@@ -45,7 +55,7 @@ export const ProductsListScreen = ({ navigation }: Props) => {
                 <FlatList
                     data={products}
                     renderItem={renderProductItem}
-                    keyExtractor={(item) => item.name}
+                    keyExtractor={(item) => item.id?.toString() || item.name}
                     style={{ marginTop: 10 }}
                 />
             )}
