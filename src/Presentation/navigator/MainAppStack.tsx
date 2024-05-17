@@ -9,6 +9,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
 import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
+import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -16,7 +17,9 @@ export type RootStackParamsList = {
     ProfileInfoScreen: undefined,
     ProfileUpdateScreen: undefined,
     AdminBottomTabs: undefined,
-    ClientBottomTabs: undefined
+    ClientBottomTabs: undefined,
+    AdminCategoryMenu: undefined,
+    AdminCategoryBottomTabs: undefined
 }
 
 
@@ -40,6 +43,7 @@ export const MainAppStack = () => {
             // This Admin
             return <>
                 <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
+                <Stack.Screen name="AdminCategoryBottomTabs" component={AdminCategoryBottomTabs}/>
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
             </>
         }
