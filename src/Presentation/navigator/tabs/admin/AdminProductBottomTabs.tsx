@@ -7,6 +7,7 @@ import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu
 import { ProductsListScreen } from '../../../screens/admin/products/list/ListProducts';
 import { ProductsCreateScreen } from '../../../screens/admin/products/create/CreateProductScreen';
 
+
 export type RootAdminBottomTabParamsList = {
   ProfileInfoScreen: undefined,
   CategoryMenuScreen: undefined,

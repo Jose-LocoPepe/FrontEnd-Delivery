@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, TextInput, Button } from 'react-native'
+import { View, Text, TextInput, Button } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
 import { useCreateProductViewModel } from './ViewModel'; // Import the hook
+import { showMessage } from 'react-native-flash-message';
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
 
@@ -11,11 +12,28 @@ export const ProductsCreateScreen = ({ navigation }: Props) => {
 
     const handleCreateProduct = async () => {
         try {
-            await createProduct();
-            // Handle successful creation, navigate or show message to the user
+            const response = await createProduct();
+            if (response) {
+                showMessage({
+                  message: 'Producto creado correctamente',
+                  type: 'success',
+                  icon: 'success',
+                });
+                navigation.goBack();
+            } else {
+                showMessage({
+                    message: 'Error al crear el producto',
+                    type: 'danger',
+                    icon: 'danger',
+                });
+            }
         } catch (error) {
             console.error("Failed to create product:", error);
-            // Handle error, show error message to the user
+            showMessage({
+                message: 'Error al crear el producto',
+                type: 'danger',
+                icon: 'danger',
+            });
         }
     };
 
@@ -46,7 +64,10 @@ export const ProductsCreateScreen = ({ navigation }: Props) => {
                     placeholder="Precio"
                     keyboardType="numeric"
                     value={newProductData.price.toString()}
-                    onChangeText={(text) => setNewProductData({ ...newProductData, price: parseFloat(text) })}
+                    onChangeText={(text) => {
+                        const price = parseFloat(text);
+                        setNewProductData({ ...newProductData, price: isNaN(price) ? 0 : Math.min(Math.max(price, 0), 999999) });
+                    }}
                 />
             </View>
             <View style={{ marginBottom: 10 }}>
@@ -55,7 +76,10 @@ export const ProductsCreateScreen = ({ navigation }: Props) => {
                     placeholder="Categoría ID"
                     keyboardType="numeric"
                     value={newProductData.categoryid.toString()}
-                    onChangeText={(text) => setNewProductData({ ...newProductData, categoryid: parseInt(text) })}
+                    onChangeText={(text) => {
+                        const categoryid = parseInt(text);
+                        setNewProductData({ ...newProductData, categoryid: isNaN(categoryid) ? 1 : categoryid });
+                    }}
                 />
             </View>
             <Button
@@ -65,5 +89,5 @@ export const ProductsCreateScreen = ({ navigation }: Props) => {
             />
             {loading && <Text>Creating...</Text>}
         </View>
-    )
-}
+    );
+};
