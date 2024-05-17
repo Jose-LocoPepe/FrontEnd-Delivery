@@ -5,7 +5,8 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../navigator/MainAppStack";
 
 //interface Props extends StackScreenProps<RootStackParamsList, 'CategoryMenuScreen'> {}
-export const CategoryMenuScreen = () => {
+interface Props extends StackScreenProps<RootStackParamsList, 'AdminCategoryBottomTabs'> {}
+export const CategoryMenuScreen = ({ navigation }: Props) => {
     //const { user, removeUserSession } = useContext (UserContext);
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
