@@ -11,6 +11,7 @@ import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
 import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
 import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
+import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScreen';
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -20,7 +21,8 @@ export type RootStackParamsList = {
     AdminBottomTabs: undefined,
     AdminProductBottomTabs: undefined,
     AdminCategoryBottomTabs: undefined,
-    ClientBottomTabs: undefined
+    ClientBottomTabs: undefined,
+    PasswordUpdateScreen: undefined,
 }
 
 
@@ -37,6 +39,7 @@ export const MainAppStack = () => {
             return <>
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
+                <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
             </>
         } else if (user.rol_id === 2) {
             // This Delivery
@@ -47,6 +50,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="AdminProductBottomTabs" component={AdminProductBottomTabs} />
                 <Stack.Screen name="AdminCategoryBottomTabs" component={AdminCategoryBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
+                <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
             </>
         }
     }

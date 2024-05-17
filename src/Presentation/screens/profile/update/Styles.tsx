@@ -54,6 +54,11 @@ const ProfileUpdateStyles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10
     },
+    formPassword: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 30
+    },
     formIcon: {
         width: 30,
         height: 30,
