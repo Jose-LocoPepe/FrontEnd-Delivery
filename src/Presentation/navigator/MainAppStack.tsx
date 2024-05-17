@@ -9,14 +9,13 @@ import LoadingScreen from '../screens/LoadingScreen';
 import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
 import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
-<<<<<<< HEAD
-import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
+
 import { CategoryCreateScreen } from '../screens/admin/category/create/CreateCategory';
 
-=======
+
 import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
 import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
->>>>>>> dcd623f108e099e0d387c38034f3e4b85ad5a42c
+
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -24,14 +23,9 @@ export type RootStackParamsList = {
     ProfileInfoScreen: undefined,
     ProfileUpdateScreen: undefined,
     AdminBottomTabs: undefined,
-<<<<<<< HEAD
-    
-=======
     AdminProductBottomTabs: undefined,
     AdminCategoryBottomTabs: undefined,
->>>>>>> dcd623f108e099e0d387c38034f3e4b85ad5a42c
     ClientBottomTabs: undefined
-    AdminCategoryBottomTabs: undefined,
     AdminCategoryMenu: undefined,
     CategoryCreateScreen: undefined,
 
@@ -55,16 +49,12 @@ export const MainAppStack = () => {
             // This Delivery
         } else {
             // This Admin
-            return <>
-<<<<<<< HEAD
-                <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />  
-=======
+            return <> 
+
                 <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
                 <Stack.Screen name="AdminProductBottomTabs" component={AdminProductBottomTabs} />
->>>>>>> dcd623f108e099e0d387c38034f3e4b85ad5a42c
                 <Stack.Screen name="AdminCategoryBottomTabs" component={AdminCategoryBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
-                <Stack.Screen name="CategoryCreateScreen" component={CategoryCreateScreen} />
                 
                 
             </>

@@ -8,14 +8,11 @@ import { RoundedButton } from "../../../components/RoundedButton";
 import { StyleSheet } from 'react-native';
 
 
-interface Props extends StackScreenProps<RootStackParamsList, 'AdminCategoryMenu'> {} 
-//interface Props extends StackScreenProps<RootStackParamsList, 'CategoryMenuScreen'> {}
-<<<<<<< HEAD
-export const CategoryMenuScreen = ({navigation, route}:Props) => {
-=======
+
+
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminCategoryBottomTabs'> {}
 export const CategoryMenuScreen = ({ navigation }: Props) => {
->>>>>>> dcd623f108e099e0d387c38034f3e4b85ad5a42c
+
     //const { user, removeUserSession } = useContext (UserContext);
     return (
         <View style={styles.container}>
@@ -30,7 +27,7 @@ export const CategoryMenuScreen = ({ navigation }: Props) => {
                 <RoundedButton
                     text='Agregar'
                     
-                    onPress={() => navigation.navigate('CategoryCreateScreen')}
+                    onPress={() => navigation.navigate('AdminCategoryBottomTabs')}
 
                 />
             </View>
