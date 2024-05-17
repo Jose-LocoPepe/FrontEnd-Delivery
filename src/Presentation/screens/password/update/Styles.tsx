@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const ProfileUpdateStyles = StyleSheet.create({
+const PasswordUpdateStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#000',
@@ -53,11 +53,6 @@ const ProfileUpdateStyles = StyleSheet.create({
         fontStyle: 'italic',
         fontWeight: 'bold',
         marginLeft: 10
-    },
-    formPassword: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 30
     },
     formIcon: {
         width: 30,
@@ -112,4 +107,4 @@ const ProfileUpdateStyles = StyleSheet.create({
     }
 });
 
-export default ProfileUpdateStyles;
+export default PasswordUpdateStyles;
