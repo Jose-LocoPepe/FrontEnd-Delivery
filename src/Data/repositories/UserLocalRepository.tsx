@@ -4,7 +4,7 @@ import { UserLocalRepository } from '../../Domain/repositories/UserLocalReposito
 import { LocalStorage } from '../sources/local/LocalStorage';
 import { ApiDelivery } from '../sources/remote/api/ApiDelivery';
 import { ResponseVerifyTokenAPIDelivery } from '../sources/remote/api/models/ResponseVerifyTokenApiDelivery';
-import { Product } from '../../Domain/entities/Product';
+
 
 export class UserLocalRepositoryImpl implements UserLocalRepository {
 
@@ -43,20 +43,6 @@ export class UserLocalRepositoryImpl implements UserLocalRepository {
         }
 
     }
-    async getProducts(): Promise<Product[]> {
-        try {
-            const { data } = await ApiDelivery.get<{ success: boolean, products: Product[] }>('getProducts');
     
-            if (data.success) {
-                return Promise.resolve(data.products);
-            } else {
-                // Handle unsuccessful response
-                return Promise.reject("Failed to fetch products");
-            }
-        } catch (error) {
-            // Handle network errors or other issues
-            return Promise.reject("Failed to fetch products");
-        }
-    }
 
 }
