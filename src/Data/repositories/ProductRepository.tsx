@@ -27,7 +27,22 @@ async getProducts(): Promise<Product[]> {
     }
 }
 
+async getPictures(): Promise<Product[]> {
+    try {
+        const { data } = await ApiDelivery.get<{ success: boolean, products: Product[] }>('user/getPictures');
 
+        if (data.success) {
+             console.log("Products data:", data.products); // Add this line to log the products data
+            return Promise.resolve(data.products);
+        } else {
+            // Handle unsuccessful response
+            return Promise.reject("Failed to fetch products");
+        }
+    } catch (error) {
+        // Handle network errors or other issues
+        return Promise.reject("Failed to fetch products");
+    }
+}
 
 
 async createProduct(Product: Product): Promise<boolean> {
