@@ -9,8 +9,13 @@ import LoadingScreen from '../screens/LoadingScreen';
 import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
 import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
+
+import { CategoryCreateScreen } from '../screens/admin/category/create/CreateCategory';
+
+
 import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
 import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
+
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -21,11 +26,13 @@ export type RootStackParamsList = {
     AdminProductBottomTabs: undefined,
     AdminCategoryBottomTabs: undefined,
     ClientBottomTabs: undefined
+    AdminCategoryMenu: undefined,
+    CategoryCreateScreen: undefined,
+
 }
 
 
 const Stack = createStackNavigator<RootStackParamsList>();
-
 export const MainAppStack = () => {
     const { user, status } = useContext(UserContext);
 
@@ -42,11 +49,14 @@ export const MainAppStack = () => {
             // This Delivery
         } else {
             // This Admin
-            return <>
+            return <> 
+
                 <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
                 <Stack.Screen name="AdminProductBottomTabs" component={AdminProductBottomTabs} />
                 <Stack.Screen name="AdminCategoryBottomTabs" component={AdminCategoryBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
+                
+                
             </>
         }
     }
@@ -71,4 +81,3 @@ export const MainAppStack = () => {
             </Stack.Navigator>
     );
 }
-
