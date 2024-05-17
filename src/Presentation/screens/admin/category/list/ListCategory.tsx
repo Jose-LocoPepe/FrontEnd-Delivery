@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, ActivityIndicator, ToastAndroid } 
 //import styles from './Styles';
 import { CustomTextInput } from "../../../../components/CustomTextInput";
 
-export const AdminCategoryListScreen = () => {
+export const AdminCategoryScreen = () => {
     return (
 
         
