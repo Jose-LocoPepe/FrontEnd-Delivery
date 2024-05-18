@@ -24,15 +24,24 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         }
     }
 
-    async createCategory(category: Category): Promise<boolean>{
-        console.log("Est1111111");
-
+    async createCategory(category: Category): Promise<boolean> {
         try {
-            await ApiDelivery.post('user/createCategory', category);
-            return true;
+            console.log("Category data:", category);
+            // Realizar una solicitud al backend para crear la categoría
+            const response = await ApiDelivery.post<{ success: boolean }>('user/createCategory', category);
+            console.log("Category data:", category);
+    
+            if (response.data.success) {
+                console.log("Category created successfully");
+                return true;
+            } else {
+                // Handle unsuccessful response
+                throw new Error("Failed to create category");
+            }
         } catch (error) {
-            console.error("Error creating category:", error);
-            return false;
+            // Handle network errors or other issues
+            throw new Error("Failed to create category");
         }
     }
+    
 }
