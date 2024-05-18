@@ -42,6 +42,9 @@ export const AdminBottomTabs = () => {
               title: 'Perfil',
               tabBarIcon: ({ size, color }) => <FontAwesome name="user" size={size} color={color} />
           }}/>
+
+
+          
     </Tab.Navigator>
   );
 }
