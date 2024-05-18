@@ -20,11 +20,14 @@ export const useCategoryViewModel = (): CategoryViewModel => {
             const categoryList = await GetCategorysUseCase();
             if (Array.isArray(categoryList)) {
                 setCategory(categoryList);
+                console.log("Fetched categories:", categoryList); // Log fetched categories
             } else {
                 setError("Invalid data format");
+                console.error("Invalid data format");
             }
         } catch (error) {
             setError("Failed to fetch category");
+            console.error("Failed to fetch category:", error);
         } finally {
             setLoading(false);
         }
