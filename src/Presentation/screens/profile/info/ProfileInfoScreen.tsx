@@ -79,6 +79,14 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                     text="Actualizar Perfil"
                     onPress={() => navigation.navigate('ProfileUpdateScreen')}
                 />
+                <View>
+                    <Text style={{ fontWeight: '700' }}>¿Quieres cambiar tu contraseña?</Text>
+                    <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => navigation.navigate('PasswordUpdateScreen')}>
+                        <Text style={styles.changePasswordText}>Cambiar contraseña</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )

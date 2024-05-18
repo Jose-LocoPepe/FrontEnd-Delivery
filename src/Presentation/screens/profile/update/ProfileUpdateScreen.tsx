@@ -167,14 +167,7 @@ const ProfileUpdateScreen = ({ navigation }: Props) => {
                 />
               )
             }
-            <View style={styles.formPassword}>
-              <Text style={{ fontWeight: '700' }}>¿Quieres cambiar tu contraseña?</Text>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => navigation.navigate('PasswordUpdateScreen')}>
-                <Text style={styles.formRegisterText}>Cambiar contraseña</Text>
-              </TouchableOpacity>
-            </View>
+            
           </View>
         </ScrollView>
       </View>
