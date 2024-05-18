@@ -5,6 +5,7 @@ import { RootStackParamsList } from "../../../../navigator/MainAppStack";
 import { useProductViewModel, SortBy } from './ViewModel';
 import { ProductWithPictures } from './ViewModel';
 import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
+import { RoundedButton } from "../../../../components/RoundedButton";
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
 
@@ -34,8 +35,8 @@ export const ProductsListScreen = ({ navigation }: Props) => {
             <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
                 Menu Listado Productos
             </Text>
-            <Button
-                title="Listar Productos"
+            <RoundedButton
+                text="Listar Productos"
                 onPress={fetchProducts}
             />
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>

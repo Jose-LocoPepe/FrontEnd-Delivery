@@ -6,7 +6,7 @@ const ApiDelivery = axios.create({
 
 
 
-    baseURL: 'http://192.168.0.2:3312/api',
+    baseURL: 'http://192.168.0.12:3307/api',
 
   
     headers: {
