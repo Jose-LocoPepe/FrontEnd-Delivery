@@ -26,6 +26,7 @@ export type RootStackParamsList = {
     AdminBottomTabs: undefined,
     AdminProductBottomTabs: undefined,
     AdminCategoryBottomTabs: undefined,
+    CreateProductScreen: undefined,
 
     ClientBottomTabs: undefined
     AdminCategoryMenu: undefined,
