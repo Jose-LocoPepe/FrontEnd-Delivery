@@ -25,7 +25,7 @@ export const CategoryMenuScreen = ({ navigation }: Props) => {
             
             <View style={styles.buttonContainer}>
                 <RoundedButton
-                    text='Agregar'
+                    text='Lista'
                     
                     onPress={() => navigation.navigate('AdminCategoryBottomTabs')}
 

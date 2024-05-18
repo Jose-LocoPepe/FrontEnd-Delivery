@@ -7,7 +7,7 @@ import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu
 
 
 import { CategoriesListScreen } from '../../../screens/admin/category/list/ListCategory';
-import { CategoryCreateScreen } from '../../../screens/admin/category/create/CreateCategory';
+import { CategoriesCreateScreen } from '../../../screens/admin/category/create/CreateCategory';
 
 
 export type RootAdminBottomTabParamsList = {
@@ -15,7 +15,7 @@ export type RootAdminBottomTabParamsList = {
   CategoryMenuScreen: undefined,
   ProductsMenuScreen: undefined,
   
-  CreateCategoryScreen: undefined,
+  CategoriesCreateScreen: undefined,
   CategoriesListScreen: undefined,
 
 }
@@ -44,20 +44,14 @@ export const AdminCategoryBottomTabs = () => {
         <Tab.Screen
 
           name="ProductsMenuScreen"
-          component={ProductsMenuScreen}
+          component={CategoriesCreateScreen}
           options={{
-            title:"Productos",
+            title:"Agregar",
 
             tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
           }}/>
           
-        <Tab.Screen
-          name="ProfileInfoScreen"
-          component={ProfileInfoScreen}
-          options={{
-              title: 'Perfil',
-              tabBarIcon: ({ size, color }) => <FontAwesome name="user" size={size} color={color} />
-          }}/>
+        
 
 
     </Tab.Navigator>

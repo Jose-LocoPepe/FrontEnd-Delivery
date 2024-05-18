@@ -1,7 +1,9 @@
-import React from "react";
+// ListCategory.tsx
+
+import React from 'react';
 import { View, Text, Button, FlatList } from 'react-native';
-import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamsList } from "../../../../navigator/MainAppStack";
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamsList } from '../../../../navigator/MainAppStack';
 import { useCategoryViewModel } from './ViewModel'; // Import the hook
 import { Category } from '../../../../../Domain/entities/Category'; // Import Category entity
 
@@ -16,6 +18,10 @@ export const CategoriesListScreen = ({ navigation }: Props) => {
             <Text>Descripción: {item.description}</Text>
         </View>
     );
+
+    const handleNavigateToCreateCategory = () => {
+        navigation.navigate('CategoryCreateScreen'); // Navigate to the create category screen
+    };
 
     return (
         <View style={{ flex: 1, backgroundColor: '#F5FCFF' }}>
@@ -39,6 +45,12 @@ export const CategoriesListScreen = ({ navigation }: Props) => {
             {!loading && Array.isArray(category) && category.length === 0 && (
                 <Text style={{ marginTop: 20 }}>No hay categorías disponibles.</Text>
             )}
+
+            {/* Botón para ir a la pantalla de creación de categorías */}
+            <Button
+                title="Agregar Categoría"
+                onPress={() => navigation.navigate('AdminCategoryBottomTabs')}
+            />
         </View>
     );
 };
