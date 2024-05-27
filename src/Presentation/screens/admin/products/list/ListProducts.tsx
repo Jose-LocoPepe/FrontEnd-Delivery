@@ -23,7 +23,7 @@ export const ProductsListScreen = ({ navigation }: Props) => {
             <Text>Pictures:</Text>
              {item.pictures.length > 0 ? (
               item.pictures.map((picture: ProductPictures) => (
-            <Text key={picture.id}>Imagen: {picture.image}</Text> // Display the imagen string as text
+            <Text key={picture.id}>image: {picture.image}</Text> // Display the image string as text
     ))
 ) : (
     <Text>No pictures available</Text>

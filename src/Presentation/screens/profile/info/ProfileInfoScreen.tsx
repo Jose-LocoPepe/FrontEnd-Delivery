@@ -36,7 +36,7 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
 
             <View style={styles.logoContainer}>
                 <Image
-                    source={{ uri: user?.imagen
+                    source={{ uri: user?.image
                      }}
                     style={styles.logoImage}
                 />
@@ -50,7 +50,7 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                     />
                     <View style={styles.formContent}>
                         <Text>Nombres</Text>
-                        <Text>{user?.name} {user?.lastname}</Text>
+                        <Text>{user?.name} {user?.lastName}</Text>
                     </View>
                 </View>
 
