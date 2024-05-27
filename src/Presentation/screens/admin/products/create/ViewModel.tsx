@@ -26,8 +26,7 @@ interface ResponseErrorData {
 }
 const validationCreateProductSchema = yup.object().shape({
     name: yup.string().required('El nombre del producto es requerido'),
-    description: yup.string().required('La descripción del producto es requerida'),
-    price: yup.number().required('El precio del producto es requerido')
+    description: yup.string().required('La descripción del producto es requerida')
 });
 const CreateProductViewModel = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -78,17 +77,17 @@ const CreateProductViewModel = () => {
             }
         }
     }
-    const isValidForm = async(): Promise<boolean> => {
+
+    const isValidForm = async (): Promise<boolean> => {
         try {
             await validationCreateProductSchema.validate(values, { abortEarly: false });
             return true;
         } catch (error) {
-            const errors: Record<string,string> = {};
-            errors.inner.forEach((err) => {
+            const errors = {};
+            error.inner.forEach((err) => {
                 errors[err.path] = err.message;
             });
             setErrorMessages(errors);
-            console.log(errorMessages);
             return false;
         }
     }

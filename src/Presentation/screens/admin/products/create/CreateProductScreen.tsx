@@ -8,6 +8,7 @@ import { showMessage } from 'react-native-flash-message';
 import { CustomTextInput } from "../../../../components/CustomTextInput";
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { FlatList } from "react-native-gesture-handler";
+import { ImageButton } from "../../../../components/ImageButton";
 
 interface Props extends StackScreenProps<RootStackParamsList, 'CreateProductScreen'> {}
 
@@ -23,7 +24,13 @@ export const ProductsCreateScreen = ({ navigation, route }: Props) => {
             <Image
                 style={styles.imageBackground}
                 source={require('../../../../../../assets/comidas-rapidas.jpeg')}/>
-        
+        <View style={{ top: '1%', left: '3%', position: 'absolute', marginTop: 30 }}>
+        <ImageButton
+          text='back'
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+
             <View style={{...styles.form, height: '55%'}}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
                     Agregar Producto

@@ -64,7 +64,7 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                         <Text>{user?.email}</Text>
                     </View>
                 </View>
-                <View style={{ ...styles.formInfo, marginTop: 20, marginBottom: 50 }}>
+                <View style={{ ...styles.formInfo, marginTop: 20, marginBottom: 20 }}>
                     <Image
                         source={require('../../../../../assets/phone.png')}
                         style={styles.formIcon}
@@ -79,7 +79,7 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                     text="Actualizar Perfil"
                     onPress={() => navigation.navigate('ProfileUpdateScreen')}
                 />
-                <View>
+                <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
                     <Text style={{ fontWeight: '700' }}>¿Quieres cambiar tu contraseña?</Text>
                     <TouchableOpacity
                         activeOpacity={0.6}

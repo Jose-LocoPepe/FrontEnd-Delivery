@@ -3,26 +3,60 @@ import { View, Text,Image, Pressable, Button } from 'react-native'
 import { UserContext } from "../../../context/auth/UserContext";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../navigator/MainAppStack";
+import { RoundedButton } from "../../../components/RoundedButton";
+import { StyleSheet } from 'react-native';
 
 //interface Props extends StackScreenProps<RootStackParamsList, 'CategoryMenuScreen'> {}
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
 
 export const ProductsMenuScreen = ({ navigation }: Props) => {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                Menu Administrador Productos
+        <View style={styles.container}>
+            <Text style={styles.title}>
+                Productos
             </Text>
-            <Button
-                title="Menu Productos"
-                onPress={() => {
-                    // Add your navigation or functionality here
-                    navigation.navigate('AdminProductBottomTabs');
-                }}
-            />
-            <Text style={{ textAlign: 'center', margin: 10 }}>
-                This is the profile screen.
+            <Text style={styles.subtitle}>
+                Accede a las opciones de Productos:
             </Text>
+            
+                <RoundedButton
+                    text='Menu'
+                    
+                    onPress={() => navigation.navigate('AdminProductBottomTabs')}
+        />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+        paddingHorizontal: 20,
+
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 10,
+
+    },
+    subtitle: {
+        textAlign: 'center',
+        margin: 10,
+    },
+    buttonContainer: {
+        position: 'absolute',
+        top: 45,
+        right: 20,
+    },
+    buttonImage: {
+        width: 36,
+        height: 36,
+    },
+
+});
+export default ProductsMenuScreen;

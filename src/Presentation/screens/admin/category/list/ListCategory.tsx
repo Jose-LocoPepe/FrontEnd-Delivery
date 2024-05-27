@@ -4,6 +4,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamsList } from '../../../../navigator/MainAppStack';
 import { useCategoryViewModel } from './ViewModel'; // Import the hook
 import { Category } from '../../../../../Domain/entities/Category'; // Import Category entity
+import { RoundedButton } from '../../../../components/RoundedButton';
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminCategoryBottomTabs'> {}
 
@@ -22,8 +23,8 @@ export const CategoriesListScreen = ({ navigation }: Props) => {
             <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
                 Menú Listado de Categorías
             </Text>
-            <Button
-                title="Actualizar"
+            <RoundedButton
+                text="Actualizar"
                 onPress={fetchCategory} // Invoke the function directly
             />
             {loading && <Text>Loading...</Text>}
