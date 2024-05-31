@@ -2,7 +2,7 @@
 export interface ProductPictures {
 
     id?: string;
-    imagen: string;
+    image: string;
     productid: number;
 
 }

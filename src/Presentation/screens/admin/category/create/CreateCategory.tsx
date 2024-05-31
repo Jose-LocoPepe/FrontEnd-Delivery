@@ -1,69 +1,68 @@
 import React from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import styles from './Styles';
+
+import { View, Text,Image, TextInput, Button, ActivityIndicator } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamsList } from '../../../../navigator/MainAppStack';
-import { useCreateCategoryViewModel } from './ViewModel'; // Import the hook
+import  CreateCategoryViewModel  from './ViewModel'; // Import the hook
 import { showMessage } from 'react-native-flash-message';
+import { CustomTextInput } from '../../../../components/CustomTextInput';
+import { RoundedButton } from '../../../../components/RoundedButton';
+import { ImageButton } from '../../../../components/ImageButton';
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminCategoryBottomTabs'> {}
 
 export const CategoriesCreateScreen = ({ navigation }: Props) => {
-    const { loading, createCategory, newCategoryData, setNewCategoryData } = useCreateCategoryViewModel(); // Call the hook to get loading state and createCategory function
-
-    const handleCreateCategory = async () => {
-        try {
-            const response = await createCategory();
-            if (response) {
-                showMessage({
-                    message: 'Categoría creada correctamente',
-                    type: 'success',
-                    icon: 'success',
-                });
-                navigation.goBack();
-            } else {
-                showMessage({
-                    message: 'Error al crear la categoría',
-                    type: 'danger',
-                    icon: 'danger',
-                });
-            }
-        } catch (error) {
-            console.error('Failed to create category:', error);
-            showMessage({
-                message: 'Error al crear la categoría',
-                type: 'danger',
-                icon: 'danger',
-            });
-        }
-    };
+    const { 
+        name, description,
+        loading, createCategory, onChange, errorMessages, errorsResponse } = CreateCategoryViewModel(); // Call the hook to get loading state and createCategory function
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                Agregar Categoría
-            </Text>
-            <View style={{ marginBottom: 10 }}>
-                <Text>Nombre:</Text>
-                <TextInput
-                    placeholder="Nombre"
-                    value={newCategoryData.name}
-                    onChangeText={(text) => setNewCategoryData({ ...newCategoryData, name: text })}
-                />
-            </View>
-            <View style={{ marginBottom: 10 }}>
-                <Text>Descripción:</Text>
-                <TextInput
-                    placeholder="Descripción"
-                    value={newCategoryData.description}
-                    onChangeText={(text) => setNewCategoryData({ ...newCategoryData, description: text })}
-                />
-            </View>
-            <Button
-                title="Agregar Categoría"
-                onPress={handleCreateCategory} // Invoke the function to create a category
-                disabled={loading} // Disable the button while loading
+        <View style={styles.container}>
+            <Image
+                style={styles.imageBackground}
+                source={require('../../../../../../assets/comidas-rapidas.jpeg')}/>
+        <View style={{ top: '1%', left: '3%', position: 'absolute', marginTop: 30 }}>
+        <ImageButton
+          text='back'
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+
+            <View style={{...styles.form, height: '55%'}}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
+                    Agregar Categoria
+                </Text>
+            <CustomTextInput
+              image= { require('../../../../../../assets/pedido.png')}
+              placeholder='Nombre'
+              keyboardType='default'
+              property='name'
+              onChangeText={onChange}
+              editable={(loading)? false : true}
+              value={name}/>
+              {
+                errorMessages.name && <Text style={styles.errorText}>{errorMessages.name}</Text>
+              }
+            <CustomTextInput
+              image= { require('../../../../../../assets/pedido.png')}
+              placeholder='Descripcion'
+              keyboardType='default'
+              property='description'
+              onChangeText={onChange}
+              editable={(loading)? false : true}
+              value={description}/>
+                {
+                    errorMessages.description && <Text style={styles.errorText}>{errorMessages.description}</Text>
+                }
+            <View style={{marginTop: 20}}/>
+            <RoundedButton
+                text="Agregar Categoría"
+                onPress={createCategory} // Invoke the function to create a category
             />
-            {loading && <Text>Creating...</Text>}
+            </View>
+            {loading && (
+            <ActivityIndicator style={styles.loading} size="large" color="red" />)}
         </View>
     );
 };

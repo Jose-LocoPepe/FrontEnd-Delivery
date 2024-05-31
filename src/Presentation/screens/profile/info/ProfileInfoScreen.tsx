@@ -36,7 +36,7 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
 
             <View style={styles.logoContainer}>
                 <Image
-                    source={{ uri: user?.imagen
+                    source={{ uri: user?.image
                      }}
                     style={styles.logoImage}
                 />
@@ -50,7 +50,7 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                     />
                     <View style={styles.formContent}>
                         <Text>Nombres</Text>
-                        <Text>{user?.name} {user?.lastname}</Text>
+                        <Text>{user?.name} {user?.lastName}</Text>
                     </View>
                 </View>
 
@@ -64,7 +64,7 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                         <Text>{user?.email}</Text>
                     </View>
                 </View>
-                <View style={{ ...styles.formInfo, marginTop: 20, marginBottom: 50 }}>
+                <View style={{ ...styles.formInfo, marginTop: 20, marginBottom: 20 }}>
                     <Image
                         source={require('../../../../../assets/phone.png')}
                         style={styles.formIcon}
@@ -79,6 +79,14 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                     text="Actualizar Perfil"
                     onPress={() => navigation.navigate('ProfileUpdateScreen')}
                 />
+                <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                    <Text style={{ fontWeight: '700' }}>¿Quieres cambiar tu contraseña?</Text>
+                    <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => navigation.navigate('PasswordUpdateScreen')}>
+                        <Text style={styles.changePasswordText}>Cambiar contraseña</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )

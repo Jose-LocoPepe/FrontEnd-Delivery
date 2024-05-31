@@ -40,6 +40,14 @@ const ProfileInfoStyles = StyleSheet.create({
         fontSize: 12,
         color: 'gray'
     },
+    changePasswordText: {
+        borderBottomColor: 'orange',
+        borderBottomWidth: 1,
+        color: 'orange',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginLeft: 10
+    },
     logoContainer: {
         position: 'absolute',
         alignSelf: 'center',

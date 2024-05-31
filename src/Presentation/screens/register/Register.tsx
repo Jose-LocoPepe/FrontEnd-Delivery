@@ -19,14 +19,14 @@ export const RegisterScreen = ({navigation, route}:Props) => {
 
     const {
         name,
-        lastname,
+        lastName,
         email,
         phone,
         password,
         confirmPassword,
         onChange,
         pickImage,
-        imagen,
+        image,
         takePhoto,
         register,
         errorMessages,
@@ -52,15 +52,15 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                 <TouchableOpacity
                     onPress={() => setModalVisible(true)}>
                     {
-                        (imagen == '')
+                        (image == '')
                             ?
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image
                                     style={styles.logo}
                                     source={require('../../../../assets/user.png')}/>
-                                <Text style={styles.logoText}>Seleccione una imagen</Text>
+                                <Text style={styles.logoText}>Seleccione una image</Text>
                                 {
-                                    errorMessages.imagen && (
+                                    errorMessages.image && (
                                         <Text
                                             style={{
                                                 ...styles.errorText,
@@ -72,7 +72,7 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                                                 marginVertical: 12,
                                                 paddingVertical: 8,
                                                 paddingHorizontal: 12,}}>
-                                            {errorMessages.imagen}
+                                            {errorMessages.image}
                                         </Text>
                                     )
                                 }
@@ -80,7 +80,7 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                             :
                             <Image
                                 style={styles.logo}
-                                source={{ uri: imagen }}/>
+                                source={{ uri: image }}/>
                     }
                 </TouchableOpacity>
             </View>
@@ -104,10 +104,10 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                         placeholder='Apellido'
                         keyboardType='default'
                         image={require('../../../../assets/user.png')}
-                        property='lastname'
+                        property='lastName'
                         onChangeText={onChange}
                         editable={(loading)? false : true}
-                        value={lastname}/>
+                        value={lastName}/>
                     {errorMessages.lastName && <Text style={styles.errorText}>{errorMessages.lastName}</Text>}
 
                     <CustomTextInput 

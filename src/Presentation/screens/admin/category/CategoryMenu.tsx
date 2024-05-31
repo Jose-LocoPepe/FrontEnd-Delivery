@@ -20,17 +20,14 @@ export const CategoryMenuScreen = ({ navigation }: Props) => {
                 Categoria
             </Text>
             <Text style={styles.subtitle}>
-                This is the profile screen.
+                Accede a las opciones de Categoria:
             </Text>
             
-            <View style={styles.buttonContainer}>
                 <RoundedButton
-                    text='Lista'
+                    text='Menu'
                     
                     onPress={() => navigation.navigate('AdminCategoryBottomTabs')}
-
-                />
-            </View>
+        />
         </View>
     )
 }
