@@ -1,69 +1,51 @@
 import React from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, Button, FlatList } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamsList } from '../../../../navigator/MainAppStack';
-import { useCreateCategoryViewModel } from './ViewModel'; // Import the hook
-import { showMessage } from 'react-native-flash-message';
+import { useDeleteCategoryViewModel } from './ViewModel'; // Import the hook
+import { Category } from '../../../../../Domain/entities/Category'; // Import Category entity
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminCategoryBottomTabs'> {}
 
-export const CategoriesEliminateScreen = ({ navigation }: Props) => {
-    const { loading, createCategory, newCategoryData, setNewCategoryData } = useCreateCategoryViewModel(); // Call the hook to get loading state and createCategory function
+export const CategoriesDeleteScreen = ({ navigation }: Props) => {
+    const { categories, loading, fetchCategories, deleteCategory, error } = useDeleteCategoryViewModel(); // Call the hook to get categories and loading state
 
-    const handleCreateCategory = async () => {
-        try {
-            const response = await createCategory();
-            if (response) {
-                showMessage({
-                    message: 'Categoría creada correctamente',
-                    type: 'success',
-                    icon: 'success',
-                });
-                navigation.goBack();
-            } else {
-                showMessage({
-                    message: 'Error al crear la categoría',
-                    type: 'danger',
-                    icon: 'danger',
-                });
-            }
-        } catch (error) {
-            console.error('Failed to create category:', error);
-            showMessage({
-                message: 'Error al crear la categoría',
-                type: 'danger',
-                icon: 'danger',
-            });
-        }
-    };
-
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                Agregar Categoría
-            </Text>
-            <View style={{ marginBottom: 10 }}>
-                <Text>Nombre:</Text>
-                <TextInput
-                    placeholder="Nombre"
-                    value={newCategoryData.name}
-                    onChangeText={(text) => setNewCategoryData({ ...newCategoryData, name: text })}
-                />
-            </View>
-            <View style={{ marginBottom: 10 }}>
-                <Text>Descripción:</Text>
-                <TextInput
-                    placeholder="Descripción"
-                    value={newCategoryData.description}
-                    onChangeText={(text) => setNewCategoryData({ ...newCategoryData, description: text })}
-                />
+    const renderCategoryItem = ({ item }: { item: Category }) => (
+        <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View>
+                <Text>Nombre: {item.name}</Text>
+                <Text>Descripción: {item.description}</Text>
             </View>
             <Button
-                title="Agregar Categoría"
-                onPress={handleCreateCategory} // Invoke the function to create a category
-                disabled={loading} // Disable the button while loading
+                title="Eliminar"
+                onPress={() => deleteCategory(item.id!)} // Invoke the delete function with category id
+                color="red"
             />
-            {loading && <Text>Creating...</Text>}
+        </View>
+    );
+
+    return (
+        <View style={{ flex: 1, backgroundColor: '#F5FCFF', paddingTop: 75, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
+                Eliminar Categorías
+            </Text>
+            <Button
+                title="Actualizar"
+                onPress={fetchCategories} // Invoke the function directly
+            />
+            {loading && <Text>Loading...</Text>}
+            {!loading && error && <Text>{error}</Text>}
+            {!loading && Array.isArray(categories) && categories.length > 0 && (
+                <FlatList
+                    data={categories}
+                    renderItem={renderCategoryItem}
+                    keyExtractor={(item) => item.id?.toString() ?? item.name}
+                    style={{ marginTop: 10 }}
+                />
+            )}
+            {!loading && Array.isArray(categories) && categories.length === 0 && (
+                <Text style={{ marginTop: 20 }}>No hay categorías disponibles.</Text>
+            )}
         </View>
     );
 };

@@ -1,35 +1,59 @@
-import { useState, Dispatch, SetStateAction } from 'react';
-import { CreateCategoryUseCase } from '../../../../../Domain/useCases/Category/CreateCategoryUseCase';
+import { useState, useEffect } from 'react';
+import { GetCategorysUseCase } from '../../../../../Domain/useCases/Category/GetCategoryUseCase';
+import { deleteCategoryUseCase } from '../../../../../Domain/useCases/Category/DeleteCategoryUseCase';
 import { Category } from '../../../../../Domain/entities/Category';
 
-interface CreateCategoryViewModel {
+interface DeleteCategoryViewModel {
+    categories: Category[];
     loading: boolean;
     error: string | null;
-    createCategory: () => Promise<boolean>; // Define createCategory function
-    newCategoryData: Category; // Category data to be input by the user
-    setNewCategoryData: Dispatch<SetStateAction<Category>>; // Adjust the type here
+    fetchCategories: () => void;
+    deleteCategory: (categoryId: string) => void;
 }
 
-export const useCreateCategoryViewModel = (): CreateCategoryViewModel => {
-    const [loading, setLoading] = useState<boolean>(false);
+export const useDeleteCategoryViewModel = (): DeleteCategoryViewModel => {
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [newCategoryData, setNewCategoryData] = useState<Category>({
-        name: "",
-        description: ""
-    });
 
-    const createCategory = async (): Promise<boolean> => {
+    const fetchCategories = async () => {
         try {
             setLoading(true);
-            await CreateCategoryUseCase(newCategoryData);
-            setLoading(false);
-            return true;
+            const categoryList = await GetCategorysUseCase();
+            if (Array.isArray(categoryList)) {
+                setCategories(categoryList);
+            } else {
+                setError("Invalid data format");
+            }
         } catch (error) {
-            setError("Failed to create category");
+            setError("Failed to fetch categories");
+            console.error("Failed to fetch categories:", error);
+        } finally {
             setLoading(false);
-            return false;
         }
     };
 
-    return { loading, error, createCategory, newCategoryData, setNewCategoryData };
+    const deleteCategory = async (categoryId: string) => {
+        try {
+            setLoading(true);
+            const categoryToDelete = categories.find(category => category.id === categoryId);
+            if (categoryToDelete) {
+                await deleteCategoryUseCase(categoryToDelete);
+                fetchCategories(); // Refresh the categories after deletion
+            } else {
+                setError("Category not found");
+            }
+        } catch (error) {
+            setError("Failed to delete category");
+            console.error("Failed to delete category:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    return { categories, loading, error, fetchCategories, deleteCategory };
 };

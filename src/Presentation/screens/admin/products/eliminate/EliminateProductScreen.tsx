@@ -11,7 +11,7 @@ import { RoundedButton } from "../../../../components/RoundedButton";
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
 
-export const ProductsListScreen = ({ navigation }: Props) => {
+export const ProductsEliminateScreen = ({ navigation }: Props) => {
     const { products, loading, fetchProducts, deleteProduct, sortBy, setSortBy } = useProductViewModel();
 
     const renderProductItem = ({ item }: { item: ProductWithPictures }) => (

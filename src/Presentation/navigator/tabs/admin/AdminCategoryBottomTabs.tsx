@@ -8,7 +8,7 @@ import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu
 
 import { CategoriesListScreen } from '../../../screens/admin/category/list/ListCategory';
 import { CategoriesCreateScreen } from '../../../screens/admin/category/create/CreateCategory';
-import { CategoriesEliminateScreen } from '../../../screens/admin/category/eliminate/EliminateCategory';
+import { CategoriesDeleteScreen } from '../../../screens/admin/category/eliminate/EliminateCategory';
 
 
 export type RootAdminBottomTabParamsList = {
@@ -18,7 +18,7 @@ export type RootAdminBottomTabParamsList = {
   
   CategoriesCreateScreen: undefined,
   CategoriesListScreen: undefined,
-  CategoriesEliminateScreen: undefined,
+  CategoriesDeleteScreen: undefined,
 
 }
 
@@ -55,7 +55,7 @@ export const AdminCategoryBottomTabs = () => {
         <Tab.Screen
 
           name="ProductsDeleteScreen"
-          component={CategoriesEliminateScreen}
+          component={CategoriesDeleteScreen}
           options={{
             title:"Eliminar",
 
