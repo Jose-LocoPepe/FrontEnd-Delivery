@@ -43,5 +43,24 @@ export class CategoryRepositoryImpl implements CategoryRepository {
             throw new Error("Failed to create category");
         }
     }
+    async deleteCategory(category: Category): Promise<boolean> {
+        try {
+            console.log("Category data:", category);
+            // Realizar una solicitud al backend para crear la categoría
+            const response = await ApiDelivery.post<{ success: boolean }>('user/deleteCategory', category);
+            console.log("Category data:", category);
+    
+            if (response.data.success) {
+                console.log("Category deleted successfully");
+                return true;
+            } else {
+                // Handle unsuccessful response
+                throw new Error("Failed to delete category");
+            }
+        } catch (error) {
+            // Handle network errors or other issues
+            throw new Error("Failed to delete category");
+        }
+    }
     
 }

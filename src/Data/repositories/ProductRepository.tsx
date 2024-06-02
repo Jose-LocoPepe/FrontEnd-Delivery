@@ -67,4 +67,25 @@ async createProduct(Product: Product): Promise<boolean> {
     }
 }
 
+async deleteProduct(Product: Product): Promise<boolean> {
+    try {
+        console.log("Products data:", Product);
+        // Realizar una solicitud al backend para crear el producto
+        const response = await ApiDelivery.post<{ success: boolean }>('user/deleteProduct', Product);
+        console.log("Products data:", Product);
+
+        if (response.data.success) {
+            console.log("Product created successfully");
+            return true;
+        } else {
+            // Handle unsuccessful response
+            throw new Error("Failed to create product");
+            return false;
+        }
+    } catch (error) {
+        // Handle network errors or other issues
+        throw new Error("Failed to create product");
+    }
+}
+
 }
