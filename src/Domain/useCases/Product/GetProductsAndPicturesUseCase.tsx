@@ -10,6 +10,6 @@ export const GetProductsAndPicturesUseCase = async (): Promise<(Product & { pict
 
     return products.map(product => ({
         ...product,
-        pictures: pictures.filter(picture => picture.productid === Number(product.id))
+        pictures: pictures.filter(picture => picture.productId === Number(product.id))
     }));
 }
