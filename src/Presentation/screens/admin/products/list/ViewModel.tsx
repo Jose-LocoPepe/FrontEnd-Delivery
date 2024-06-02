@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { GetProductsAndPicturesUseCase } from '../../../../../Domain/useCases/Product/GetProductsAndPicturesUseCase';
 import { Product } from '../../../../../Domain/entities/Product';
 import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
+import { GetCategorysUseCase } from '../../../../../Domain/useCases/Category/GetCategoryUseCase'; // Import GetCategorysUseCase
 
 export enum SortBy {
     NAME = "NAME",
@@ -31,7 +32,19 @@ export const useProductViewModel = (): ProductViewModel => {
         try {
             setLoading(true);
             const productList = await GetProductsAndPicturesUseCase();
-            setProducts(productList);
+            const categories = await GetCategorysUseCase(); // Fetch categories
+
+            const updatedProducts = productList.map(product => ({
+                ...product,
+                pictures: product.pictures,
+                categoryName: categories.find(category => category.id === product.categoryId)?.name || '' // Find category name by ID or set to empty string if not found
+            })).filter(product => product.categoryName); // Filter out products without a valid category name
+
+            if (sortBy === SortBy.NAME) {
+                setProducts([...updatedProducts.sort((a, b) => a.name.localeCompare(b.name))]);
+            } else if (sortBy === SortBy.PRICE) {
+                setProducts([...updatedProducts.sort((a, b) => a.price - b.price)]);
+            }
             setLoading(false);
         } catch (error) {
             setError("Failed to fetch products");
@@ -44,11 +57,7 @@ export const useProductViewModel = (): ProductViewModel => {
     }, []);
 
     useEffect(() => {
-        if (sortBy === SortBy.NAME) {
-            setProducts([...products.sort((a, b) => a.name.localeCompare(b.name))]);
-        } else if (sortBy === SortBy.PRICE) {
-            setProducts([...products.sort((a, b) => a.price - b.price)]);
-        }
+        fetchProducts();
     }, [sortBy]);
 
     return { products, loading, error, fetchProducts, sortBy, setSortBy };

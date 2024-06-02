@@ -17,7 +17,7 @@ export const ProductsListScreen = ({ navigation }: Props) => {
             <Text>Nombre: {item.name}</Text>
             <Text>Descripcion: {item.description}</Text>
             <Text>Precio: {item.price}</Text>
-            <Text>Categoria: {item.categoryid}</Text>
+            <Text>Categoria: {item.categoryName}</Text>
             <Text>Pictures:</Text>
              {item.pictures.length > 0 ? (
               item.pictures.map((picture: ProductPictures) => (
