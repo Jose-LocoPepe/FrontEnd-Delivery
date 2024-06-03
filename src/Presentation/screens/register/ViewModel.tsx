@@ -11,12 +11,12 @@ import { UpdateFileUseCase } from '../../../Domain/useCases/File/UpdateFileUseCa
 import { ResponseAPIDelivery } from '../../../Data/sources/remote/api/models/ResponseAPIDelivery';
 interface Values {
     name: string;
-    lastname: string;
+    lastName: string;
     email: string;
     phone: string;
     password: string;
     confirmPassword: string;
-    imagen: string;
+    image: string;
 }
 interface ResponseErrorData {
     path: string;
@@ -24,7 +24,7 @@ interface ResponseErrorData {
 }
 
 const validationRegisterSchema = yup.object().shape({
-    image: yup.string().required('La imagen es requerida'),
+    image: yup.string().required('La image es requerida'),
     name: yup.string().required('El nombre es requerido'),
     lastName: yup.string().required('El apellido es requerido'),
     email: yup.string().email('Ingrese un correo electrónico válido').required('El correo electrónico es requerido'),
@@ -39,10 +39,10 @@ const RegisterViewModel = () => {
     const [errorsResponse, setErrorResponses] = useState<ResponseErrorData[]>([]);
     const [values, setValues] = useState<Values>({
         name: '',
-        lastname:'',
+        lastName:'',
         phone: '',
         email: '',
-        imagen: '',
+        image: '',
         password: '',
         confirmPassword: '',
     });
@@ -61,7 +61,7 @@ const RegisterViewModel = () => {
         });
 
         if (!result.canceled) {
-            onChange('imagen', result.assets[0].uri);
+            onChange('image', result.assets[0].uri);
             setFile(result.assets[0]);
 
         }
@@ -76,7 +76,7 @@ const RegisterViewModel = () => {
             });
 
             if (!result.canceled) {
-                onChange('imagen', result.assets[0].uri);
+                onChange('image', result.assets[0].uri);
                 setFile(result.assets[0]);
             }
         } catch (error) {
@@ -90,7 +90,7 @@ const RegisterViewModel = () => {
         if (validForm) {
             setLoading(true);
             try {
-                const { imagen, confirmPassword, ...data } = values;
+                const { image, confirmPassword, ...data } = values;
 
                 const response = await RegisterAuthUseCase(data);
 
@@ -101,7 +101,7 @@ const RegisterViewModel = () => {
                     const dataUser = response.data;
                     console.log(responseImage.success);
                     
-                    dataUser.imagen = responseImage.data;
+                    dataUser.image = responseImage.data;
 
                     // Save user in local storage
                     await SaveUserUseCase(dataUser);

@@ -19,6 +19,7 @@ interface CreateProductViewModel {
 }
 
 export const useCreateProductViewModel = (): CreateProductViewModel => {
+
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [name, setName] = useState<string>('');
@@ -81,6 +82,7 @@ export const useCreateProductViewModel = (): CreateProductViewModel => {
         }
 
         setLoading(true);
+
         try {
             const newProduct: Product = {
                 name,

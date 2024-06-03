@@ -28,10 +28,19 @@ const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
 export const AdminCategoryBottomTabs = () => {
   return (
     <Tab.Navigator
-    initialRouteName='CategoryMenuScreen'
+    initialRouteName='CategoriesCreateScreen'
     screenOptions={{
       headerShown: false
     }}>
+      <Tab.Screen
+
+name="CategoriesCreateScreen"
+component={CategoriesCreateScreen}
+options={{
+  title:"Agregar",
+
+  tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
+}}/>
       <Tab.Screen
 
         name="CategoryMenuScreen"
@@ -61,7 +70,6 @@ export const AdminCategoryBottomTabs = () => {
 
             tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
           }}/>
-
 
           
         

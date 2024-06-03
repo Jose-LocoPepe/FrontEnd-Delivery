@@ -16,8 +16,8 @@ const ProfileUpdateScreen = ({ navigation }: Props) => {
 
   const {
     name,
-    lastname,
-    imagen,
+    lastName,
+    image,
     phone,
     errorMessages,
     loading,
@@ -32,7 +32,7 @@ const ProfileUpdateScreen = ({ navigation }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    onChangeInfoUpdate(user.name, user.lastname, user.phone);
+    onChangeInfoUpdate(user.name, user.lastName, user.phone);
   }, [user]);
 
   const handleUpdateUser = async () => {
@@ -67,16 +67,16 @@ const ProfileUpdateScreen = ({ navigation }: Props) => {
           onPress={() => setModalVisible(true)}
         >
           {
-            imagen == ''
+            image == ''
               ?
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   style={styles.logo}
-                  source={{ uri: user?.imagen }}
+                  source={{ uri: user?.image }}
                 />
-                <Text style={styles.logoText}>Seleccione una imagen</Text>
+                <Text style={styles.logoText}>Seleccione una image</Text>
                 {
-                  errorMessages.imagen && (
+                  errorMessages.image && (
                     <Text style={{
                       ...styles.logoText, marginTop: 10, backgroundColor: '#ff7f7f', borderLeftWidth: 3,
                       borderColor: '#993235',
@@ -86,14 +86,14 @@ const ProfileUpdateScreen = ({ navigation }: Props) => {
                       marginVertical: 12,
                       paddingVertical: 8,
                       paddingHorizontal: 12,
-                    }}>{errorMessages.imagen}</Text>
+                    }}>{errorMessages.image}</Text>
                   )
                 }
               </View>
               :
               <Image
                 style={styles.logo}
-                source={{ uri: imagen }}
+                source={{ uri: image }}
               />
           }
         </TouchableOpacity>
@@ -131,13 +131,13 @@ const ProfileUpdateScreen = ({ navigation }: Props) => {
               style={styles.formTextInput}
               placeholder={'Plaza'}
               keyboardType='default'
-              value={lastname}
-              onChangeText={text => onChange('lastname', text)}
+              value={lastName}
+              onChangeText={text => onChange('lastName', text)}
               secureTextEntry={false}
             />
 
           </View>
-          {errorMessages.lastname && <Text style={styles.errorText}>{errorMessages.lastname}</Text>}
+          {errorMessages.lastName && <Text style={styles.errorText}>{errorMessages.lastName}</Text>}
 
 
           <View style={styles.formInput}>

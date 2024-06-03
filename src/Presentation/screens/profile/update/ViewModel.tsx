@@ -10,14 +10,14 @@ import { UserContext } from "../../../context/auth/UserContext";
 
 interface Values {
     name: string;
-    lastname: string;
+    lastName: string;
     phone: string;
-    imagen: string;
+    image: string;
 }
 
 const validationSchema = yup.object().shape({
     name: yup.string().required('El nombre es requerido'),
-    lastname: yup.string().required('Los apellidos son requeridos'),
+    lastName: yup.string().required('Los apellidos son requeridos'),
     phone: yup.string().required('El teléfono es requerido')
 });
 
@@ -27,10 +27,10 @@ const ProfileUpdateViewModel = () => {
 
     const [values, setValues] = useState<Values>({
         name: user.name,
-        lastname: user.lastname,
+        lastName: user.lastName,
         phone: user.phone,
         session_token: user.session_token || '',
-        imagen: ''
+        image: ''
     });
     const [file, setFile] = useState<ImagePicker.ImageInfo>();
     const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
@@ -44,7 +44,7 @@ const ProfileUpdateViewModel = () => {
         });
 
         if (!result.canceled) {
-            onChange('imagen', result.assets[0].uri);
+            onChange('image', result.assets[0].uri);
             setFile(result.assets[0]);
 
         }
@@ -59,7 +59,7 @@ const ProfileUpdateViewModel = () => {
             });
 
             if (!result.canceled) {
-                onChange('imagen', result.assets[0].uri);
+                onChange('image', result.assets[0].uri);
                 setFile(result.assets[0]);
             }
         } catch (error) {
@@ -76,7 +76,7 @@ const ProfileUpdateViewModel = () => {
 
                 const { image, ...data } = values;
                 // Call to use case
-                const response = await UpdateUserUseCase(user.id, data.name, data.lastname, data.phone, user.session_token);
+                const response = await UpdateUserUseCase(user.id, data.name, data.lastName, data.phone, user.session_token);
 
                 if (response.success) {
                     const dataUser = response.data;
@@ -99,8 +99,8 @@ const ProfileUpdateViewModel = () => {
         }
     }
 
-    const onChangeInfoUpdate = async (name: string, lastname: string, phone: string) => {
-        setValues({ ...values, name, lastname, phone });
+    const onChangeInfoUpdate = async (name: string, lastName: string, phone: string) => {
+        setValues({ ...values, name, lastName, phone });
     }
 
     const onChange = (property: string, value: string) => {

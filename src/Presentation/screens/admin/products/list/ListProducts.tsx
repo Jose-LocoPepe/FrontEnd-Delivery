@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './Styles';
 import { View, Text, Button, FlatList, Image } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
@@ -6,6 +7,7 @@ import { useProductViewModel, SortBy } from './ViewModel';
 import { ProductWithPictures } from './ViewModel';
 import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
 import { RoundedButton } from "../../../../components/RoundedButton";
+import { ImageButton } from "../../../../components/ImageButton";
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
 
@@ -21,7 +23,7 @@ export const ProductsListScreen = ({ navigation }: Props) => {
             <Text>Pictures:</Text>
              {item.pictures.length > 0 ? (
               item.pictures.map((picture: ProductPictures) => (
-            <Text key={picture.id}>Imagen: {picture.image}</Text> // Display the imagen string as text
+            <Text key={picture.id}>image: {picture.image}</Text> // Display the image string as text
     ))
 ) : (
     <Text>No pictures available</Text>
@@ -31,35 +33,43 @@ export const ProductsListScreen = ({ navigation }: Props) => {
     );
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                Menu Listado Productos
-            </Text>
-            <RoundedButton
-                text="Listar Productos"
-                onPress={fetchProducts}
-            />
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <Button
-                    title="Ordenar por Nombre"
-                    onPress={() => setSortBy(SortBy.NAME)}
-                    disabled={loading}
-                />
-                <Button
-                    title="Ordenar por Precio"
-                    onPress={() => setSortBy(SortBy.PRICE)}
-                    disabled={loading}
-                />
-            </View>
+        
+        <View style={styles.container}>
+            
             {loading && <Text>Loading...</Text>}
             {!loading && (
+                
                 <FlatList
                     data={products}
                     renderItem={renderProductItem}
                     keyExtractor={(item) => item.id?.toString() || item.name}
-                    style={{ marginTop: 10 }}
+                    style={{ marginTop: 80 }}
                 />
             )}
+            
+            <View style={{...styles.form}}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
+                Menu Listado Productos
+            </Text>
+            <View style={{marginTop: 20}}/>
+            <RoundedButton
+                text="Listar Productos"
+                onPress={fetchProducts}
+            />
+            <View style={{marginTop: 20}}/>
+            <RoundedButton
+                    text="Ordenar por Nombre"
+                    onPress={() => setSortBy(SortBy.NAME)}
+                />
+                <View style={{marginTop: 20}}/>
+            <RoundedButton
+                    text="Ordenar por Precio"
+                    onPress={() => setSortBy(SortBy.PRICE)}
+                />
+        
+            </View>
+            
         </View>
     )
+    
 }
