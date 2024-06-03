@@ -7,6 +7,6 @@ export const deleteCategoryUseCase = async (newCategoryData: Category): Promise<
     try {
         await deleteCategory(newCategoryData);
     } catch (error) {
-        throw new Error("Failed todelete category");
+        throw new Error("Failed to delete category");
     }
 };
