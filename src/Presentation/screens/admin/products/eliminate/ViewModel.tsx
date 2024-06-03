@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { GetProductsAndPicturesUseCase } from '../../../../../Domain/useCases/Product/GetProductsAndPicturesUseCase';
 import { Product } from '../../../../../Domain/entities/Product';
 import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
-import { GetCategorysUseCase } from '../../../../../Domain/useCases/Category/GetCategoryUseCase'; // Import GetCategorysUseCase
+import { GetCategorysUseCase } from '../../../../../Domain/useCases/Category/GetCategoryUseCase';
+import { DeleteProductUseCase } from '../../../../../Domain/useCases/Product/DeleteProductsUseCase'; // Import DeleteProductUseCase
 
 export enum SortBy {
     NAME = "NAME",
@@ -20,6 +21,7 @@ interface ProductViewModel {
     fetchProducts: () => void;
     sortBy: SortBy;
     setSortBy: (sortBy: SortBy) => void;
+    deleteProduct: (product: ProductWithPictures) => void; // New function for product deletion
 }
 
 export const useProductViewModel = (): ProductViewModel => {
@@ -60,5 +62,18 @@ export const useProductViewModel = (): ProductViewModel => {
         fetchProducts();
     }, [sortBy]);
 
-    return { products, loading, error, fetchProducts, sortBy, setSortBy };
+    const deleteProduct = async (product: ProductWithPictures) => {
+        try {
+            const success = await DeleteProductUseCase(product);
+            if (success) {
+                fetchProducts();
+            } else {
+                setError("Failed to delete product");
+            }
+        } catch (error) {
+            setError("Failed to delete product");
+        }
+    };
+
+    return { products, loading, error, fetchProducts, sortBy, setSortBy, deleteProduct };
 };

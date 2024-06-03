@@ -6,13 +6,12 @@ import { ApiDelivery } from '../sources/remote/api/ApiDelivery';
 export class CategoryRepositoryImpl implements CategoryRepository {
 
     async getCategories(): Promise<Category[]> { // Asegúrate de usar el mismo nombre aquí
-        console.log("Estmoas ahi");
 
         try {
             const { data } = await ApiDelivery.get<{  categories: Category[],success: boolean }>('user/getCategory');
-            console.log("Data:", data);
+       
             if (data.success) {
-                console.log("Category data:", data.categories); // Add this line to log the Category data
+           //     console.log("Category data:", data.categories); // Add this line to log the Category data
                 return Promise.resolve(data.categories);
             } else {
                 // Handle unsuccessful response
@@ -26,10 +25,9 @@ export class CategoryRepositoryImpl implements CategoryRepository {
 
     async createCategory(category: Category): Promise<boolean> {
         try {
-            console.log("Category data:", category);
-            // Realizar una solicitud al backend para crear la categoría
+      
             const response = await ApiDelivery.post<{ success: boolean }>('user/createCategory', category);
-            console.log("Category data:", category);
+           // console.log("Category data:", category);
     
             if (response.data.success) {
                 console.log("Category created successfully");
@@ -41,6 +39,24 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         } catch (error) {
             // Handle network errors or other issues
             throw new Error("Failed to create category");
+        }
+    }
+    async deleteCategory(category: Category): Promise<boolean> {
+        try {
+            // Realizar una solicitud al backend para crear la categoría
+            const response = await ApiDelivery.post<{ success: boolean }>('user/deleteCategory', category);
+            console.log("Category data:", category);
+    
+            if (response.data.success) {
+                console.log("Category deleted successfully");
+                return true;
+            } else {
+                // Handle unsuccessful response
+                throw new Error("Failed to delete category");
+            }
+        } catch (error) {
+            // Handle network errors or other issues
+            throw new Error("Failed to delete category");
         }
     }
     

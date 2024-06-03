@@ -4,4 +4,5 @@ import { Category } from '../entities/Category';
 export interface CategoryRepository {
     getCategories(): Promise<Category[]>;
     createCategory(category: Category): Promise<boolean>;
+    deleteCategory(category: Category): Promise<boolean>;
 }
