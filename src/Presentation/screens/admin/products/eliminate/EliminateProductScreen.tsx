@@ -1,41 +1,40 @@
-// ProductsListScreen.js
-
 import React from "react";
-import { View, Text, Button, FlatList, Image } from 'react-native';
+import { View, Text, Button, FlatList, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
 import { useProductViewModel, SortBy } from './ViewModel';
 import { ProductWithPictures } from './ViewModel';
-import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
 import { RoundedButton } from "../../../../components/RoundedButton";
 
 interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
 
 export const ProductsEliminateScreen = ({ navigation }: Props) => {
-    const { products, loading, fetchProducts, deleteProduct, sortBy, setSortBy } = useProductViewModel();
+    const { products, loading, fetchProducts, sortBy, setSortBy, deleteProduct } = useProductViewModel();
 
     const renderProductItem = ({ item }: { item: ProductWithPictures }) => (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
             <Text>Nombre: {item.name}</Text>
             <Text>Descripcion: {item.description}</Text>
             <Text>Precio: {item.price}</Text>
-            <Text>Categoria: {item.categoryId}</Text>
+            <Text>Categoria: {item.categoryName}</Text>
             <Text>Pictures:</Text>
-             {item.pictures.length > 0 ? (
-              item.pictures.map((picture: ProductPictures) => (
-                <Text key={picture.id}>Imagen: {picture.image}</Text> // Display the image string as text
-              ))
+            {item.pictures.length > 0 ? (
+                item.pictures.map((picture, index) => (
+                    <Text key={index}>Imagen: {picture.image}</Text>
+                ))
             ) : (
-              <Text>No pictures available</Text>
+                <Text>No pictures available</Text>
             )}
-            <Button
-                title="Eliminar"
-                onPress={() => deleteProduct(item)}
-                disabled={loading}
-            />
+            <TouchableOpacity onPress={() => onDeleteProduct(item)}>
+                <Text style={{ color: 'red' }}>Delete</Text>
+            </TouchableOpacity>
             <Text>-------------</Text>
         </View>
     );
+
+    const onDeleteProduct = (product: ProductWithPictures) => {
+        deleteProduct(product);
+    };
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
