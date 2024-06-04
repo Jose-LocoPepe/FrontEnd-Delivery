@@ -4,7 +4,7 @@ import { HOST_LOCAL, HOST_EMULATOR} from '@env';
 
 const ApiDelivery = axios.create({
 
-    baseURL: 'http://192.168.0.12:3307/api',
+    baseURL: 'http://192.168.1.89:3380/api',
 
     headers: {
         
