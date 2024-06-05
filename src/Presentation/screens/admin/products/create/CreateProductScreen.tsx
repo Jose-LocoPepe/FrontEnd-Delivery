@@ -8,7 +8,6 @@ import { showMessage } from 'react-native-flash-message';
 import { CustomTextInput } from "../../../../components/CustomTextInput";
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { Category } from "../../../../../Domain/entities/Category";
-import { FlatList } from "react-native-gesture-handler";
 import { ImageButton } from "../../../../components/ImageButton";
 
 

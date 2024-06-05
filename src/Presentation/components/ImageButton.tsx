@@ -11,6 +11,8 @@ export const ImageButton = ({ text, onPress }: Props) => {
 
     const images = {
         back: require('../../../assets/back.png'),
+        add: require('../../../assets/add.png'),
+
     };
     return (
         <TouchableOpacity

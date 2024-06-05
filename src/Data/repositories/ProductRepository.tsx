@@ -16,7 +16,7 @@ async getProducts(): Promise<Product[]> {
         const { data } = await ApiDelivery.get<{ success: boolean, products: Product[] }>('user/getProducts');
 
         if (data.success) {
-          //   console.log("Products data:", data.products); // Add this line to log the products data
+           console.log("Products data:", data.products); // Add this line to log the products data
             return Promise.resolve(data.products);
         } else {
             // Handle unsuccessful response

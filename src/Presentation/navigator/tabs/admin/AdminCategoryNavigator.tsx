@@ -1,14 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { View, Text } from'react-native'
-import { AdminCategoryCreateScreen } from "../../../screens/admin/category/create/CreateCategory";
-import { AdminCategoryListScreen } from "../../../screens/admin/category/list/ListCategory";
+import { CategoriesCreateScreen } from "../../../screens/admin/category/create/CreateCategory";
+import { CategoriesListScreen } from "../../../screens/admin/category/list/ListCategory";
 import { CategoryMenuScreen } from "../../../screens/admin/category/CategoryMenu";
+import { CategoryProvider } from "../../../context/categories/CategoryContext";
 
+interface ContextStateProps {
+    children: React.ReactElement | React.ReactElement[] | null;
+
+}
 
 export type CategoryStackParamList = {
-    AdminCategoryListScreen: undefined,
-    AdminCategoryCreateScreen: undefined,
+    CategoryListScreen: undefined,
+    CategoryCreateScreen: undefined,
     //AdminProductNavigator: undefined
 }
 
@@ -16,27 +21,36 @@ const Stack = createNativeStackNavigator<CategoryStackParamList>();
 
 export const AdminCategoryNavigator = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen 
-            name="AdminCategoryListScreen" 
-            component={CategoryMenuScreen}
-            options={{
-                headerShown: true,
-                title: 'Listar Categorias'
-            }} />
+        <CategoryState>
+            <Stack.Navigator>
+                <Stack.Screen 
+                name="CategoryListScreen" 
+                component={CategoriesListScreen}
+                options={{
+                    headerShown: false,
+                    title: 'Listar Categorias'
+                }} />
 
-            <Stack.Screen 
-            name="AdminCategoryCreateScreen" 
-            component={AdminCategoryCreateScreen} 
-            options={{
-                headerShown: true,
-                title: 'Crear Categoria'
-            }}
-            />
-        </Stack.Navigator>
+                <Stack.Screen 
+                name="CategoryCreateScreen" 
+                component={CategoriesCreateScreen} 
+                options={{
+                    headerShown: false,
+                    title: 'Crear Categoria'
+                }}
+                />
+            </Stack.Navigator>
+        </CategoryState>
     );
 }
 
+const CategoryState: React.FC<ContextStateProps> = ({ children }) => {
+    return (
+        <CategoryProvider>
+            {children}
+        </CategoryProvider>
+    )
+}
 /*
 import React, { useContext } from "react";
 import { View, Text,Image, Pressable, Button } from 'react-native'

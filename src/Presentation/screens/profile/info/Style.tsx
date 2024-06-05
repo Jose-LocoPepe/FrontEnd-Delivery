@@ -13,7 +13,7 @@ const ProfileInfoStyles = StyleSheet.create({
     },
     form: {
         width: '100%',
-        height: '45%',
+        height: '55%',
         backgroundColor: 'white',
         position: 'absolute',
         bottom: 0,

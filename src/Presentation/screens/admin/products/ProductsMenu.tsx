@@ -11,19 +11,23 @@ interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBotto
 
 export const ProductsMenuScreen = ({ navigation }: Props) => {
     return (
+        
         <View style={styles.container}>
-            <Text style={styles.title}>
-                Productos
-            </Text>
-            <Text style={styles.subtitle}>
-                Accede a las opciones de Productos:
-            </Text>
-            
+            <Image 
+                style={styles.imageBackground} 
+                source={require('../../../../../assets/comidas-rapidas.jpeg')} />
+            <View style={styles.form}>
+                <Text style={styles.title}>
+                    Productos
+                </Text>
+                <Text style={styles.subtitle}>
+                    Accede a las opciones de Productos:
+                </Text>
                 <RoundedButton
-                    text='Menu'
-                    
+                    text='Menu'            
                     onPress={() => navigation.navigate('AdminProductBottomTabs')}
-        />
+                />
+            </View>
         </View>
     )
 }
@@ -36,6 +40,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
         paddingHorizontal: 20,
 
+    },
+    form: {
+        width: '100%',
+        height: '25%',
+        position: 'absolute',
+        top: '40%',
+        backgroundColor: 'white',
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        borderBottomLeftRadius: 40,
+        borderBottomRightRadius: 40,
+        padding: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    imageBackground: {
+        width: '150%',
+        height: '150%',
+        opacity: 1
     },
     title: {
         fontSize: 20,

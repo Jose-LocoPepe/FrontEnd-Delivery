@@ -57,7 +57,7 @@ const RegisterStyles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         position: 'absolute',
-        top: '5%'
+        top: '15%'
     },
     logo: {
         width: 80,

@@ -1,16 +1,16 @@
-import { View, Text, Modal, StyleSheet, Button } from 'react-native'
+import { View, Text, Modal, StyleSheet } from 'react-native'
 import React from 'react'
 import { RoundedButton } from './RoundedButton'
+import { RoundedButtonError } from './RoundedButtonError'
 
 
 interface Props {
-    openGallery: () => void,
-    openCamera: () => void
     modalUseState: boolean,
+    action: () => void,
     setModalUseState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const ModalPickImage = ({modalUseState,setModalUseState,openGallery,openCamera}: Props) => {
+export const ModalConfirmation = ({modalUseState,setModalUseState, action}: Props) => {
     return (
         <View style={styles.container}>
             <Modal
@@ -22,29 +22,22 @@ export const ModalPickImage = ({modalUseState,setModalUseState,openGallery,openC
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.textOptions}>Seleccione una opción</Text>
+                        <Text style={styles.textOptions}>¿Estás seguro de eliminar?</Text>
                         <View style={styles.buttonContainer}>
-                            <RoundedButton
-                                text='Galería'
+                            <RoundedButtonError
+                                text='Eliminar'
                                 onPress={() => {
-                                    openGallery();
+                                    action();
                                     setModalUseState(!modalUseState);
                                 }}/>
                         </View>
                         <View style={styles.buttonContainer}>
                             <RoundedButton
-                                text='Cámara'
+                                text='Cancelar'
                                 onPress={() => {
-                                    openCamera();
                                     setModalUseState(!modalUseState);
                                 }}/>
                         </View>
-                        <View style={styles.buttonContainer}>
-                            <Button
-
-                                title='Cancelar'
-                                onPress={() => setModalUseState(!modalUseState)}/>
-                            </View>
                     </View>
                 </View>
             </Modal>
@@ -68,7 +61,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 20,
-        height: 240,
+        height: 220,
         margin: 20,
         paddingTop: 35,
         paddingHorizontal: 25,

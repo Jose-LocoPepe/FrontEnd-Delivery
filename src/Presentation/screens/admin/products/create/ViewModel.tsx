@@ -3,15 +3,16 @@ import { CreateProductUseCase } from '../../../../../Domain/useCases/Product/Cre
 import { Product } from '../../../../../Domain/entities/Product';
 import { useCategoryViewModel } from '../../category/list/ViewModel'; // Import Category ViewModel
 import { Category } from '../../../../../Domain/entities/Category'; // Import Category entity
-
-interface CreateProductViewModel {
-    loading: boolean;
-    error: string | null;
-    createProduct: () => void;
+interface Values{
     name: string;
     description: string;
     price: string;
     categoryId: string;
+}
+interface CreateProductViewModel {
+    loading: boolean;
+    error: string | null;
+    createProduct: () => void;
     onChange: (property: string, value: any) => void;
     errorMessages: Record<string, string>;
     categories: Category[]; // Add categories
@@ -22,10 +23,18 @@ export const useCreateProductViewModel = (): CreateProductViewModel => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [values, setValues] = useState<Values>({
+        name: '',
+        description: '',
+        price: '',
+        categoryId: '',
+    });
+    /*
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [price, setPrice] = useState<string>('');
     const [categoryId, setCategoryId] = useState<string>('');
+    */
     const [categories, setCategories] = useState<Category[]>([]); // State for categories
     const [selectedCategoryName, setSelectedCategoryName] = useState<string>(''); // State for selected category name
 
@@ -44,14 +53,26 @@ export const useCreateProductViewModel = (): CreateProductViewModel => {
     }, [categoryLoading, categoryError, category]);
 
     useEffect(() => {
-        if (categoryId) {
+        if (values.categoryId) {
             const selectedCategory = categories.find(cat => cat.id === categoryId);
             if (selectedCategory) {
                 setSelectedCategoryName(selectedCategory.name);
             }
         }
-    }, [categoryId, categories]);
+    }, [values.categoryId, categories]);
 
+    const onChange = (property: string, value: any) => {
+        if(property === 'price'){
+            const numericValue = parseFloat(value);
+            if(!isNaN(numericValue) && numericValue >= 0 && numericValue <= 999999){
+                setValues({ ...values, [property]: value });
+            }
+        } else {
+        setValues({ ...values, [property]: value });
+        }
+    };
+
+/*
     const onChange = (property: string, value: any) => {
         if (property === 'price') {
             const numericValue = parseFloat(value);
@@ -74,7 +95,7 @@ export const useCreateProductViewModel = (): CreateProductViewModel => {
             }
         }
     };
-
+*/
     const createProduct = async () => {
         if (!name || !description || !price || !categoryId) {
             setError('All fields are required.');

@@ -4,10 +4,10 @@ import { CustomColors } from "../theme/AppTheme";
 
 interface Props {
     text: String,
-    onPress: () => void
+    onPress: () => void,
 }
 
-export const RoundedButton = ({ text, onPress,}: Props) => {
+export const RoundedButtonError = ({ text, onPress,}: Props) => {
     return (
         <TouchableOpacity
             activeOpacity={0.7}
@@ -25,7 +25,7 @@ export const RoundedButton = ({ text, onPress,}: Props) => {
 const styles = StyleSheet.create({
     roundedButton: {
         alignItems: 'center',
-        backgroundColor: CustomColors.primary,
+        backgroundColor: 'red',
         borderRadius: 15,
         padding: 15,
         width: '100%'

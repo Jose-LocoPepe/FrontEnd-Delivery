@@ -7,7 +7,7 @@ import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu
 import { ProductsListScreen } from '../../../screens/admin/products/list/ListProducts';
 import { ProductsCreateScreen } from '../../../screens/admin/products/create/CreateProductScreen';
 
-import { ProductsEliminateScreen } from '../../../screens/admin/products/eliminate/EliminateProductScreen';
+import { ProductsDeleteScreen } from '../../../screens/admin/products/delete/DeleteProductScreen';
 
 
 export type RootAdminBottomTabParamsList = {
@@ -42,8 +42,8 @@ export const AdminProductBottomTabs = () => {
             tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
           }}/>
         <Tab.Screen
-        name="EliminateProductScreen"
-        component={ProductsEliminateScreen}
+        name="DeleteProductScreen"
+        component={ProductsDeleteScreen}
         options={{
           title:"Eliminar",
           tabBarIcon: ({ size, color }) => <FontAwesome name="align-justify" size={size} color={'#000'} />,

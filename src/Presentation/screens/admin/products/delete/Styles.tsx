@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const ListProductStyles = StyleSheet.create({
+const CreateProductStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white'
@@ -9,7 +9,7 @@ const ListProductStyles = StyleSheet.create({
         width: '100%',
         height: '100%',
         opacity: 0.9,
-        bottom: '20%'
+        bottom: '30%'
     },
     form: {
         width: '100%',
@@ -17,8 +17,8 @@ const ListProductStyles = StyleSheet.create({
         backgroundColor: 'white',
         position: 'absolute',
         bottom: 0,
-        //borderTopLeftRadius: 40,
-        //borderTopRightRadius: 40,
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
         padding: 30
     },
     formText: {
@@ -107,4 +107,4 @@ const ListProductStyles = StyleSheet.create({
 
 });
 
-export default ListProductStyles;
+export default CreateProductStyles;

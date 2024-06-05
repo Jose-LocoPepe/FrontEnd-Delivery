@@ -8,7 +8,8 @@ import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu
 
 import { CategoriesListScreen } from '../../../screens/admin/category/list/ListCategory';
 import { CategoriesCreateScreen } from '../../../screens/admin/category/create/CreateCategory';
-import { CategoriesDeleteScreen } from '../../../screens/admin/category/eliminate/EliminateCategory';
+import { CategoriesDeleteScreen } from '../../../screens/admin/category/delete/DeleteCategory';
+import { AdminCategoryNavigator } from './AdminCategoryNavigator';
 
 
 export type RootAdminBottomTabParamsList = {
@@ -16,9 +17,10 @@ export type RootAdminBottomTabParamsList = {
   CategoryMenuScreen: undefined,
   ProductsMenuScreen: undefined,
   
-  CategoriesCreateScreen: undefined,
-  CategoriesListScreen: undefined,
-  CategoriesDeleteScreen: undefined,
+  CategoryCreateScreen: undefined,
+  CategoryListScreen: undefined,
+  CategoryDeleteScreen: undefined,
+  AdminCategoryNavigator: undefined
 
 }
 
@@ -28,53 +30,25 @@ const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
 export const AdminCategoryBottomTabs = () => {
   return (
     <Tab.Navigator
-    initialRouteName='CategoriesCreateScreen'
+    initialRouteName='AdminCategoryNavigator'
     screenOptions={{
       headerShown: false
     }}>
-      <Tab.Screen
-
-name="CategoriesCreateScreen"
-component={CategoriesCreateScreen}
-options={{
-  title:"Agregar",
-
-  tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
-}}/>
-      <Tab.Screen
-
-        name="CategoryMenuScreen"
-        component={CategoriesListScreen}
-        options={{
-          title:"Secccion",
-
-
-          tabBarIcon: ({ size, color }) => <FontAwesome name="align-justify" size={size} color={'#000'} />,
-        }}
-        />
-        <Tab.Screen
-
-          name="ProductsMenuScreen"
-          component={CategoriesCreateScreen}
-          options={{
-            title:"Agregar",
-
-            tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
-          }}/>
-        <Tab.Screen
-
-          name="ProductsDeleteScreen"
-          component={CategoriesDeleteScreen}
-          options={{
-            title:"Eliminar",
-
-            tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
-          }}/>
-
-          
-        
-
-
+    <Tab.Screen
+      name="AdminCategoryNavigator"
+      component={AdminCategoryNavigator}
+      options={{
+      title:"Listar",
+      tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
+    }}/>
+    <Tab.Screen
+      name="CategoryCreateScreen"
+      component={CategoriesCreateScreen}
+      options={{
+      title:"Agregar",
+      tabBarIcon: ({ size, color }) => <FontAwesome name="align-justify" size={size} color={'#000'} />,
+    }}/>
+   
     </Tab.Navigator>
   );
 }
