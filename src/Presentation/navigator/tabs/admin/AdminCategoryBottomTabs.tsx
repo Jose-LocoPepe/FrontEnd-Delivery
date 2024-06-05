@@ -8,6 +8,7 @@ import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu
 
 import { CategoriesListScreen } from '../../../screens/admin/category/list/ListCategory';
 import { CategoriesCreateScreen } from '../../../screens/admin/category/create/CreateCategory';
+import { CategoriesDeleteScreen } from '../../../screens/admin/category/eliminate/EliminateCategory';
 
 
 export type RootAdminBottomTabParamsList = {
@@ -17,6 +18,7 @@ export type RootAdminBottomTabParamsList = {
   
   CategoriesCreateScreen: undefined,
   CategoriesListScreen: undefined,
+  CategoriesDeleteScreen: undefined,
 
 }
 
@@ -50,7 +52,25 @@ options={{
           tabBarIcon: ({ size, color }) => <FontAwesome name="align-justify" size={size} color={'#000'} />,
         }}
         />
-        
+        <Tab.Screen
+
+          name="ProductsMenuScreen"
+          component={CategoriesCreateScreen}
+          options={{
+            title:"Agregar",
+
+            tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
+          }}/>
+        <Tab.Screen
+
+          name="ProductsDeleteScreen"
+          component={CategoriesDeleteScreen}
+          options={{
+            title:"Eliminar",
+
+            tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
+          }}/>
+
           
         
 

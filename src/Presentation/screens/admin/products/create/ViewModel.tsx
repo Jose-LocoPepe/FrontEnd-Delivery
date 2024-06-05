@@ -1,106 +1,125 @@
-
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect } from 'react';
 import { CreateProductUseCase } from '../../../../../Domain/useCases/Product/CreateProductUseCase';
 import { Product } from '../../../../../Domain/entities/Product';
-import * as yup from 'yup';
-import { ResponseAPIDelivery } from '../../../../../Data/sources/remote/api/models/ResponseAPIDelivery';
-import { showMessage } from 'react-native-flash-message';
-/*interface CreateProductViewModel {
+import { useCategoryViewModel } from '../../category/list/ViewModel'; // Import Category ViewModel
+import { Category } from '../../../../../Domain/entities/Category'; // Import Category entity
+
+interface CreateProductViewModel {
     loading: boolean;
     error: string | null;
-    createProduct: () => Promise<boolean>; // Define createProduct function
-    newProductData: Product; // Product data to be input by the user
-    setNewProductData: Dispatch<SetStateAction<Product>>; // Adjust the type here
-}*/
-interface Values {
+    createProduct: () => void;
     name: string;
     description: string;
-    price: number;
-    categoryid: number; // Assuming categoryId is a required field, you might need to adjust this
+    price: string;
+    categoryId: string;
+    onChange: (property: string, value: any) => void;
+    errorMessages: Record<string, string>;
+    categories: Category[]; // Add categories
+    selectedCategoryName: string; // Add selectedCategoryName
 }
-// Crear un nuevo producto
 
-interface ResponseErrorData {
-    path: string;
-    value: string;
-}
-const validationCreateProductSchema = yup.object().shape({
-    name: yup.string().required('El nombre del producto es requerido'),
-    description: yup.string().required('La descripción del producto es requerida')
-});
-const CreateProductViewModel = () => {
+export const useCreateProductViewModel = (): CreateProductViewModel => {
+
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-   
-    const [errorMessages, setErrorMessages] = useState<Record<string,string>>({});
-    const [errorsResponse, setErrorResponses] = useState<ResponseErrorData[]>([]);
+    const [name, setName] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [price, setPrice] = useState<string>('');
+    const [categoryId, setCategoryId] = useState<string>('');
+    const [categories, setCategories] = useState<Category[]>([]); // State for categories
+    const [selectedCategoryName, setSelectedCategoryName] = useState<string>(''); // State for selected category name
 
+    const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
 
-    const [values, setValues] = useState<Values>({
-        name: "",
-        description: "",
-        price: 0,
-        categoryid: 1 // Assuming categoryId is a required field, you might need to adjust this
-    }); 
+    const { category, loading: categoryLoading, error: categoryError, fetchCategory } = useCategoryViewModel(); // Fetch category list
 
-    const onChange = (property: string, value: any) => {
-        setValues({ ...values, [property]: value });
-    }
-    const createProduct = async ()=> {
-        
-        const isValid = await isValidForm();
-        if(isValid){
-            console.log('values: ' +JSON.stringify(values));
-            setLoading(true);
-            setErrorMessages({});
-            try {
-                const { ...data } = values;
-                const response = await CreateProductUseCase(data);
-                console.log('response: ' +JSON.stringify(response));
-                
-            } catch (error) {
-                console.log('error: ' +JSON.stringify(error));
-                const rejectErrors: ResponseAPIDelivery = error;
-                if(rejectErrors.error){
-                    setErrorResponses([]);
-                    showMessage({
-                        message: rejectErrors.message,
-                        type: 'danger',
-                        icon: 'danger',
-                    });
-                    //return false;
-                } else {
-                    const errorsArray = Object.values(rejectErrors.errors);
-                    const errorsArrayFilter = errorsArray.map(({ msg, path }) => ({ value: msg, path }))
-                    //return false;
-                }
+    useEffect(() => {
+        fetchCategory(); // Fetch categories on component mount
+    }, []);
+
+    useEffect(() => {
+        if (!categoryLoading && !categoryError) {
+            setCategories(category); // Set categories if fetched successfully
+        }
+    }, [categoryLoading, categoryError, category]);
+
+    useEffect(() => {
+        if (categoryId) {
+            const selectedCategory = categories.find(cat => cat.id === categoryId);
+            if (selectedCategory) {
+                setSelectedCategoryName(selectedCategory.name);
             }
         }
-    }
+    }, [categoryId, categories]);
 
-    const isValidForm = async (): Promise<boolean> => {
-        try {
-            await validationCreateProductSchema.validate(values, { abortEarly: false });
-            return true;
-        } catch (error) {
-            const errors = {};
-            error.inner.forEach((err) => {
-                errors[err.path] = err.message;
-            });
-            setErrorMessages(errors);
-            return false;
+    const onChange = (property: string, value: any) => {
+        if (property === 'price') {
+            const numericValue = parseFloat(value);
+            if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 999999) {
+                setPrice(value);
+            }
+        } else {
+            switch (property) {
+                case 'name':
+                    setName(value);
+                    break;
+                case 'description':
+                    setDescription(value);
+                    break;
+                case 'categoryId':
+                    setCategoryId(value);
+                    break;
+                default:
+                    break;
+            }
         }
-    }
-    return {
-        ...values,
-        onChange,
-        createProduct,
-        error,
-        loading,
-        errorMessages, 
-        errorsResponse
-    }
-}
-export default CreateProductViewModel;
+    };
 
-    ///return { loading, error, createProduct, newProductData, setNewProductData };
+    const createProduct = async () => {
+        if (!name || !description || !price || !categoryId) {
+            setError('All fields are required.');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const newProduct: Product = {
+                name,
+                description,
+                price: parseFloat(price),
+                categoryId,
+            };
+            const success = await CreateProductUseCase(newProduct);
+            if (success) {
+                setName('');
+                setDescription('');
+                setPrice('');
+                setCategoryId('');
+                setError(null);
+                setErrorMessages({});
+                console.log('Product created successfully.');
+            } else {
+                setError('Failed to create product.');
+            }
+        } catch (error) {
+            setError('An error occurred while creating product.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {
+        loading,
+        error,
+        createProduct,
+        name,
+        description,
+        price,
+        categoryId,
+        onChange,
+        errorMessages,
+        categories,
+        selectedCategoryName,
+    };
+};

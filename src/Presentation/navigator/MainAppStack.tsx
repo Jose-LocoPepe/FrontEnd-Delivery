@@ -10,7 +10,7 @@ import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
 import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
 
-import { CategoryCreateScreen } from '../screens/admin/category/create/CreateCategory';
+import { CategoriesCreateScreen } from '../screens/admin/category/create/CreateCategory';
 
 
 import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
@@ -26,6 +26,9 @@ export type RootStackParamsList = {
     AdminBottomTabs: undefined,
     AdminProductBottomTabs: undefined,
     AdminCategoryBottomTabs: undefined,
+    CreateProductScreen: undefined,
+
+    EliminateProductScreen: undefined,
     CreateProductScreen: undefined,
 
     ClientBottomTabs: undefined
