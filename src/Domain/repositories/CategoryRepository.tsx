@@ -1,8 +1,9 @@
-import { ResponseVerifyTokenAPIDelivery } from '../../Data/sources/remote/api/models/ResponseVerifyTokenApiDelivery';
+import { ResponseAPIDelivery } from '../../Data/sources/remote/api/models/ResponseAPIDelivery';
 import { Category } from '../entities/Category';
 
 export interface CategoryRepository {
-    getCategories(): Promise<Category[]>;
-    createCategory(category: Category): Promise<boolean>;
-    deleteCategory(category: Category): Promise<boolean>;
+    getAllCategories(token: string): Promise<ResponseAPIDelivery>;
+    createCategory(category: Category, token: string): Promise<ResponseAPIDelivery>;
+    deleteCategory(id: string, token: string): Promise<ResponseAPIDelivery>;
+    updateCategory(category: Category, token: string): Promise<ResponseAPIDelivery>;
 }

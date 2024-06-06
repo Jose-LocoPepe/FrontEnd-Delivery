@@ -1,37 +1,31 @@
-import { useState, useEffect } from 'react';
-import { GetProductsAndPicturesUseCase } from '../../../../../Domain/useCases/Product/GetProductsAndPicturesUseCase';
+import { useState, useEffect, useContext } from 'react';
 import { Product } from '../../../../../Domain/entities/Product';
 import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
 import { GetCategorysUseCase } from '../../../../../Domain/useCases/Category/GetCategoryUseCase'; // Import GetCategorysUseCase
+import { ProductContext } from '../../../../context/products/ProductContext';
+import { getProductsUseCase } from '../../../../../Domain/useCases/Product/GetProductsUseCase';
+import { CategoryContext } from '../../../../context/categories/CategoryContext';
 
 export enum SortBy {
     NAME = "NAME",
     PRICE = "PRICE"
 }
 
-export interface ProductWithPictures extends Product {
-    pictures: ProductPictures[];
-}
 
-interface ProductViewModel {
-    products: ProductWithPictures[];
-    loading: boolean;
-    error: string | null;
-    fetchProducts: () => void;
-    sortBy: SortBy;
-    setSortBy: (sortBy: SortBy) => void;
-}
 
-export const useProductViewModel = (): ProductViewModel => {
-    const [products, setProducts] = useState<ProductWithPictures[]>([]);
+
+export const useProductViewModel = () => {
+    const { products, getAllProducts, removeProduct } = useContext(ProductContext);
+    const { categories, getAllCategories } = useContext(CategoryContext);
+    //const [products, setProducts] = useState<ProductWithPictures[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState<SortBy>(SortBy.NAME);
 
-    const fetchProducts = async () => {
+    /*const fetchProducts = async () => {
         try {
             setLoading(true);
-            const productList = await GetProductsAndPicturesUseCase();
+            const productList = await getProductsUseCase();
             const categories = await GetCategorysUseCase(); // Fetch categories
 
             const updatedProducts = productList.map(product => ({
@@ -50,15 +44,61 @@ export const useProductViewModel = (): ProductViewModel => {
             setError("Failed to fetch products");
             setLoading(false);
         }
-    };
+    };*/
 
-    useEffect(() => {
+    //Ordenar por nombre
+    /*const sortByName = () => {
+        setSortBy(SortBy.NAME);
         fetchProducts();
+    };*/
+
+    const onChange = (property: string, value: any) => {
+        //setValues({ ...values, [property]: value });
+    }
+    const deleteProduct = async (id: string) => {
+        try {
+            setLoading(true);
+            const response = await removeProduct(id);
+            if (response) {
+                updateListProducts();
+            } else {
+                setError("Product not found");
+            }
+        } catch (error) {
+            setError("Failed to delete product");
+            console.error("Failed to delete product:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    const updateListProducts = async () => {
+        try {
+            setLoading(true);
+            await getAllProducts();
+        } catch (error) {
+            setError("Failed to update products");
+            console.error("Failed to update products:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    const updateListCategory = async () => {
+        try {
+            setLoading(true);
+            await getAllCategories();
+        } catch (error) {
+            setError("Failed to update categories");
+            console.error("Failed to update categories:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        updateListProducts();
     }, []);
 
-    useEffect(() => {
-        fetchProducts();
-    }, [sortBy]);
 
-    return { products, loading, error, fetchProducts, sortBy, setSortBy };
+   return { products, loading, error,categories,deleteProduct, updateListCategory, getAllCategories,updateListProducts, sortBy, setSortBy };
 };
+
+export default useProductViewModel;

@@ -5,87 +5,135 @@ import { LocalStorage } from '../sources/local/LocalStorage';
 import { ApiDelivery } from '../sources/remote/api/ApiDelivery';
 import { ResponseVerifyTokenAPIDelivery } from '../sources/remote/api/models/ResponseVerifyTokenApiDelivery';
 import { ProductPictures } from '../../Domain/entities/ProductPictures';
+import { ResponseAPIDelivery } from '../sources/remote/api/models/ResponseAPIDelivery';
 
 
 
 export class ProductRepositoryImpl implements ProductRepository {
+    async getProducts(token: string): Promise<ResponseAPIDelivery> {
+        try {
+            const { data } = await ApiDelivery.get<ResponseAPIDelivery>('product/getProducts', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        
+            return Promise.resolve(data);
 
-
-async getProducts(): Promise<Product[]> {
-    try {
-        const { data } = await ApiDelivery.get<{ success: boolean, products: Product[] }>('user/getProducts');
-
-        if (data.success) {
-          //   console.log("Products data:", data.products); // Add this line to log the products data
-            return Promise.resolve(data.products);
-        } else {
-            // Handle unsuccessful response
-            return Promise.reject("Failed to fetch products");
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
         }
-    } catch (error) {
-        // Handle network errors or other issues
-        return Promise.reject("Failed to fetch products");
     }
-}
 
-async getPictures(): Promise<ProductPictures[]> {
-    try {
-        const { data } = await ApiDelivery.get<{ success: boolean, productimages: ProductPictures[] }>('user/getPictures');
 
-        if (data.success) {
-             console.log("Products data:", data.productimages); // Add this line to log the products data
-            return Promise.resolve(data.productimages);
-        } else {
-            // Handle unsuccessful response
-            return Promise.reject("Failed to fetch products");
+    async createProduct(product: Product, token: string): Promise<ResponseAPIDelivery> {
+        try {
+            const { data } = await ApiDelivery.post('product/create', product, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseVerifyTokenAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
         }
-    } catch (error) {
-        // Handle network errors or other issues
-        return Promise.reject("Failed to fetch products");
-    }
-}
+    }/*async deleteProduct(product: Product, token: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `product/${product.id}`;
+            const { data } = await ApiDelivery.delete(path, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
+            return Promise.resolve(data);
 
-async createProduct(Product: Product): Promise<boolean> {
-    try {
-        console.log("Products data:", Product);
-        // Realizar una solicitud al backend para crear el producto
-        const response = await ApiDelivery.post<{ success: boolean }>('user/createProduct', Product);
-        console.log("Products data:", Product);
-
-        if (response.data.success) {
-            console.log("Product created successfully");
-            return true;
-        } else {
-            // Handle unsuccessful response
-            throw new Error("Failed to create product");
-            return false;
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
         }
-    } catch (error) {
-        // Handle network errors or other issues
-        throw new Error("Failed to create product");
     }
-}
+*/
+    async deleteProduct(id: string, token: string): Promise<ResponseAPIDelivery> {
 
-async deleteProduct(Product: Product): Promise<boolean> {
-    try {
-        console.log("Products data:", Product);
-        // Realizar una solicitud al backend para crear el producto
-        const response = await ApiDelivery.post<{ success: boolean }>('user/deleteProduct', Product);
-        console.log("Products data:", Product);
+        try {
+            const path = `product/deactivate`
+            const { data } = await ApiDelivery.post<ResponseAPIDelivery>(path,{id}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+                
+            });
 
-        if (response.data.success) {
-            console.log("Product created successfully");
-            return true;
-        } else {
-            // Handle unsuccessful response
-            throw new Error("Failed to create product");
-            return false;
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            // console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
         }
-    } catch (error) {
-        // Handle network errors or other issues
-        throw new Error("Failed to create product");
     }
-}
+    
+    async getPictures(): Promise<ProductPictures[]> {
+        try {
+            const { data } = await ApiDelivery.get<ProductPictures[]>('product/getPictures');
 
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
+    async updateProduct(product: Product, token: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `product/${product.id}`;
+            const { data } = await ApiDelivery.put(path, product, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
+    async updateProductPictures(product: Product, token: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `product/${product.id}/pictures`;
+            const { data } = await ApiDelivery.put(path, product, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
 }

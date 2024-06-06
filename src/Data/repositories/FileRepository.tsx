@@ -26,7 +26,7 @@ export class FileRepositoryImpl implements FileRepository {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            
+            console.log('DATA IMG: ', JSON.stringify(data));
             return Promise.resolve(data);
         } catch (error) {
             let e = (error as AxiosError);

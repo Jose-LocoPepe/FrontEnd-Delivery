@@ -4,11 +4,15 @@ import { FontAwesome } from '@expo/vector-icons';
 import { ProfileInfoScreen } from '../../../screens/profile/info/ProfileInfoScreen';
 import { CategoryMenuScreen } from '../../../screens/admin/category/CategoryMenu';
 import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu';
+import { AdminCategoryNavigator } from './AdminCategoryNavigator';
+import { AdminProductNavigator } from './AdminProductNavigator';
 
 export type RootAdminBottomTabParamsList = {
   ProfileInfoScreen: undefined,
   CategoryMenuScreen: undefined,
   ProductsMenuScreen: undefined,
+  AdminCategoryNavigator: undefined,
+  AdminProductNavigator: undefined
 }
 
 const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
@@ -16,25 +20,30 @@ const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
 export const AdminBottomTabs = () => {
   return (
     <Tab.Navigator
-    initialRouteName='CategoryMenuScreen'
+    initialRouteName='AdminProductNavigator'
     screenOptions={{
       headerShown: false
     }}>
       <Tab.Screen
-        name="CategoryMenuScreen"
-        component={CategoryMenuScreen}
+        name="AdminCategoryNavigator"
+        component={AdminCategoryNavigator}
         options={{
           title:"Categorias",
           tabBarIcon: ({ size, color }) => <FontAwesome name="align-justify" size={size} color={'#000'} />,
         }}
         />
+        
+      
         <Tab.Screen
-          name="ProductsMenuScreen"
-          component={ProductsMenuScreen}
+          name="AdminProductNavigator"
+          component={AdminProductNavigator}
           options={{
             title:"Productos",
+            headerShown: false,
             tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
           }}/>
+
+        
         <Tab.Screen
           name="ProfileInfoScreen"
           component={ProfileInfoScreen}

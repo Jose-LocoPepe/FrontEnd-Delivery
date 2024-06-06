@@ -3,5 +3,6 @@ export interface Category {
     image?: string;
     name: string;
     description: string;
+    isActive?: boolean;
     
 }

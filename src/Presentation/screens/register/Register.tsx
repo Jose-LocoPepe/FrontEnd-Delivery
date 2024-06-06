@@ -85,7 +85,7 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={{ ...styles.form, height: '80%' }}>
+            <View style={{ ...styles.form, height: '70%' }}>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}>
@@ -155,16 +155,16 @@ export const RegisterScreen = ({navigation, route}:Props) => {
                     <View style={{ marginTop: 10 }}>
                 
                     <RoundedButton text='CONFIRMAR' onPress={ register} />
-
+                    <ModalPickImage
+                        modalUseState={modalVisible}
+                        setModalUseState={setModalVisible}
+                        openGallery={pickImage}
+                        openCamera={takePhoto}/>
                     </View>
                 </ScrollView>
             </View>
 
-            <ModalPickImage
-                modalUseState={modalVisible}
-                setModalUseState={setModalVisible}
-                openGallery={pickImage}
-                openCamera={takePhoto}/>
+            
                 {loading && (
                 <ActivityIndicator style={styles.loading} size={"large"} color={"red"} />
             )

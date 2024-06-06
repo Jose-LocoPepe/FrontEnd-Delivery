@@ -1,9 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import  { RegisterScreen } from "../screens/register/Register";
-import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
+
 import { UserContext, UserProvider } from '../context/auth/UserContext';
 import { AdminBottomTabs } from './tabs/admin/AdminBottomTabs';
-import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
+
 import { useContext } from 'react';
 import LoadingScreen from '../screens/LoadingScreen';
 import { ClientBottomTabs } from './tabs/client/ClientBottomTabs';
@@ -11,11 +11,15 @@ import ProfileUpdateScreen from '../screens/profile/update/ProfileUpdateScreen';
 import HomeScreen from '../screens/home/Home';
 
 import { CategoriesCreateScreen } from '../screens/admin/category/create/CreateCategory';
-
+import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
+import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
 
 import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
 import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
 import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScreen';
+import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
+import { ProductsCreateScreen } from '../screens/admin/products/create/CreateProductScreen';
+import { ProductsListScreen } from '../screens/admin/products/list/ListProducts';
 
 
 export type RootStackParamsList = {
@@ -23,19 +27,20 @@ export type RootStackParamsList = {
     RegisterScreen: undefined,
     ProfileInfoScreen: undefined,
     ProfileUpdateScreen: undefined,
+    PasswordUpdateScreen: undefined,
+
     AdminBottomTabs: undefined,
     AdminProductBottomTabs: undefined,
     AdminCategoryBottomTabs: undefined,
-    CreateProductScreen: undefined,
+    ClientBottomTabs: undefined,
 
-    EliminateProductScreen: undefined,
     CreateProductScreen: undefined,
+    ProductListScreen: undefined,
+    
 
-    ClientBottomTabs: undefined
     AdminCategoryMenu: undefined,
     CategoryCreateScreen: undefined,
-    PasswordUpdateScreen: undefined,
-
+    CategoryListScreen: undefined,
 }
 
 
@@ -55,6 +60,11 @@ export const MainAppStack = () => {
             </>
         } else if (user.rol_id === 2) {
             // This Delivery
+            return <>
+                <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
+                <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
+                <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
+            </>
         } else {
             // This Admin
             return <> 
@@ -64,7 +74,11 @@ export const MainAppStack = () => {
                 <Stack.Screen name="AdminCategoryBottomTabs" component={AdminCategoryBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
+                <Stack.Screen name="CategoryCreateScreen" component={CategoriesCreateScreen} />
+                <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
 
+                <Stack.Screen name="CreateProductScreen" component={ProductsCreateScreen} />
+                <Stack.Screen name="ProductListScreen" component={ProductsListScreen} />
             </>
         }
     }
