@@ -1,14 +1,37 @@
 import { StyleSheet } from "react-native";
 
-const CreateProductStyles = StyleSheet.create({
+const EditProductStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white'
     },
+    imageContainer: {
+        paddingVertical: 40
+    },
+    image: {
+        borderRadius: 10,
+        height: 200,
+        width: 200,
+    },
+    imageAux: {
+        width: '150%',
+        height: 150,
+        alignSelf: 'center',
+        resizeMode: 'contain',
+       
+    },
+    imageText: {
+        color: '#000',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 15,
+        textTransform: 'uppercase',
+        textAlign: 'center'
+    },
     imageBackground: {
         width: '100%',
         height: '100%',
-        opacity: 0.9,
+        opacity: 0.1,
         bottom: '30%'
     },
     form: {
@@ -43,7 +66,7 @@ const CreateProductStyles = StyleSheet.create({
     logoContainer: {
         position: 'absolute',
         alignSelf: 'center',
-        top: '11%'
+        top: '20%'
     },
     logoImage: {
         width: 150,
@@ -107,4 +130,4 @@ const CreateProductStyles = StyleSheet.create({
 
 });
 
-export default CreateProductStyles;
+export default EditProductStyles;

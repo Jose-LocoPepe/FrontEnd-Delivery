@@ -6,11 +6,13 @@ import { ProductProvider } from "../../../context/products/ProductContext";
 import { ProductsListScreen } from "../../../screens/admin/products/list/ListProducts";
 import { ProductsCreateScreen } from "../../../screens/admin/products/create/CreateProductScreen";
 import { CategoryProvider } from "../../../context/categories/CategoryContext";
+import { UpdateProductScreen } from "../../../screens/admin/products/update/UpdateProducts";
 
 
 export type ProductStackParamList = {
     ProductListScreen: undefined,
     CreateProductScreen: undefined,
+    UpdateProductScreen: {id: string}
     //AdminProductNavigator: undefined
 }
 
@@ -38,6 +40,15 @@ export const AdminProductNavigator = () => {
                     title: 'Crear Categoria'
                 }}
                 />
+                <Stack.Screen
+                name="UpdateProductScreen"
+                component={UpdateProductScreen}
+                options={{
+                    headerShown: false,
+                    title: 'Actualizar Producto'
+                }}
+                />
+
             </Stack.Navigator>
             
         </ProductState>

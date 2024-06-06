@@ -18,6 +18,7 @@ import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
 import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
 import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScreen';
 import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
+import { CategoriesEditScreen } from '../screens/admin/category/update/UpdateCategory';
 
 
 export type RootStackParamsList = {
@@ -34,6 +35,8 @@ export type RootStackParamsList = {
 
     CreateProductScreen: undefined,
     ProductListScreen: undefined,
+    UpdateProductScreen: { id: string },
+
     
 
     AdminCategoryMenu: undefined,
@@ -74,9 +77,6 @@ export const MainAppStack = () => {
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
                 <Stack.Screen name="CategoryCreateScreen" component={CategoriesCreateScreen} />
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
-                
-                <Stack.Screen name="CreateProductScreen" component={CategoriesCreateScreen} />
-                <Stack.Screen name="ProductListScreen" component={CategoriesListScreen} />
             </>
         }
     }
