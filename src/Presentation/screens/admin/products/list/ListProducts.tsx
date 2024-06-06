@@ -1,37 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from './Styles';
-import { View, Text, Button, FlatList, Image } from 'react-native';
+import { View, Text, Button, FlatList, Image, Modal } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
 import { useProductViewModel, SortBy } from './ViewModel';
-import { ProductWithPictures } from './ViewModel';
 import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { ImageButton } from "../../../../components/ImageButton";
+import ProductItem from "./ProductItem";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Category } from "../../../../../Domain/entities/Category";
 
-interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
+interface Props extends StackScreenProps<RootStackParamsList, 'ProductListScreen'> {}
 
 export const ProductsListScreen = ({ navigation }: Props) => {
-    const { products, loading, fetchProducts, sortBy, setSortBy } = useProductViewModel();
+    const { products, loading, updateListProducts, error, categories,sortBy, setSortBy } = useProductViewModel();
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const renderProductItem = ({ item }: { item: ProductWithPictures }) => (
-        <View style={{ margin: 2,padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', flexDirection:'row',justifyContent: 'space-between', alignItems: 'center' }}>
-            <View style={{width: '25%'}}>
-                <Text>Foto:</Text>
-                {item.pictures.length > 0 ? (
-                item.pictures.map((picture: ProductPictures) => (
-                <Text key={picture.id}>image: {picture.image}</Text> // Display the image string as text
-                ))) : (
-                <Text>No pictures available</Text>
-                )}
-            </View>
-            <View style={{width: '75%'}}>
-                <Text>Nombre: {item.name}</Text>
-                <Text>Descripcion: {item.description}</Text>
-                <Text>Precio: {item.price}</Text>
-                <Text>Categoria: {item.categoryName}</Text>
-            </View>
-        </View>
+    const openModal = () => setIsModalVisible(true);
+    const closeModal = () => setIsModalVisible(false);
+    const renderCategoryItem = ({ item }: { item: Category }) => (
+        <TouchableOpacity onPress={() => {
+            //onChange('categoryId', item.id);
+            //setSelectedCategoryName(item.name);
+            closeModal();
+        }}>
+            <Text>{item.name}</Text>
+        </TouchableOpacity>
     );
 
     return (
@@ -40,34 +35,62 @@ export const ProductsListScreen = ({ navigation }: Props) => {
                 style={styles.imageBackground} 
                 source={require('../../../../../../assets/comidas-rapidas.jpeg')} />
                 
-            <View style={{ top: '0%', left: '0%', position: 'absolute', width: '100%', height: '65%' }}>
+            <View style={{ top: '10%', left: '0%', position: 'absolute', width: '100%', height: '55%' }}>
+
             {loading && <Text>Loading...</Text>}
-            {!loading && (
+                {!loading && error && <Text>{error}</Text>}
                 
-                <FlatList
-                    data={products}
-                    renderItem={renderProductItem}
-                    keyExtractor={(item) => item.id?.toString() || item.name}
-                    style={{ marginTop: 100, opacity: loading ? 0.5 : 1, borderTopLeftRadius: 40,
-                        borderTopRightRadius: 40, backgroundColor: 'white', padding: 10}}
-                />
-            )} 
+                    <FlatList
+                        data={products}
+                        renderItem={({item})=>(
+                            <ProductItem product={item} 
+                            />    
+                        )}
+                        keyExtractor={(item) => item.id!}
+                        style={{ padding:10, marginTop: 100, opacity: loading ? 0.5 : 1, borderTopLeftRadius: 40,
+                            borderTopRightRadius: 40, backgroundColor: 'white'}}
+                    />
+                
+                {!loading && Array.isArray(products) && products.length === 0 && (
+                    <Text style={{ textAlign: "center" }}>No hay categorías disponibles.</Text>
+                )}
+     
         </View>
-            <View style={{ top: '1%', left: '3%', position: 'absolute', marginTop: 30 }}>
-            <ImageButton
-              text='back'
-              onPress={() => navigation.navigate('AdminBottomTabs')}
-            />
+        <View style={{position: 'absolute', alignContent:'center', width:400,top: 120, right: 10}}>
+           
+        
+            <RoundedButton
+                    text="Agregar Producto"
+                    onPress={() => navigation.navigate('CreateProductScreen')}
+                />  
+           <Modal
+                    visible={isModalVisible}
+                    animationType="slide"
+                    onRequestClose={closeModal}
+                    transparent={true}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Selecciona una categoría</Text>
+                            <FlatList
+                                data={categories}
+                                renderItem={renderCategoryItem}
+                                keyExtractor={(item) => item.id!}
+                                style={{ maxHeight: 300 }}
+                            />
+                            <Button title="Cerrar" onPress={closeModal} />
+                        </View>
+                    </View>
+                </Modal>
             
         </View>
             <View style={{...styles.form, height: '35%'}}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                    Menu Listado Productos
+                    Menu Productos
                 </Text>
             <View style={{marginTop: 20}}/>
                 <RoundedButton
                     text="Listar Productos"
-                    onPress={fetchProducts}
+                    onPress={updateListProducts}
                 />
             <View style={{marginTop: 20}}/>
             <RoundedButton

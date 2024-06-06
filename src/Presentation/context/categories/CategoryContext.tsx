@@ -31,8 +31,10 @@ export const CategoryProvider = ({ children }: any) => {
     }, []);
     const getAllCategories = async (): Promise<void> => {
         try{
+        
             const response = await GetAllCategoriesUseCase(user.session_token);
             if(response.data){
+               
                 setCategories(response.data);
             }
         }catch(error){

@@ -5,12 +5,14 @@ import { ProfileInfoScreen } from '../../../screens/profile/info/ProfileInfoScre
 import { CategoryMenuScreen } from '../../../screens/admin/category/CategoryMenu';
 import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu';
 import { AdminCategoryNavigator } from './AdminCategoryNavigator';
+import { AdminProductNavigator } from './AdminProductNavigator';
 
 export type RootAdminBottomTabParamsList = {
   ProfileInfoScreen: undefined,
   CategoryMenuScreen: undefined,
   ProductsMenuScreen: undefined,
-  AdminCategoryNavigator: undefined
+  AdminCategoryNavigator: undefined,
+  AdminProductNavigator: undefined
 }
 
 const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
@@ -18,7 +20,7 @@ const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
 export const AdminBottomTabs = () => {
   return (
     <Tab.Navigator
-    initialRouteName='AdminCategoryNavigator'
+    initialRouteName='AdminProductNavigator'
     screenOptions={{
       headerShown: false
     }}>
@@ -30,13 +32,18 @@ export const AdminBottomTabs = () => {
           tabBarIcon: ({ size, color }) => <FontAwesome name="align-justify" size={size} color={'#000'} />,
         }}
         />
+        
+      
         <Tab.Screen
-          name="ProductsMenuScreen"
-          component={ProductsMenuScreen}
+          name="AdminProductNavigator"
+          component={AdminProductNavigator}
           options={{
             title:"Productos",
+            headerShown: false,
             tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
           }}/>
+
+        
         <Tab.Screen
           name="ProfileInfoScreen"
           component={ProfileInfoScreen}

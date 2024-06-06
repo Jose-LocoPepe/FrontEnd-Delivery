@@ -9,7 +9,6 @@ import { Category } from '../../../../../Domain/entities/Category'; // Import Ca
 import { RoundedButton } from '../../../../components/RoundedButton';
 import { ImageButton } from '../../../../components/ImageButton';
 import CategoryItem from './CategoryItem';
-import { ImageButtonAdd } from '../../../../components/ImageButtonAdd';
 
 interface Props extends StackScreenProps<RootStackParamsList, 'CategoryListScreen'> {}
 /*<View style={{width: '75%'}}>
@@ -18,7 +17,7 @@ interface Props extends StackScreenProps<RootStackParamsList, 'CategoryListScree
             </View>
             <View style={{width: '25%'}}>
             <Button
-                title="Eliminar"
+                titzle="Eliminar"
                 onPress={()=>setModalVisible(true)} // Invoke the delete function with category id
                 color="red"
             />

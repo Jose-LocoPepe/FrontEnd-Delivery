@@ -12,7 +12,7 @@ import { RoundedButton } from '../../../components/RoundedButton';
 import { RootStackParamsList } from '../../../navigator/MainAppStack';
 
 
-interface Props extends StackScreenProps<RootStackParamsList, 'AdminBottomTabs'> { };
+interface Props extends StackScreenProps<RootStackParamsList, 'ProfileInfoScreen'> { };
 
 export const ProfileInfoScreen = ({ navigation, route }: Props) => {
 

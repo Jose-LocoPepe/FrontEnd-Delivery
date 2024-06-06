@@ -8,7 +8,7 @@ const ListProductStyles = StyleSheet.create({
     imageBackground: {
         width: '100%',
         height: '100%',
-        opacity: 0.9,
+        opacity: 0.4,
         bottom: '20%'
     },
     form: {

@@ -1,10 +1,13 @@
 
+import { ResponseAPIDelivery } from '../../Data/sources/remote/api/models/ResponseAPIDelivery';
 import { Product } from '../entities/Product';
 import { ProductPictures } from '../entities/ProductPictures';
 
 export interface ProductRepository {
-    getProducts(): Promise<Product[]>;
+    getProducts(token: string): Promise<ResponseAPIDelivery>;
     getPictures(): Promise<ProductPictures[]>;
-    createProduct(Product: Product): Promise<boolean>;
-    deleteProduct(Product: Product): Promise<boolean>;
+    createProduct(product: Product, token: string): Promise<ResponseAPIDelivery>;
+    deleteProduct(id: string, token: string): Promise<ResponseAPIDelivery>;
+    updateProduct(product: Product, token: string): Promise<ResponseAPIDelivery>;
 }
+
