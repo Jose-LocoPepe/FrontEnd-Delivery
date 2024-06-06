@@ -7,14 +7,18 @@ import { getProductsUseCase } from "../../../Domain/useCases/Product/GetProducts
 import { CreateProductUseCase } from "../../../Domain/useCases/Product/CreateProductUseCase";
 import { UpdateProductUseCase } from "../../../Domain/useCases/Product/UpdateProductUseCase";
 import { deleteProductUseCase } from "../../../Domain/useCases/Product/DeleteProductsUseCase";
+import { UpdateFileUseCase } from "../../../Domain/useCases/File/UpdateFileUseCase";
+import { GetProductByIdUseCase } from "../../../Domain/useCases/Product/GetProductByIdUseCase";
 
 interface ProductContextProps {
     products: Product[];
     getAllProducts(): Promise<void>;
-    createProduct(product: Product, file: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
+    createProduct(product: Product, file1: ImagePicker.ImageInfo, file2: ImagePicker.ImageInfo, file3: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery> ;
+    //createProduct(product: Product, file: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
     updateProduct(product: Product, file: ImagePicker.ImageInfo, id: string): Promise<ResponseAPIDelivery>;
     removeProduct(id: string): Promise<ResponseAPIDelivery>;
     updateFile?(file: ImagePicker.ImageInfo, collection: string, id: string): Promise<ResponseAPIDelivery>;
+    sortProducts(criteria: 'name' | 'price'): void;
 }
 
 export const ProductContext = createContext({} as ProductContextProps);
@@ -39,17 +43,35 @@ export const ProductProvider = ({ children }: any) => {
             setProducts([]);
         }
     }
+    const getProductById = async (id: string) => {
+        try {
+            const response = await GetProductByIdUseCase(id, user.session_token);
+            return response;
+        } catch (error) {
+            return { success: false, message: "Failed to get Product" };
+        }
+    }
 
-    const createProduct = async (product: Product, file: ImagePicker.ImageInfo) => {
+    const createProduct = async (product: Product, file1: ImagePicker.ImageInfo, file2: ImagePicker.ImageInfo, file3: ImagePicker.ImageInfo) => {
         const response = await CreateProductUseCase(product, user.session_token);
+        console.log('response:', response)
         if (response.success) {
-            // Call to update file image
-            //await updateFile(file!, 'products', response.data.id);
+            // crear 3 imagenes
+            if (file1 !== undefined) {
+                await updateFile(file1!, 'productsImages', response.image1.id);
+            }
+            if (file2 !== undefined) {
+                await updateFile(file2!, 'productsImages', response.image2.id);
+            }
+            if (file3 !== undefined) {
+                await updateFile(file3!, 'productsImages', response.image3.id);
+           }
         }
         // Refresh list product
         getAllProducts();
         return response;
     }
+
 
     const updateProduct = async (product: Product, file: ImagePicker.ImageInfo, id: string) => {
         const response = await UpdateProductUseCase(product, id, user.session_token);
@@ -60,6 +82,16 @@ export const ProductProvider = ({ children }: any) => {
             getAllProducts();
         }
     }
+    const sortProducts = (criteria: 'name' | 'price') => {
+        const sortedProducts = [...products].sort((a, b) => {
+            if (criteria === 'name') {
+                return a.name.localeCompare(b.name);
+            } else {
+                return parseInt(a.price) - parseInt(b.price);
+            }
+        });
+        setProducts(sortedProducts);
+    }
 
     const removeProduct = async (id: string) => {
         const response = await deleteProductUseCase(id, user.session_token);
@@ -67,10 +99,21 @@ export const ProductProvider = ({ children }: any) => {
         return response;
     }
 
+    const updateFile = async (file: ImagePicker.ImageInfo, collection: string, id: string) => {
+        await UpdateFileUseCase(file, collection, id);
+    }
+    
+
+
     return (
         <ProductContext.Provider value={{ 
             products, 
-            getAllProducts, createProduct, updateProduct, removeProduct }}>
+            getAllProducts,
+            createProduct, 
+            updateProduct, 
+            removeProduct,
+            sortProducts
+        }}>
             {children}
         </ProductContext.Provider>
     )

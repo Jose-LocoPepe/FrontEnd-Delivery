@@ -19,6 +19,8 @@ interface ResponseErrorData {
     path: string;
     value: string;
 }
+
+
 const validationCreateCategorySchema = yup.object().shape({
     name: yup.string().required('El nombre de la categoría es requerido'),
     description: yup.string().required('La descripción de la categoría es requerida'),
@@ -28,6 +30,7 @@ const validationCreateCategorySchema = yup.object().shape({
 const CreateCategoryViewModel = () => {
     
     const [loading, setLoading] = useState<boolean>(false);
+    
     const [error, setError] = useState<string | null>(null);
     const [file, setFile] = useState<ImagePicker.ImageInfo>();
    

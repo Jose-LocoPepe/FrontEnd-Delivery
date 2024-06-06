@@ -17,7 +17,7 @@ export class ProductRepositoryImpl implements ProductRepository {
                     Authorization: `Bearer ${token}`
                 }
             });
-        
+            
             return Promise.resolve(data);
 
         } catch (error) {
@@ -27,6 +27,7 @@ export class ProductRepositoryImpl implements ProductRepository {
             return Promise.reject(apiError)
         }
     }
+
 
 
     async createProduct(product: Product, token: string): Promise<ResponseAPIDelivery> {
@@ -45,10 +46,13 @@ export class ProductRepositoryImpl implements ProductRepository {
             const apiError: ResponseVerifyTokenAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
             return Promise.reject(apiError)
         }
-    }/*async deleteProduct(product: Product, token: string): Promise<ResponseAPIDelivery> {
+    }
+
+    // Get product by id
+    async getProductById(id: string, token: string): Promise<ResponseAPIDelivery> {
         try {
-            const path = `product/${product.id}`;
-            const { data } = await ApiDelivery.delete(path, {
+            const path = `product/get/${id}`;
+            const { data } = await ApiDelivery.get<ResponseAPIDelivery>(path, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -63,7 +67,6 @@ export class ProductRepositoryImpl implements ProductRepository {
             return Promise.reject(apiError)
         }
     }
-*/
     async deleteProduct(id: string, token: string): Promise<ResponseAPIDelivery> {
 
         try {

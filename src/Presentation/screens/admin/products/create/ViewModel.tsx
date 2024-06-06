@@ -12,7 +12,12 @@ import * as yup from 'yup';
 
 import { showMessage } from 'react-native-flash-message';
 
+interface ImagesValue{
+    image1: string;
+    image2: string;
+    image3: string;
 
+}
 interface Values{
     name: string;
     description: string;
@@ -31,8 +36,14 @@ export const useCreateProductViewModel = () => {
     
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [file, setFile] = useState<ImagePicker.ImageInfo>();
-
+    const [file1, setFile1] = useState<ImagePicker.ImageInfo>();
+    const [file2, setFile2] = useState<ImagePicker.ImageInfo>();
+    const [file3, setFile3] = useState<ImagePicker.ImageInfo>();
+    const [images, setImages] = useState<ImagesValue>({
+        image1: '',
+        image2: '',
+        image3: ''
+    });
     const [values, setValues] = useState<Values>({
         name: '',
         description: '',
@@ -55,7 +66,7 @@ export const useCreateProductViewModel = () => {
             try {
                 setLoading(true);
                 const {...data } = values;
-                const response = await createProduct(data, file!);
+                const response = await createProduct(data, file1!, file2!, file3!);
                 if (response) {
                     showMessage({
                         message: 'Producto creado',
@@ -78,6 +89,55 @@ export const useCreateProductViewModel = () => {
             }
         }
     }
+    const pickImage = async (numberImage: number) => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1
+        });
+
+        if (!result.canceled) {
+
+            if (numberImage == 1) {
+                onChangeImage('image1', result.assets[0].uri); 
+                setFile1(result.assets[0]);
+            }
+            else if (numberImage == 2) {
+
+                onChangeImage('image2', result.assets[0].uri); 
+                setFile2(result.assets[0]);
+            }
+            else if (numberImage == 3) {
+
+                onChangeImage('image3', result.assets[0].uri); 
+                setFile3(result.assets[0]);
+            }
+
+        }
+    }
+    
+    const takePhoto = async (numberImage: number) => {
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1
+        });
+
+        if (!result.canceled) {
+            if (numberImage == 1) {
+                onChangeImage('image1', result.assets[0].uri); 
+                setFile1(result.assets[0]);
+            }
+            else if (numberImage == 2) {
+                onChangeImage('image2', result.assets[0].uri); 
+                setFile2(result.assets[0]);
+            }
+            else if (numberImage == 3) {
+                onChangeImage('image3', result.assets[0].uri); 
+                setFile3(result.assets[0]);
+            }
+        }
+    }
     
     //Validar formulario
     const isValidForm = async () => {
@@ -94,6 +154,9 @@ export const useCreateProductViewModel = () => {
             return false;
         }
     }
+    const onChangeImage = (property: string, value: any) => {
+        setImages({ ...images, [property]: value });
+    }
     
     const onChange = (property: string, value: any) => {
         if(property === 'price'){
@@ -105,12 +168,16 @@ export const useCreateProductViewModel = () => {
         setValues({ ...values, [property]: value });
         }
     };
+    
 
     return {
         ...values,
+        ...images,
         loading,
         error,
         onChange,
+        pickImage,
+        takePhoto,
         create,
         errorMessages,
         categories,

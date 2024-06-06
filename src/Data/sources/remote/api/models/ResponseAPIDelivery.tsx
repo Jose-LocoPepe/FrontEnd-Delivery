@@ -4,6 +4,9 @@ export interface ResponseAPIDelivery {
     data?: any;
     errors?: Error[];
     error?: string;
+    image1?: string;
+    image2?: string;
+    image3?: string;
 }
 
 export interface Error {

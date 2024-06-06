@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
 export const AdminBottomTabs = () => {
   return (
     <Tab.Navigator
-    initialRouteName='AdminProductNavigator'
+    initialRouteName='AdminCategoryNavigator'
     screenOptions={{
       headerShown: false
     }}>

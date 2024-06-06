@@ -9,7 +9,7 @@ import { showMessage } from 'react-native-flash-message';
 import { CustomTextInput } from '../../../../components/CustomTextInput';
 import { RoundedButton } from '../../../../components/RoundedButton';
 import { ImageButton } from '../../../../components/ImageButton';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { ModalPickImage } from '../../../../components/ModalPickImage';
 
 interface Props extends StackScreenProps<RootStackParamsList, 'CategoryCreateScreen'> {}
@@ -83,7 +83,12 @@ export const CategoriesCreateScreen = ({ navigation }: Props) => {
         }
       </TouchableOpacity>
             </View>
-            <View style={{...styles.form, height: '45%'}}>
+            <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        automaticallyAdjustKeyboardInsets={true}
+                        style={{...styles.form, height: '45%'}}
+                >
               <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 , top:-5}}>
                   Agregar Categoria
               </Text>
@@ -122,7 +127,7 @@ export const CategoriesCreateScreen = ({ navigation }: Props) => {
         />
             {loading && (
             <ActivityIndicator style={styles.loading} size="large" color="red" />)}
-        </View>
+        </ScrollView>
         
         
     </View>

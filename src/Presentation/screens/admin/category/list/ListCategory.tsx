@@ -67,12 +67,15 @@ export const CategoriesListScreen = ({ navigation }: Props) => {
             </View>
         
 
-        <View style={{ top: '5%', right: '3%', position: 'absolute', marginTop: 30 }}>
-            <ImageButton
-                text='add'
-                onPress={() => navigation.navigate('CategoryCreateScreen')}
-            />
-        </View>
+            <View style={{position: 'absolute', alignContent:'center', width:130,top: 100, right: 12}}>
+           
+        
+           <RoundedButton
+                   text="Agregar Categoria"
+                   onPress={() => navigation.navigate('CategoryCreateScreen')}
+               />  
+           
+       </View>
             <View style={{...styles.form, height: '20%'}}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10, top:-5}}>
                     Menú Listado de Categorías

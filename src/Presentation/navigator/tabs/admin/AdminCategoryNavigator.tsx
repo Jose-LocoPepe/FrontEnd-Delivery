@@ -5,6 +5,7 @@ import { CategoriesCreateScreen } from "../../../screens/admin/category/create/C
 import { CategoriesListScreen } from "../../../screens/admin/category/list/ListCategory";
 import { CategoryMenuScreen } from "../../../screens/admin/category/CategoryMenu";
 import { CategoryProvider } from "../../../context/categories/CategoryContext";
+import { CategoriesEditScreen } from "../../../screens/admin/category/update/UpdateCategory";
 
 interface ContextStateProps {
     children: React.ReactElement | React.ReactElement[] | null;
@@ -14,6 +15,7 @@ interface ContextStateProps {
 export type CategoryStackParamList = {
     CategoryListScreen: undefined,
     CategoryCreateScreen: undefined,
+    CategoryEditScreen: {categoryId: string },
     //AdminProductNavigator: undefined
 }
 
@@ -39,6 +41,15 @@ export const AdminCategoryNavigator = () => {
                     title: 'Crear Categoria'
                 }}
                 />
+                <Stack.Screen
+                name="CategoryEditScreen"
+                component={CategoriesEditScreen}
+                options={{
+                    headerShown: false,
+                    title: 'Editar Categoria'
+                }}
+                />
+
             </Stack.Navigator>
         </CategoryState>
     );

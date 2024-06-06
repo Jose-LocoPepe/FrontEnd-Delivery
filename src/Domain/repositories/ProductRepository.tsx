@@ -9,5 +9,6 @@ export interface ProductRepository {
     createProduct(product: Product, token: string): Promise<ResponseAPIDelivery>;
     deleteProduct(id: string, token: string): Promise<ResponseAPIDelivery>;
     updateProduct(product: Product, token: string): Promise<ResponseAPIDelivery>;
+    getProductById(id: string, token: string): Promise<ResponseAPIDelivery>;
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert,FlatList } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert,FlatList, KeyboardAvoidingView, Platform } from 'react-native'
 
 import styles from './Styles';
 import { RoundedButton } from '../../components/RoundedButton';
@@ -31,11 +31,12 @@ const HomeScreen = ({ navigation, route }: Props) => {
         />
       </View>
 
-      <View style={{ ...styles.form, height: '55%' }}>
-
-        <ScrollView
+      
+      <ScrollView
         showsVerticalScrollIndicator={true}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets={true}
+        style={{ ...styles.form, height: '55%' }}>
           
           <View>
             <Text style={styles.formText}>¡Bienvenido!</Text>
@@ -107,7 +108,8 @@ const HomeScreen = ({ navigation, route }: Props) => {
           </View>
 
         </ScrollView>
-      </View>
+       
+ 
     </View>
   )
 }

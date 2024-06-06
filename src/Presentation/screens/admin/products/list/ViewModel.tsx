@@ -15,7 +15,7 @@ export enum SortBy {
 
 
 export const useProductViewModel = () => {
-    const { products, getAllProducts, removeProduct } = useContext(ProductContext);
+    const { products, getAllProducts, removeProduct, sortProducts } = useContext(ProductContext);
     const { categories, getAllCategories } = useContext(CategoryContext);
     //const [products, setProducts] = useState<ProductWithPictures[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -98,7 +98,7 @@ export const useProductViewModel = () => {
     }, []);
 
 
-   return { products, loading, error,categories,deleteProduct, updateListCategory, getAllCategories,updateListProducts, sortBy, setSortBy };
+   return { products, loading, error,categories,sortProducts,deleteProduct, updateListCategory, getAllCategories,updateListProducts, sortBy, setSortBy };
 };
 
 export default useProductViewModel;
