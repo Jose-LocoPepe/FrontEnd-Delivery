@@ -14,7 +14,7 @@ import { Category } from "../../../../../Domain/entities/Category";
 interface Props extends StackScreenProps<RootStackParamsList, 'ProductListScreen'> {}
 
 export const ProductsListScreen = ({ navigation }: Props) => {
-    const { products, loading, updateListProducts, error, categories,sortBy, setSortBy } = useProductViewModel();
+    const { products, loading, updateListProducts,sortProducts, error, categories,sortBy, setSortBy } = useProductViewModel();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const openModal = () => setIsModalVisible(true);
@@ -56,31 +56,13 @@ export const ProductsListScreen = ({ navigation }: Props) => {
                 )}
      
         </View>
-        <View style={{position: 'absolute', alignContent:'center', width:400,top: 120, right: 10}}>
+        <View style={{position: 'absolute', alignContent:'center', width:130,top: 100, right: 12}}>
            
         
             <RoundedButton
                     text="Agregar Producto"
                     onPress={() => navigation.navigate('CreateProductScreen')}
                 />  
-           <Modal
-                    visible={isModalVisible}
-                    animationType="slide"
-                    onRequestClose={closeModal}
-                    transparent={true}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Selecciona una categoría</Text>
-                            <FlatList
-                                data={categories}
-                                renderItem={renderCategoryItem}
-                                keyExtractor={(item) => item.id!}
-                                style={{ maxHeight: 300 }}
-                            />
-                            <Button title="Cerrar" onPress={closeModal} />
-                        </View>
-                    </View>
-                </Modal>
             
         </View>
             <View style={{...styles.form, height: '35%'}}>
@@ -95,12 +77,12 @@ export const ProductsListScreen = ({ navigation }: Props) => {
             <View style={{marginTop: 20}}/>
             <RoundedButton
                     text="Ordenar por Nombre"
-                    onPress={() => setSortBy(SortBy.NAME)}
+                    onPress={() => sortProducts('name')}
                 />
                 <View style={{marginTop: 20}}/>
             <RoundedButton
                     text="Ordenar por Precio"
-                    onPress={() => setSortBy(SortBy.PRICE)}
+                    onPress={() => sortProducts('price')}
                 />
         
             </View>

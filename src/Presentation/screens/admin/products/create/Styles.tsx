@@ -8,8 +8,36 @@ const CreateProductStyles = StyleSheet.create({
     imageBackground: {
         width: '100%',
         height: '100%',
-        opacity: 0.9,
+        opacity: 0.4,
         bottom: '30%'
+    },
+    imageContainer: {
+        padding: 30,
+        position: 'absolute',
+        alignSelf: 'center',
+        top: '12%',
+        flexDirection: 'row', 
+        
+    },
+    logoContainer: {
+        position: 'absolute',
+        alignSelf: 'center',
+        width: '30%',
+        height: '30%',
+
+        top: '20%'
+    },
+    logoImage: {
+        width: 120,
+        height: 120,
+        borderRadius: 100,
+        borderColor: 'white',
+        borderWidth: 2
+    },
+    formIcon: {
+        width: 30,
+        height: 30,
+        marginTop: 10
     },
     form: {
         width: '100%',
@@ -40,23 +68,7 @@ const CreateProductStyles = StyleSheet.create({
         fontSize: 12,
         color: 'gray'
     },
-    logoContainer: {
-        position: 'absolute',
-        alignSelf: 'center',
-        top: '11%'
-    },
-    logoImage: {
-        width: 150,
-        height: 150,
-        borderRadius: 100,
-        borderColor: 'white',
-        borderWidth: 2
-    },
-    formIcon: {
-        width: 30,
-        height: 30,
-        marginTop: 10
-    },
+
     logoText: {
         color: 'white',
         textAlign: 'center',

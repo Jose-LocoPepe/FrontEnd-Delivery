@@ -79,7 +79,7 @@ export const CategoryProvider = ({ children }: any) => {
             return { success: false, message: "Failed to delete category" };
         }
     }
-   
+    
 
     const updateFile = async (file: ImagePicker.ImageInfo, collection: string, id: string) => {
         await UpdateFileUseCase(file, collection, id);
