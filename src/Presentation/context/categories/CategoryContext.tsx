@@ -8,12 +8,14 @@ import { UpdateFileUseCase } from "../../../Domain/useCases/File/UpdateFileUseCa
 import { deleteCategoryUseCase } from "../../../Domain/useCases/Category/DeleteCategoryUseCase";
 import { CreateCategoryUseCase } from "../../../Domain/useCases/Category/CreateCategoryUseCase";
 import { UpdateCategoryUseCase } from "../../../Domain/useCases/Category/UpdateCategoryUseCase";
+import { GetCategoryIdUseCase } from "../../../Domain/useCases/Category/GetCategoryByIdUseCase";
 
 interface CategoryContextProps {
     categories: Category[];
     getAllCategories(): Promise<void>;
+    getCategoryById(id: string): Promise<ResponseAPIDelivery>;
     createCategory(category: Category, file:ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
-    updateCategory(category: Category, token: string): Promise<ResponseAPIDelivery>;
+    updateCategory(category: Category, file: ImagePicker.ImageInfo, id: string): Promise<ResponseAPIDelivery>;
     removeCategory(id: string): Promise<ResponseAPIDelivery>;
     updateFile?(file: ImagePicker.ImageInfo, collection: string, id: string): Promise<ResponseAPIDelivery>;
 }
@@ -31,7 +33,6 @@ export const CategoryProvider = ({ children }: any) => {
     }, []);
     const getAllCategories = async (): Promise<void> => {
         try{
-        
             const response = await GetAllCategoriesUseCase(user.session_token);
             if(response.data){
                
@@ -41,7 +42,14 @@ export const CategoryProvider = ({ children }: any) => {
             setCategories([]);
         }
     }
-
+    const getCategoryById = async (id: string): Promise<ResponseAPIDelivery> => {
+        try {
+            const response = await GetCategoryIdUseCase(id, user.session_token);
+            return response;
+        } catch (error) {
+            return { success: false, message: "Failed to get category" };
+        }
+    }
     const createCategory = async (category: Category, file: ImagePicker.ImageInfo) => {
         const response = await CreateCategoryUseCase(category, user.session_token);
         if (response.success) {
@@ -90,6 +98,7 @@ export const CategoryProvider = ({ children }: any) => {
                 categories,
                 getAllCategories,
                 createCategory,
+                getCategoryById,
                 updateCategory,
                 removeCategory,
                 updateFile

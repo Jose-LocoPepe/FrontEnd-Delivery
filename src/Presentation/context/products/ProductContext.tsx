@@ -8,6 +8,7 @@ import { CreateProductUseCase } from "../../../Domain/useCases/Product/CreatePro
 import { UpdateProductUseCase } from "../../../Domain/useCases/Product/UpdateProductUseCase";
 import { deleteProductUseCase } from "../../../Domain/useCases/Product/DeleteProductsUseCase";
 import { UpdateFileUseCase } from "../../../Domain/useCases/File/UpdateFileUseCase";
+import { GetProductByIdUseCase } from "../../../Domain/useCases/Product/GetProductByIdUseCase";
 
 interface ProductContextProps {
     products: Product[];
@@ -40,6 +41,14 @@ export const ProductProvider = ({ children }: any) => {
             }
         }catch(error){
             setProducts([]);
+        }
+    }
+    const getProductById = async (id: string) => {
+        try {
+            const response = await GetProductByIdUseCase(id, user.session_token);
+            return response;
+        } catch (error) {
+            return { success: false, message: "Failed to get Product" };
         }
     }
 

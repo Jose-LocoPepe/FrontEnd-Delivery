@@ -52,7 +52,7 @@ export const ProductsListScreen = ({ navigation }: Props) => {
                     />
                 
                 {!loading && Array.isArray(products) && products.length === 0 && (
-                    <Text style={{ textAlign: "center" }}>No hay categorías disponibles.</Text>
+                    <Text style={{ textAlign: "center" }}>No hay productos disponibles.</Text>
                 )}
      
         </View>

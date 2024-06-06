@@ -6,6 +6,24 @@ import { ResponseAPIDelivery } from '../sources/remote/api/models/ResponseAPIDel
 
 
 export class CategoryRepositoryImpl implements CategoryRepository {
+    async getCategoryById(id: string, token: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `category/get/${id}`;
+            const { data } = await ApiDelivery.get<ResponseAPIDelivery>(path, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
     async getAllCategories(token: string): Promise<ResponseAPIDelivery> {
         try {
             const { data } = await ApiDelivery.get<ResponseAPIDelivery>('category/getCategories', {
@@ -42,6 +60,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
             return Promise.reject(apiError)
         }
     }
+    
 
     async updateCategory(category: Category, id: string, token: string): Promise<ResponseAPIDelivery> {
         try {

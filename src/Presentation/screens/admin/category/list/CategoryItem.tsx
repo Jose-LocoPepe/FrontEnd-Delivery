@@ -40,12 +40,16 @@ export const CategoryItem = ({ category }: Props) => {
             </View>
             <View style={{width:'20%', flexDirection:'row'}}>
             <TouchableOpacity
-               onPress={()=> console.log("edit")} // Invoke the delete function with category id
-               >
-               <Image
-                style={{width: 30, height: 30, resizeMode: 'contain', marginRight: 10}}
-                source={require('../../../../../../assets/edit.png')}
-                />
+                  onPress={() => {
+                    if (category.id) {
+                      console.log("Navigating to CategoryEditScreen with categoryId:", category.id);
+                      navigation.navigate('CategoryEditScreen', { categoryId: category.id });
+                    }}}
+                >
+                <Image
+                 style={{width: 30, height: 30, resizeMode: 'contain'}}
+                 source={require('../../../../../../assets/edit.png')}
+                 />
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={()=> setModalVisible(true)} // Invoke the delete function with category id
