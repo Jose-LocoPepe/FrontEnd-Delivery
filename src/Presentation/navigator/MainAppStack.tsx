@@ -19,6 +19,7 @@ import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
 import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScreen';
 import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
 import { CategoriesEditScreen } from '../screens/admin/category/update/UpdateCategory';
+import AddressListScreen from '../screens/address/list/AddressListScreen';
 
 
 export type RootStackParamsList = {
@@ -42,6 +43,8 @@ export type RootStackParamsList = {
     AdminCategoryMenu: undefined,
     CategoryCreateScreen: undefined,
     CategoryListScreen: undefined,
+
+    AddressListScreen: undefined,
 }
 
 
@@ -58,6 +61,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
+                <Stack.Screen name="AddressListScreen" component={AddressListScreen} />
             </>
         } else if (user.rol_id === 2) {
             // This Delivery
