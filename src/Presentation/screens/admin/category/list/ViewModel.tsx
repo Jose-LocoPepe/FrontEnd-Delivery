@@ -4,6 +4,7 @@ import { Category } from '../../../../../Domain/entities/Category';
 import { User } from '../../../../../Domain/entities/User';
 import { GetAllCategoriesUseCase } from '../../../../../Domain/useCases/Category/GetAllCategoriesUseCase';
 import { CategoryContext } from '../../../../context/categories/CategoryContext';
+import { showMessage } from 'react-native-flash-message';
 
 interface CategoryViewModel {
     category: Category[];
@@ -37,6 +38,12 @@ const useCategoryViewModel = () => {
             setLoading(true);
             const response = await removeCategory(id);
             if (response) {
+                setLoading(false);
+                    showMessage({
+                        message: 'Categoría eliminada',
+                        description: 'La categoría se ha eliminado correctamente',
+                        type: 'success',
+                    });
                 updateListCategory();
             } else {
                 setError("Category not found");

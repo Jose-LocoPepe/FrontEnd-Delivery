@@ -101,12 +101,18 @@ export const ProductProvider = ({ children }: any) => {
         });
         setProducts(sortedProducts);
     }
-
+  
     const removeProduct = async (id: string) => {
+    try{
         const response = await deleteProductUseCase(id, user.session_token);
-        getAllProducts();
-        return response;
+        if(response.success){
+            await getAllProducts();
+            return response;
+        }
+    } catch (error) {
+        return { success: false, message: "Failed to delete product" };
     }
+}
 
     const updateFile = async (file: ImagePicker.ImageInfo, collection: string, id: string) => {
         await UpdateFileUseCase(file, collection, id);

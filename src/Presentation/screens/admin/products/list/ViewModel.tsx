@@ -3,6 +3,7 @@ import { Product } from '../../../../../Domain/entities/Product';
 import { GetProductsUseCase } from '../../../../../Domain/useCases/Product/GetProductsUseCase'; // Import GetProductsUseCase
 import { ProductContext } from '../../../../context/products/ProductContext';
 import { CategoryContext } from '../../../../context/categories/CategoryContext';
+import { showMessage } from 'react-native-flash-message';
 
 export enum SortBy {
     NAME = "NAME",
@@ -20,7 +21,13 @@ export const useProductViewModel = () => {
         try {
             setLoading(true);
             const response = await removeProduct(id);
-            if (response) {
+            if (response.success) {
+                setLoading(false);
+                    showMessage({
+                        message: 'Producto eliminado',
+                        description: 'El producto se ha eliminado correctamente',
+                        type: 'success',
+                    });
                 updateListProducts();
             } else {
                 setError("Product not found");

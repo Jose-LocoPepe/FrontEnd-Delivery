@@ -79,7 +79,6 @@ export class ProductRepositoryImpl implements ProductRepository {
                 }
                 
             });
-
             return Promise.resolve(data);
 
         } catch (error) {
