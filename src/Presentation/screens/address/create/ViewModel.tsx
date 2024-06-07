@@ -1,8 +1,8 @@
-
-import * as yup from "yup";
-
 import { useState, useContext } from "react";
 import { UserContext } from "../../../context/auth/UserContext";
+
+import * as yup from "yup";
+import { CreateAddressUseCase } from "../../../../Domain/useCases/Address/CreateAddressUseCase";
 
 interface Values {
     name: string;
@@ -46,8 +46,8 @@ const AddressCreateViewModel = () => {
                 const {...data} = values;
 
                 // Call to use case
-                const response = await ;
-
+                const response = await CreateAddressUseCase(user?.id as string, data.name, data.street, data.neighborhood, data.longitude, data.latitude, user?.session_token as string);
+                
                 if(response.success){
                     setLoading(false);
                     return true;
