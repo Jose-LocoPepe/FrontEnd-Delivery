@@ -18,14 +18,16 @@ import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
 import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
 import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScreen';
 import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
+
 import { CategoriesEditScreen } from '../screens/admin/category/update/UpdateCategory';
 import AddressListScreen from '../screens/address/list/AddressListScreen';
 import { AddressFormScreen } from '../screens/address/create/AddressFormScreen';
 
 
+
 export type RootStackParamsList = {
     Home: undefined,
-    RegisterScreen: undefined,
+    RegisterScreen: undefined,  
     ProfileInfoScreen: undefined,
     ProfileUpdateScreen: undefined,
     PasswordUpdateScreen: undefined,
@@ -37,16 +39,16 @@ export type RootStackParamsList = {
 
     CreateProductScreen: undefined,
     ProductListScreen: undefined,
-    UpdateProductScreen: { id: string },
-
     
 
     AdminCategoryMenu: undefined,
     CategoryCreateScreen: undefined,
     CategoryListScreen: undefined,
 
+
     AddressListScreen: undefined,
     AddressFormScreen: undefined,
+
 }
 
 
@@ -84,6 +86,9 @@ export const MainAppStack = () => {
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
                 <Stack.Screen name="CategoryCreateScreen" component={CategoriesCreateScreen} />
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
+
+                <Stack.Screen name="CreateProductScreen" component={ProductsCreateScreen} />
+                <Stack.Screen name="ProductListScreen" component={ProductsListScreen} />
             </>
         }
     }

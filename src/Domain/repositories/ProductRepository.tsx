@@ -1,4 +1,3 @@
-
 import { ResponseAPIDelivery } from '../../Data/sources/remote/api/models/ResponseAPIDelivery';
 import { Product } from '../entities/Product';
 import { ProductPictures } from '../entities/ProductPictures';
@@ -11,4 +10,3 @@ export interface ProductRepository {
     updateProduct(product: Product, token: string): Promise<ResponseAPIDelivery>;
     getProductById(id: string, token: string): Promise<ResponseAPIDelivery>;
 }
-

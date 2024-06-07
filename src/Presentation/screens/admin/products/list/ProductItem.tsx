@@ -10,6 +10,9 @@ import { Product } from '../../../../../Domain/entities/Product';
 import { useProductViewModel } from './ViewModel';
 import { ProductStackParamList } from '../../../../navigator/tabs/admin/AdminProductNavigator';
 
+
+
+
 interface Props {
     product: Product;
 }
@@ -35,13 +38,18 @@ export const ProductItem = ({ product }: Props) => {
             </View>
             <View style={{width:'20%', flexDirection:'row'}}>
             <TouchableOpacity
-               onPress={()=> console.log("edit")} // Invoke the delete function with category id
-               >
-               <Image
-                style={{width: 30, height: 30, resizeMode: 'contain', marginRight: 10}}
-                source={require('../../../../../../assets/edit.png')}
-                />
-            </TouchableOpacity>
+                    onPress={() => {
+                        if (product.id) {
+                            console.log("Navigating to UpdateProductScreen with productId:", product.id);
+                            navigation.navigate('UpdateProductScreen', { productId: product.id });
+                        }
+                    }}
+                >
+                    <Image
+                        style={{ width: 30, height: 30, resizeMode: 'contain', marginRight: 10 }}
+                        source={require('../../../../../../assets/edit.png')}
+                    />
+                </TouchableOpacity>
             <TouchableOpacity
                 onPress={()=> setModalVisible(true)} // Invoke the delete function with category id
                 >

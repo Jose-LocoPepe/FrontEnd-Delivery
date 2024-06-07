@@ -13,9 +13,10 @@ import { GetProductByIdUseCase } from "../../../Domain/useCases/Product/GetProdu
 interface ProductContextProps {
     products: Product[];
     getAllProducts(): Promise<void>;
+    getProductById(id: string): Promise<ResponseAPIDelivery>;
     createProduct(product: Product, file1: ImagePicker.ImageInfo, file2: ImagePicker.ImageInfo, file3: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery> ;
     //createProduct(product: Product, file: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
-    updateProduct(product: Product, file: ImagePicker.ImageInfo, id: string): Promise<ResponseAPIDelivery>;
+    updateProduct(product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo, id: string): Promise<ResponseAPIDelivery>;
     removeProduct(id: string): Promise<ResponseAPIDelivery>;
     updateFile?(file: ImagePicker.ImageInfo, collection: string, id: string): Promise<ResponseAPIDelivery>;
     sortProducts(criteria: 'name' | 'price'): void;
@@ -26,7 +27,7 @@ export const ProductContext = createContext({} as ProductContextProps);
 export const ProductProvider = ({ children }: any) => {
 
     const [products, setProducts] = useState<Product[]>([]);
-    const { user } = useContext(UserContext);
+    const { user } = useContext(UserContext);   
 
     useEffect(() => {
         if(products.length === 0) getAllProducts();
@@ -43,7 +44,7 @@ export const ProductProvider = ({ children }: any) => {
             setProducts([]);
         }
     }
-    const getProductById = async (id: string) => {
+    const getProductById = async (id: string): Promise<ResponseAPIDelivery> => {
         try {
             const response = await GetProductByIdUseCase(id, user.session_token);
             return response;
@@ -54,7 +55,7 @@ export const ProductProvider = ({ children }: any) => {
 
     const createProduct = async (product: Product, file1: ImagePicker.ImageInfo, file2: ImagePicker.ImageInfo, file3: ImagePicker.ImageInfo) => {
         const response = await CreateProductUseCase(product, user.session_token);
-        console.log('response:', response)
+        console.log('response:', response);
         if (response.success) {
             // crear 3 imagenes
             if (file1 !== undefined) {
@@ -73,14 +74,22 @@ export const ProductProvider = ({ children }: any) => {
     }
 
 
-    const updateProduct = async (product: Product, file: ImagePicker.ImageInfo, id: string) => {
-        const response = await UpdateProductUseCase(product, id, user.session_token);
+    const updateProduct = async (product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo, id: string) => {
+        const response = await UpdateProductUseCase(product, user.session_token);
         if (response.success) {
-            if (file !== undefined) {
-                await updateFile(file!, 'products', id);
+            if (file1 !== undefined) {
+                await updateFile(file1!, 'productsImages', response.image1.id);
+            }
+            
+            if (file2 !== undefined) {
+                await updateFile(file2!, 'productsImages', response.image1.id);
+            }
+            if (file2 !== undefined) {
+                await updateFile(file3!, 'productsImages', response.image1.id);
             }
             getAllProducts();
         }
+        return response;
     }
     const sortProducts = (criteria: 'name' | 'price') => {
         const sortedProducts = [...products].sort((a, b) => {
@@ -106,13 +115,15 @@ export const ProductProvider = ({ children }: any) => {
 
 
     return (
-        <ProductContext.Provider value={{ 
+        <ProductContext.Provider 
+        value={{ 
             products, 
             getAllProducts,
             createProduct, 
             updateProduct, 
             removeProduct,
-            sortProducts
+            sortProducts,
+            getProductById,
         }}>
             {children}
         </ProductContext.Provider>
