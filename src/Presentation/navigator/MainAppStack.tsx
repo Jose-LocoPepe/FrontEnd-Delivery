@@ -87,8 +87,6 @@ export const MainAppStack = () => {
                 <Stack.Screen name="CategoryCreateScreen" component={CategoriesCreateScreen} />
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
 
-                <Stack.Screen name="CreateProductScreen" component={ProductsCreateScreen} />
-                <Stack.Screen name="ProductListScreen" component={ProductsListScreen} />
             </>
         }
     }
