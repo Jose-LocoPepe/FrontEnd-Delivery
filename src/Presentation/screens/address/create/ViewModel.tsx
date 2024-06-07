@@ -31,16 +31,63 @@ const AddressCreateViewModel = () => {
     });
     const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
+    const [addressSelected, setAddressSelected] = useState(false);
 
     const onChange = (property: string, value: string | number) => {
         setValues({ ...values, [property]: value });
     }
 
+    const saveAddress = async () => {
+        const validForm = await isValidForm();
+
+        if (validForm) {
+            try {
+                setLoading(true);
+                const {...data} = values;
+
+                // Call to use case
+                const response = await ;
+
+                if(response.success){
+                    setLoading(false);
+                    return true;
+                }
+            } catch (error) {
+                console.log(error);
+                setLoading(false);
+                return false;
+            }
+        }
+    }
+
+    const isValidForm = async (): Promise<boolean> => {
+        try {
+            await validationSchema.validate(values, { abortEarly: false });
+            return true;
+        } catch (error) {
+            const errors: Record<string, string> = {};
+
+            if(error instanceof yup.ValidationError){
+                error.inner.forEach((err: yup.ValidationError) => {
+                    errors[err.path as string] = err.message;
+                });
+                setErrorMessages(errors);
+            }
+            console.log(errorMessages);
+            return false;
+        }
+    }
+
+
+
     return {
         ...values,
         errorMessages,
         loading,
-        onChange
+        onChange,
+        addressSelected,
+        setAddressSelected,
+        saveAddress
     }
 }
 
