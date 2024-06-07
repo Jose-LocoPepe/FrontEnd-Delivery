@@ -1,4 +1,4 @@
-import { CategoryRepositoryImpl } from "../../../Data/repositories/CategoryRepository"
+import { CategoryRepositoryImpl } from "../../../Data/repositories/CategoryRepository";
 
 const { getCategoryById } = new CategoryRepositoryImpl();
 
