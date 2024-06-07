@@ -74,7 +74,12 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                         <Text>{user?.phone}</Text>
                     </View>
                 </View>
-
+                
+                <RoundedButton
+                    text="Direcciones"
+                    onPress={() => navigation.navigate('AddressListScreen')}
+                />
+                <View style={{ height: 20 }} />
                 <RoundedButton
                     text="Actualizar Perfil"
                     onPress={() => navigation.navigate('ProfileUpdateScreen')}

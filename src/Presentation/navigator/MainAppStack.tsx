@@ -18,9 +18,11 @@ import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
 import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
 import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScreen';
 import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
-import { ProductsCreateScreen } from '../screens/admin/products/create/CreateProductScreen';
 
-import { ProductsListScreen } from '../screens/admin/products/list/ListProducts';
+import { CategoriesEditScreen } from '../screens/admin/category/update/UpdateCategory';
+import AddressListScreen from '../screens/address/list/AddressListScreen';
+import { AddressFormScreen } from '../screens/address/create/AddressFormScreen';
+
 
 
 export type RootStackParamsList = {
@@ -43,7 +45,10 @@ export type RootStackParamsList = {
     CategoryCreateScreen: undefined,
     CategoryListScreen: undefined,
 
-    
+
+    AddressListScreen: undefined,
+    AddressFormScreen: undefined,
+
 }
 
 
@@ -60,6 +65,8 @@ export const MainAppStack = () => {
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
+                <Stack.Screen name="AddressListScreen" component={AddressListScreen} />
+                <Stack.Screen name="AddressFormScreen" component={AddressFormScreen} />
             </>
         } else if (user.rol_id === 2) {
             // This Delivery
