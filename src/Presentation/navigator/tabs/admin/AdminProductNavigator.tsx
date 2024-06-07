@@ -12,7 +12,7 @@ import { UpdateProductScreen } from "../../../screens/admin/products/update/Upda
 export type ProductStackParamList = {
     ProductListScreen: undefined,
     CreateProductScreen: undefined,
-    UpdateProductScreen: {id: string}
+    UpdateProductScreen: {productId: string}
     //AdminProductNavigator: undefined
 }
 

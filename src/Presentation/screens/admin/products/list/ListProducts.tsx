@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import styles from './Styles';
-import { View, Text, Button, FlatList, Image, Modal } from 'react-native';
+import { View, Text, Button, FlatList, Image, Modal, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
 import { useProductViewModel, SortBy } from './ViewModel';
-import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { ImageButton } from "../../../../components/ImageButton";
 import ProductItem from "./ProductItem";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Category } from "../../../../../Domain/entities/Category";
 
 interface Props extends StackScreenProps<RootStackParamsList, 'ProductListScreen'> {}
 
 export const ProductsListScreen = ({ navigation }: Props) => {
-    const { products, loading, updateListProducts,sortProducts, error, categories,sortBy, setSortBy } = useProductViewModel();
+    const { products, loading, updateListProducts, sortProducts, error, categories, setSortBy } = useProductViewModel();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const openModal = () => setIsModalVisible(true);
@@ -37,56 +35,50 @@ export const ProductsListScreen = ({ navigation }: Props) => {
                 
             <View style={{ top: '10%', left: '0%', position: 'absolute', width: '100%', height: '55%' }}>
 
-            {loading && <Text>Loading...</Text>}
+                {loading && <Text>Loading...</Text>}
                 {!loading && error && <Text>{error}</Text>}
                 
-                    <FlatList
-                        data={products}
-                        renderItem={({item})=>(
-                            <ProductItem product={item} 
-                            />    
-                        )}
-                        keyExtractor={(item) => item.id!}
-                        style={{ padding:10, marginTop: 100, opacity: loading ? 0.5 : 1, borderTopLeftRadius: 40,
-                            borderTopRightRadius: 40, backgroundColor: 'white'}}
-                    />
+                <FlatList
+                    data={products}
+                    renderItem={({item}) => (
+                        <ProductItem product={item} />
+                    )}
+                    keyExtractor={(item) => item.id!}
+                    style={{ padding:10, marginTop: 100, opacity: loading ? 0.5 : 1, borderTopLeftRadius: 40,
+                        borderTopRightRadius: 40, backgroundColor: 'white'}}
+                />
                 
                 {!loading && Array.isArray(products) && products.length === 0 && (
                     <Text style={{ textAlign: "center" }}>No hay productos disponibles.</Text>
                 )}
      
-        </View>
-        <View style={{position: 'absolute', alignContent:'center', width:130,top: 100, right: 12}}>
-           
-        
-            <RoundedButton
+            </View>
+            <View style={{position: 'absolute', alignContent:'center', width:130,top: 100, right: 12}}>
+                <RoundedButton
                     text="Agregar Producto"
                     onPress={() => navigation.navigate('CreateProductScreen')}
                 />  
-            
-        </View>
+            </View>
             <View style={{...styles.form, height: '35%'}}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                    Menu Productos
+                    Menú Productos
                 </Text>
-            <View style={{marginTop: 20}}/>
+                <View style={{marginTop: 20}}/>
                 <RoundedButton
                     text="Listar Productos"
                     onPress={updateListProducts}
                 />
-            <View style={{marginTop: 20}}/>
-            <RoundedButton
+                <View style={{marginTop: 20}}/>
+                <RoundedButton
                     text="Ordenar por Nombre"
                     onPress={() => sortProducts('name')}
                 />
                 <View style={{marginTop: 20}}/>
-            <RoundedButton
+                <RoundedButton
                     text="Ordenar por Precio"
                     onPress={() => sortProducts('price')}
                 />
-        
             </View>
         </View>
-    )
-    
-}
+    );
+};

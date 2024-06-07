@@ -3,7 +3,7 @@ import styles from './Styles';
 import { View, Text, Image, Button, ActivityIndicator, TouchableOpacity, Modal, FlatList } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
-import { useCreateProductViewModel } from './ViewModel';
+//import { useUpdateProductViewModel } from './ViewModel';
 import { showMessage } from 'react-native-flash-message';
 import { CustomTextInput } from "../../../../components/CustomTextInput";
 import { RoundedButton } from "../../../../components/RoundedButton";
@@ -13,14 +13,33 @@ import { ScrollView } from "react-native-gesture-handler";
 import { ModalPickImage } from "../../../../components/ModalPickImage";
 import { ModalPickMultipleImage } from "../../../../components/ModalPickMultipleImage";
 
+import useUpdateProductViewModel from "./ViewModel";
+import { ProductStackParamList } from "../../../../navigator/tabs/admin/AdminProductNavigator";
 
-interface Props extends StackScreenProps<RootStackParamsList, 'UpdateProductScreen'> { }
+interface Props extends StackScreenProps<ProductStackParamList, 'UpdateProductScreen'> { }
 
+//type Props = StackScreenProps<RootStackParamsList, 'UpdateProductScreen'>;
 export const UpdateProductScreen = ({ navigation, route }: Props) => {
+    const { productId } = route.params;
     const {
-        name, description, price, categoryId,
-        image1, image2, image3,
-        loading, onChange, create, pickImage, takePhoto, errorMessages, categories, setSelectedCategoryName, selectedCategoryName } = useCreateProductViewModel();
+        name, 
+        description, 
+        price, categoryId,
+        categories,
+        image1,
+        image2,
+        image3,
+        updateProduct,
+        loading, 
+        onChange, 
+         
+        pickImage, 
+        takePhoto, 
+        setSelectedCategoryName,
+        selectedCategoryName,
+        errorMessages, 
+         } 
+        = useUpdateProductViewModel(productId);
 
     const [numberImage, setNumberImage] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -114,7 +133,7 @@ export const UpdateProductScreen = ({ navigation, route }: Props) => {
                             />
                     }
                 </TouchableOpacity>
-            </ScrollView>
+                </ScrollView>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
@@ -186,8 +205,9 @@ export const UpdateProductScreen = ({ navigation, route }: Props) => {
 
                 <View style={{ marginTop: 20 }}>
                     <RoundedButton
-                        text="Agregar Producto"
-                        onPress={create} />
+                        text="Editar Producto"
+                        onPress={() => updateProduct()} 
+                        />
                 </View>
 
                 {loading && (
