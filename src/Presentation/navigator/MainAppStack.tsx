@@ -59,7 +59,7 @@ export const MainAppStack = () => {
 
     if (status === 'checking') return <LoadingScreen />
     const renderRoleScreen = () => {
-        if (user.rol_id === 3) {
+        if (user?.rol_id === 3) {
             // This Client
             return <>
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
@@ -68,7 +68,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="AddressListScreen" component={AddressListScreen} />
                 <Stack.Screen name="AddressFormScreen" component={AddressFormScreen} />
             </>
-        } else if (user.rol_id === 2) {
+        } else if (user?.rol_id === 2) {
             // This Delivery
             return <>
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
