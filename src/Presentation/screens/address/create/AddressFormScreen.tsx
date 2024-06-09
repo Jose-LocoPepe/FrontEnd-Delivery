@@ -52,112 +52,109 @@ export const AddressFormScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-        <Image
-        style={styles.imageBackground}
-        source={require('../../../../../assets/city.jpg')}
-        />
-        <View style={{ top: '1%', left: '3%', position: 'absolute', marginTop: 30 }}>
-            <ImageButton
-                text='back'
-                onPress={() => navigation.goBack()}
+        <View style={styles.imageContainer}>
+            <Image
+                style={styles.imageBackground}
+                source={require('../../../../../assets/city.jpg')}
             />
+            <View style={styles.buttonContainer}>
+                <ImageButton
+                    text='back'
+                    onPress={() => navigation.goBack()}
+                />
+            </View>
         </View>
 
-        <View style= {{ ...styles.form, height: '80%' }}>
+        <View style= { styles.form }>
             <Text style={styles.formText}>Agregar dirección</Text>
-            <ScrollView>
-                {/* Name */}
-                <Text>Nombre</Text>
-                <CustomTextInput 
-                    placeholder='Apodo o nombre de la dirección.'
-                    keyboardType='default'
-                    image={ require('../../../../../assets/user.png') }
-                    property='name'
-                    onChangeText={ onChange }
-                    editable={(loading)? false : true}
-                    value={ name }
-                    secureTextEntry={ false }
-                />
-                {errorMessages.name && <Text style={styles.errorText}>{errorMessages.name}</Text>}
+
+            {/* Name */}
+            <CustomTextInput 
+                placeholder='Apodo o nombre de la dirección.'
+                keyboardType='default'
+                image={ require('../../../../../assets/user.png') }
+                property='name'
+                onChangeText={ onChange }
+                editable={(loading)? false : true}
+                value={ name }
+                secureTextEntry={ false }
+            />
+            {errorMessages.name && <Text style={styles.errorText}>{errorMessages.name}</Text>}
 
 
-                {/* Street */}
-                <Text>Calle</Text>
-                <CustomTextInput 
-                    placeholder='Ej. Av. Angamos 0610.'
-                    keyboardType='default'
-                    image={ require('../../../../../assets/neighborhood.png') }
-                    property='street'
-                    onChangeText={ onChange }
-                    editable={(loading)? false : true}
-                    value={ street }
-                    secureTextEntry={ false }
-                />
-                {errorMessages.street && <Text style={styles.errorText}>{errorMessages.street}</Text>}
+            {/* Street */}
+            <CustomTextInput 
+                placeholder='Calle. Ej. Av. Angamos 0610.'
+                keyboardType='default'
+                image={ require('../../../../../assets/neighborhood.png') }
+                property='street'
+                onChangeText={ onChange }
+                editable={(loading)? false : true}
+                value={ street }
+                secureTextEntry={ false }
+            />
+            {errorMessages.street && <Text style={styles.errorText}>{errorMessages.street}</Text>}
 
-                {/* Neighborhood */}
-                <Text>Barrio</Text>
-                <CustomTextInput 
-                    placeholder='Ej. Casa, Departamento, Institución.'
-                    keyboardType='default'
-                    image={ require('../../../../../assets/neighborhood.png') }
-                    property='neighborhood'
-                    onChangeText={ onChange }
-                    editable={(loading)? false : true}
-                    value={ neighborhood }
-                    secureTextEntry={ false }
-                />
-                {errorMessages.neighborhood && <Text style={styles.errorText}>{errorMessages.neighborhood}</Text>}
-
-                {/* Google Places */}
-                <GooglePlacesAutocomplete
-                    placeholder='Buscar dirección'
-                    onPress={(data, details = null) => {
-                        if (details && details.geometry && details.geometry.location) {
-                            const { lat, lng } = details.geometry.location;
-                            console.log(`Latitude: ${lat}, Longitude: ${lng}`);
-                            // Save lat and lng here
-                            onChange('latitude', lat);
-                            onChange('longitude', lng);
-                            setAddressSelected(true);
-                        }
-                    }}
-                    query={{
-                        key: GOOGLE_MAPS_API_KEY,
-                        language: 'es',
-                    }}
-                    styles={{
-                        textInputContainer: {
-                            backgroundColor: 'grey',
-                            borderRadius: 5,
-                            padding: 5
-                        },
-                        textInput: {
-                            height: 38,
-                            color: '#5d5d5d',
-                            fontSize: 16,
-                        },
-                    }}
-                    debounce={350}
-                    fetchDetails={true}
-                />
-                {!addressSelected && <Text style={styles.errorText}>Por favor seleccione una dirección</Text>}
+            {/* Neighborhood */}
             
-                {/* Confirm Button */}
-                <View style={{ marginTop: 20 }}>
-                    {
-                        loading === false && (
-                            <RoundedButton
-                                text='Confirmar'
-                                onPress={() => handleCreateAddress()}
-                            />
-                        )
+            <CustomTextInput 
+                placeholder='Barrio. Ej. Casa, Departamento, Institución.'
+                keyboardType='default'
+                image={ require('../../../../../assets/neighborhood.png') }
+                property='neighborhood'
+                onChangeText={ onChange }
+                editable={(loading)? false : true}
+                value={ neighborhood }
+                secureTextEntry={ false }
+            />
+            {errorMessages.neighborhood && <Text style={styles.errorText}>{errorMessages.neighborhood}</Text>}
+            
+            {/* Google Places */}
+            <GooglePlacesAutocomplete
+                placeholder='Buscar dirección'
+                onPress={(data, details = null) => {
+                    if (details && details.geometry && details.geometry.location) {
+                        const { lat, lng } = details.geometry.location;
+                        console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+                        // Save lat and lng here
+                        onChange('latitude', lat);
+                        onChange('longitude', lng);
+                        setAddressSelected(true);
                     }
-                </View>
+                }}
+                query={{
+                    key: GOOGLE_MAPS_API_KEY,
+                    language: 'es',
+                }}
+                styles={{
+                    textInputContainer: {
+                        backgroundColor: 'grey',
+                        borderRadius: 5,
+                        padding: 5
+                    },
+                    textInput: {
+                        height: 38,
+                        color: '#5d5d5d',
+                        fontSize: 16,
+                    },
+                }}
+                debounce={350}
+                fetchDetails={true}
+            />
+            {!addressSelected && <Text style={styles.errorText}>Por favor seleccione una dirección</Text>}
+        
+            {/* Confirm Button */}
+            <View style={{ marginTop: 20 }}>
+                {
+                    loading === false && (
+                        <RoundedButton
+                            text='Confirmar'
+                            onPress={() => handleCreateAddress()}
+                        />
+                    )
+                }
+            </View>
 
-
-
-            </ScrollView>
         </View>
         {
             loading && (
