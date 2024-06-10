@@ -47,6 +47,8 @@ copy .env.example .env
 Cambiamos los siguientes parámetros en el .env con las variables de entorno adecuadas:
 ```bash
 HOST_LOCAL,HOST_EMULATOR = Escribe aquí la dirección Ip de tu red del computador en comillas. Por ejemplo: 'http://192.168.1.1:8081/api'
+
+GOOGLE_MAPS_API_KEY = Escribe una key válida de google
 ```
 
 
