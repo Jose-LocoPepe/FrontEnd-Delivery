@@ -46,7 +46,8 @@ copy .env.example .env
 
 Cambiamos los siguientes parámetros en el .env con las variables de entorno adecuadas:
 ```bash
-HOST_LOCAL,HOST_EMULATOR = Escribe aquí la dirección Ip de tu red del computador en comillas. Por ejemplo: 'http://192.168.1.1:8081/api'
+HOST_LOCAL,HOST_EMULATOR = Escribe aquí la dirección Ip de tu red del computador en comillas junto con el puerto en donde tienes ejecutanse tu backend. Por ejemplo: 'http://192.168.1.1:8081/api' 
+o entrar en el archivo ApiDelivery.tsx en la carpeta src/Data/sources/remote/api/ApiDelivery y escribir directamente en baseURL: 'http://192.168.0.15:3307/api/'
 
 GOOGLE_MAPS_API_KEY = Escribe una key válida de google
 ```
