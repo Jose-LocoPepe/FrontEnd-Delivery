@@ -54,7 +54,7 @@ export const CategoriesCreateScreen = ({ navigation }: Props) => {
             <View>
               <Image
                 style={styles.imageAux}
-                source={require('../../../../../../assets/add.png')}
+                source={require('../../../../../../assets/image_new.png')}
               />
               <Text style={styles.imageText}> Seleccione una imagen</Text>
               {

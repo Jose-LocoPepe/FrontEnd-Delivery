@@ -20,7 +20,7 @@ interface Props extends StackScreenProps<ProductStackParamList, 'UpdateProductSc
 
 //type Props = StackScreenProps<RootStackParamsList, 'UpdateProductScreen'>;
 export const UpdateProductScreen = ({ navigation, route }: Props) => {
-    const { productId } = route.params;
+    const { product } = route.params;
     const {
         name, 
         description, 
@@ -39,7 +39,7 @@ export const UpdateProductScreen = ({ navigation, route }: Props) => {
         selectedCategoryName,
         errorMessages, 
          } 
-        = useUpdateProductViewModel(productId);
+        = useUpdateProductViewModel(product);
 
     const [numberImage, setNumberImage] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -72,68 +72,7 @@ export const UpdateProductScreen = ({ navigation, route }: Props) => {
                     onPress={() => navigation.goBack()}
                 />
             </View>
-            <ScrollView
-                horizontal
-
-
-                style={styles.imageContainer}>
-                <TouchableOpacity
-                    onPress={() => {
-                        setNumberImage(1)
-                        setModalVisible(true)
-                    }}
-                >
-                    {
-                        image1 == ''
-                            ? <Image
-                                style={styles.logoImage}
-                                source={require('../../../../../../assets/image_new.png')}
-                            />
-                            : <Image
-                                source={{ uri: image1 }}
-                                style={styles.logoImage}
-                            />
-                    }
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => {
-                        setNumberImage(2)
-                        setModalVisible(true)
-                    }}
-                >
-                    {
-                        image2 == ''
-                            ? <Image
-                                style={styles.logoImage}
-                                source={require('../../../../../../assets/image_new.png')}
-                            />
-                            : <Image
-                                source={{ uri: image2 }}
-                                style={styles.logoImage}
-                            />
-                    }
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => {
-                        setNumberImage(3)
-                        setModalVisible(true)
-                    }}
-                >
-                    {
-                        image3 == ''
-                            ? <Image
-                                style={styles.logoImage}
-                                source={require('../../../../../../assets/image_new.png')}
-                            />
-                            : <Image
-                                source={{ uri: image3 }}
-                                style={styles.logoImage}
-                            />
-                    }
-                </TouchableOpacity>
-                </ScrollView>
+            
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
@@ -141,7 +80,7 @@ export const UpdateProductScreen = ({ navigation, route }: Props) => {
                 style={{ ...styles.form, height: '60%' }}
             >
                 <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 5 }}>
-                    Agregar Producto
+                    Editar Producto
                 </Text>
 
                 <CustomTextInput

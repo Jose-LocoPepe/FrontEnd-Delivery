@@ -50,6 +50,22 @@ export class ProductRepositoryImpl implements ProductRepository {
         }
     }
 
+    //get first picture of product
+    async getFirstPicture(id: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `product/getFirstPicture/${id}`;
+            const { data } = await ApiDelivery.get<ResponseAPIDelivery>(path);
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
     // Get product by id
     async getProductById(id: string, token: string): Promise<ResponseAPIDelivery> {
         try {
@@ -84,6 +100,22 @@ export class ProductRepositoryImpl implements ProductRepository {
         } catch (error) {
             let e = (error as AxiosError);
             // console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
+    // Get product images
+    async getProductImages(id: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `product/getImages/${id}`;
+            const { data } = await ApiDelivery.get<ResponseAPIDelivery>(path);
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
             const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
             return Promise.reject(apiError)
         }

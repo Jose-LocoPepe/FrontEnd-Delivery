@@ -9,6 +9,7 @@ import { UpdateProductUseCase } from "../../../Domain/useCases/Product/UpdatePro
 import { deleteProductUseCase } from "../../../Domain/useCases/Product/DeleteProductsUseCase";
 import { UpdateFileUseCase } from "../../../Domain/useCases/File/UpdateFileUseCase";
 import { GetProductByIdUseCase } from "../../../Domain/useCases/Product/GetProductByIdUseCase";
+import { getProductImagesUseCase } from "../../../Domain/useCases/Product/GetProductsImages";
 
 interface ProductContextProps {
     products: Product[];
@@ -16,7 +17,7 @@ interface ProductContextProps {
     getProductById(id: string): Promise<ResponseAPIDelivery>;
     createProduct(product: Product, file1: ImagePicker.ImageInfo, file2: ImagePicker.ImageInfo, file3: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery> ;
     //createProduct(product: Product, file: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
-    updateProduct(product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo, id: string): Promise<ResponseAPIDelivery>;
+    updateProduct(product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
     removeProduct(id: string): Promise<ResponseAPIDelivery>;
     updateFile?(file: ImagePicker.ImageInfo, collection: string, id: string): Promise<ResponseAPIDelivery>;
     sortProducts(criteria: 'name' | 'price'): void;
@@ -43,19 +44,20 @@ export const ProductProvider = ({ children }: any) => {
         }catch(error){
             setProducts([]);
         }
-    }
+    } 
     const getProductById = async (id: string): Promise<ResponseAPIDelivery> => {
         try {
             const response = await GetProductByIdUseCase(id, user.session_token);
+            console.log('response:', response);
             return response;
         } catch (error) {
+            console.log('error:', error);
             return { success: false, message: "Failed to get Product" };
         }
     }
 
     const createProduct = async (product: Product, file1: ImagePicker.ImageInfo, file2: ImagePicker.ImageInfo, file3: ImagePicker.ImageInfo) => {
         const response = await CreateProductUseCase(product, user.session_token);
-        console.log('response:', response);
         if (response.success) {
             // crear 3 imagenes
             if (file1 !== undefined) {
@@ -71,22 +73,27 @@ export const ProductProvider = ({ children }: any) => {
         // Refresh list product
         getAllProducts();
         return response;
+    } 
+
+    const obtainFirstImage = async (id: string): Promise<string> => {
+        const response = await getProductImagesUseCase(id);
+        return response.data.image;
     }
 
-
-    const updateProduct = async (product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo, id: string) => {
-        const response = await UpdateProductUseCase(product, user.session_token);
+    const updateProduct = async (product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo) => {
+        
+        const response = await UpdateProductUseCase(product, user.session_token!);
         if (response.success) {
+            /*const responseImages = await getProductImagesUseCase(product.id!);
             if (file1 !== undefined) {
-                await updateFile(file1!, 'productsImages', response.image1.id);
-            }
-            
-            if (file2 !== undefined) {
-                await updateFile(file2!, 'productsImages', response.image1.id);
+                await updateFile(file1!, 'productsImages', responseImages[0].id);
             }
             if (file2 !== undefined) {
-                await updateFile(file3!, 'productsImages', response.image1.id);
+                await updateFile(file2!, 'productsImages', responseImages[1].id);
             }
+            if (file3 !== undefined) {
+                await updateFile(file3!, 'productsImages', responseImages[2].id);
+        }*/
             getAllProducts();
         }
         return response;
@@ -102,20 +109,26 @@ export const ProductProvider = ({ children }: any) => {
         setProducts(sortedProducts);
     }
   
-    const removeProduct = async (id: string) => {
+    const removeProduct = async (id: string):Promise<ResponseAPIDelivery> => {
     try{
         const response = await deleteProductUseCase(id, user.session_token);
         if(response.success){
             await getAllProducts();
             return response;
         }
+        return response;
     } catch (error) {
         return { success: false, message: "Failed to delete product" };
     }
 }
 
-    const updateFile = async (file: ImagePicker.ImageInfo, collection: string, id: string) => {
-        await UpdateFileUseCase(file, collection, id);
+    const updateFile = async (file: ImagePicker.ImageInfo, collection: string, id: string): Promise<ResponseAPIDelivery> => {
+        try {
+            const response = await UpdateFileUseCase(file, collection, id, user.session_token);
+            return response;
+        } catch (error) {
+            return { success: false, message: "Failed to update file" };
+        }
     }
     
 
