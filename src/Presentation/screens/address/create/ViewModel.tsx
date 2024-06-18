@@ -8,8 +8,8 @@ interface Values {
     name: string;
     street: string;
     neighborhood: string;
-    longitude: number;
-    latitude: number;
+    longitude: number | null;
+    latitude: number | null;
 }
 
 const validationSchema = yup.object().shape({
@@ -26,37 +26,45 @@ const AddressCreateViewModel = () => {
         name: '',
         street: '',
         neighborhood: '',
-        longitude: 0,
-        latitude: 0
+        longitude: null,
+        latitude: null
     });
     const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
-    const [addressSelected, setAddressSelected] = useState(false);
+    const [addressSelected, setAddressSelected] = useState<boolean | null>(null);
 
     const onChange = (property: string, value: string | number) => {
         setValues({ ...values, [property]: value });
     }
 
     const saveAddress = async () => {
-        const validForm = await isValidForm();
+        console.log("Entro en el saveAddress");
+        if (values.latitude !== null && values.longitude !== null && addressSelected === true) {
+            console.log("Entro en el if");
+            const validForm = await isValidForm();
+            console.log("Va a entrar en el try catch");
+            if (validForm) {
+                try {
+                    setLoading(true);
+                    const {...data} = values;
 
-        if (validForm) {
-            try {
-                setLoading(true);
-                const {...data} = values;
-
-                // Call to use case
-                const response = await CreateAddressUseCase(user?.id as string, data.name, data.street, data.neighborhood, data.longitude, data.latitude, user?.session_token as string);
-                
-                if(response.success){
+                    // Call to use case
+                    const response = await CreateAddressUseCase(user?.id as string, data.name, data.street, data.neighborhood, data.longitude as number, data.latitude as number, user?.session_token as string);
+                    
+                    if(response.success){
+                        setLoading(false);
+                        return true;
+                    }
+                } catch (error) {
+                    console.log(error);
                     setLoading(false);
-                    return true;
+                    return false;
                 }
-            } catch (error) {
-                console.log(error);
-                setLoading(false);
-                return false;
             }
+        } else {
+            // The user has not selected an address
+
+            setAddressSelected(false);
         }
     }
 
@@ -87,7 +95,8 @@ const AddressCreateViewModel = () => {
         onChange,
         addressSelected,
         setAddressSelected,
-        saveAddress
+        saveAddress,
+
     }
 }
 

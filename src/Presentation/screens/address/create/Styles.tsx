@@ -18,6 +18,7 @@ const AddressFormStyles = StyleSheet.create({
         top: '15%',
         left: '3%',
         zIndex: 1,
+        width: 60,
     },
     form: {
         flex: 7,
@@ -49,7 +50,24 @@ const AddressFormStyles = StyleSheet.create({
         marginVertical: 12,
         paddingVertical: 8,
         paddingHorizontal: 12,
-    }
+    },
+    confirmButtonContainer: {
+        marginTop: 60,
+    },
+    imageButton:{
+        width: 60,
+        height: 60,
+    },
+    locationButtonContainer: {
+        left: '40%',
+        width: 60,
+        marginTop: 30,
+    },
+    selectedLocationText: {
+        fontSize: 16,
+        color: '#000',
+        marginTop: 10,
+    },
 });
 
 export default AddressFormStyles;
