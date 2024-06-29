@@ -86,8 +86,7 @@ export const LocationSelectScreen = ({ navigation, route }: Props) => {
             {selectedLocation && <Text style={styles.selectedLocationText}>Ubicación seleccionada: {selectedLocation}</Text>}
             
             
-            {latitude && longitude && <Text style={styles.selectedLocationText}>Latitud: {latitude}, Longitud: {longitude}</Text>}
-
+            
             {/* Confirm Button */}
             <View style={styles.confirmButtonContainer}>
                 <RoundedButton

@@ -23,7 +23,7 @@ import { CategoriesEditScreen } from '../screens/admin/category/update/UpdateCat
 import AddressListScreen from '../screens/address/list/AddressListScreen';
 import { AddressFormScreen } from '../screens/address/create/AddressFormScreen';
 import { LocationSelectScreen } from '../screens/address/create/LocationSelectScreen';
-
+import { MapScreen } from '../screens/address/map/MapScreen';
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -52,6 +52,7 @@ export type RootStackParamsList = {
         longitude: number | null;
     },
     LocationSelectScreen: undefined,
+    MapScreen: undefined,
 
 }
 
@@ -72,6 +73,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="AddressListScreen" component={AddressListScreen} />
                 <Stack.Screen name="AddressFormScreen" component={AddressFormScreen} />
                 <Stack.Screen name="LocationSelectScreen" component={LocationSelectScreen} />
+                <Stack.Screen name="MapScreen" component={MapScreen} />
             </>
         } else if (user?.rol_id === 2) {
             // This Delivery
