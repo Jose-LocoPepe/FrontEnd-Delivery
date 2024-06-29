@@ -48,8 +48,8 @@ export type RootStackParamsList = {
 
     AddressListScreen: undefined,
     AddressFormScreen: {
-        latitude: number;
-        longitude: number;
+        latitude: number | null;
+        longitude: number | null;
     },
     LocationSelectScreen: undefined,
 

@@ -83,8 +83,10 @@ export const LocationSelectScreen = ({ navigation, route }: Props) => {
             />
             { addressSelected === false && <Text style={styles.errorText}>Por favor seleccione una dirección</Text>}
 
-            {selectedLocation && <Text style={styles.selectedLocationText}>Selected Location: {selectedLocation}</Text>}
-
+            {selectedLocation && <Text style={styles.selectedLocationText}>Ubicación seleccionada: {selectedLocation}</Text>}
+            
+            
+            {latitude && longitude && <Text style={styles.selectedLocationText}>Latitud: {latitude}, Longitud: {longitude}</Text>}
 
             {/* Confirm Button */}
             <View style={styles.confirmButtonContainer}>

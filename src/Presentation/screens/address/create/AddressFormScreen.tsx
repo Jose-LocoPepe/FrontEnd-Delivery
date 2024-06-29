@@ -23,22 +23,20 @@ export const AddressFormScreen = ({ navigation, route }: Props) => {
         name,
         street,
         neighborhood,
-        latitude,
-        longitude,
 
         errorMessages,
         loading,
         onChange,
         addressSelected,
-        setAddressSelected,
         saveAddress,
+        changeCoordinates
     } = useViewModel();
 
     // Define a function to handle location update
     const handleLocationUpdate = (newLatitude: number, newLongitude: number) => {
-        onChange('latitude', newLatitude);
-        onChange('longitude', newLongitude);
-        setAddressSelected(true);
+        changeCoordinates(newLatitude, newLongitude);
+        console.log('latitude: ', newLatitude);
+        console.log('longitude: ', newLongitude);
     }
 
     // Use useEffect to listen for changes in route.params
@@ -51,7 +49,6 @@ export const AddressFormScreen = ({ navigation, route }: Props) => {
 
 
     const handleCreateAddress = async () => {
-        console.log('handleCreateAddress');
         const response = await saveAddress();
 
         if (response) {
@@ -139,7 +136,7 @@ export const AddressFormScreen = ({ navigation, route }: Props) => {
                 </View>
                 { addressSelected === false && <Text style={styles.errorText}>Por favor elige su punto de referencia</Text>}
 
-                <Text>{latitude} {longitude}</Text>
+                
                 {/* Confirm Button */}
                 <View style={styles.confirmButtonContainer}>
                     {

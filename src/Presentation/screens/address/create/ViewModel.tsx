@@ -8,16 +8,12 @@ interface Values {
     name: string;
     street: string;
     neighborhood: string;
-    longitude: number | null;
-    latitude: number | null;
 }
 
 const validationSchema = yup.object().shape({
     name: yup.string().required('El nombre es requerido'),
     street: yup.string().required('La calle es requerida'),
-    neighborhood: yup.string().required('La colonia es requerida'),
-    longitude: yup.number().required('La longitud es requerida'),
-    latitude: yup.number().required('La latitud es requerida')
+    neighborhood: yup.string().required('La colonia es requerida')
 });
 
 const AddressCreateViewModel = () => {
@@ -25,51 +21,47 @@ const AddressCreateViewModel = () => {
     const [values, setValues] = useState<Values>({
         name: '',
         street: '',
-        neighborhood: '',
-        longitude: null,
-        latitude: null
+        neighborhood: ''
     });
     const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
+    // add the coordinates state
+    const [latitude, setLatitude] = useState<number | null>(null);
+    const [longitude, setLongitude] = useState<number | null>(null);
+
     const [addressSelected, setAddressSelected] = useState<boolean | null>(null);
 
-    const onChange = (property: string, value: string | number) => {
+    const onChange = (property: string, value: string | number | null) => {
         setValues({ ...values, [property]: value });
     }
 
     const saveAddress = async () => {
-        console.log("Entro en el saveAddress");
-        if (values.latitude !== null && values.longitude !== null && addressSelected === true) {
-            console.log("Entro en el if");
-            const validForm = await isValidForm();
-            console.log("Va a entrar en el try catch");
-            if (validForm) {
-                try {
-                    setLoading(true);
-                    const {...data} = values;
+        const validForm = await isValidForm();
+        if (validForm) {
+            try {
+                setLoading(true);
+                const {...data} = values;
 
-                    // Call to use case
-                    const response = await CreateAddressUseCase(user?.id as string, data.name, data.street, data.neighborhood, data.longitude as number, data.latitude as number, user?.session_token as string);
-                    
-                    if(response.success){
-                        setLoading(false);
-                        return true;
-                    }
-                } catch (error) {
-                    console.log(error);
+                // Call to use case
+                const response = await CreateAddressUseCase(user?.id as string, data.name, data.street, data.neighborhood, longitude as number, latitude as number, user?.session_token as string);
+                
+                if(response.success){
                     setLoading(false);
-                    return false;
+                    return true;
                 }
+            } catch (error) {
+                console.log(error);
+                setLoading(false);
+                return false;
             }
-        } else {
-            // The user has not selected an address
-
-            setAddressSelected(false);
         }
     }
 
     const isValidForm = async (): Promise<boolean> => {
         try {
+            if(!checkCoordinates()){
+                return false;
+            }
             await validationSchema.validate(values, { abortEarly: false });
             return true;
         } catch (error) {
@@ -86,6 +78,21 @@ const AddressCreateViewModel = () => {
         }
     }
 
+    //change the coordinates
+    const changeCoordinates = (newLatitude: number, newLongitude: number) => {
+        setLatitude(newLatitude);
+        setLongitude(newLongitude);
+        setAddressSelected(true);
+    }
+
+    //validate coordinates
+    const checkCoordinates = () => {
+        if(latitude && longitude){
+            return true;
+        }
+        setAddressSelected(false);
+        return false;
+    }
 
 
     return {
@@ -96,7 +103,7 @@ const AddressCreateViewModel = () => {
         addressSelected,
         setAddressSelected,
         saveAddress,
-
+        changeCoordinates,
     }
 }
 

@@ -29,7 +29,7 @@ const AddressListScreen = ({ navigation, route }: Props) => {
             <View style={{ top: '6%', right: '3%', position: 'absolute', marginTop: 30 }}>
                 <ImageButton
                     text='add'
-                    onPress={() => navigation.navigate("AddressFormScreen")}
+                    onPress={() => navigation.navigate("AddressFormScreen", { latitude: null, longitude: null })}
                 />
             </View>
         <View style={styles.form}>
