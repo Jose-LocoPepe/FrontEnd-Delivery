@@ -23,40 +23,61 @@ export const OrdersTopTabs = () => {
 
     const tabsByRole = {
         Admin: [
-          { name: 'PendingOrders', component: PendingOrdersScreen },
-          { name: 'DeliveredOrders', component: DeliveredOrdersScreen },
-          { name: 'DispatchedOrders', component: DispatchedOrdersScreen },
-          { name: 'OnTheWayOrders', component: OnTheWayOrdersScreen },
+          { name: 'PendingOrders', label: 'Pendiente', component: PendingOrdersScreen },
+          { name: 'DeliveredOrders', label: 'Entregado', component: DeliveredOrdersScreen },
+          { name: 'DispatchedOrders', label: 'Despachado', component: DispatchedOrdersScreen },
+          { name: 'OnTheWayOrders', label: 'En camino', component: OnTheWayOrdersScreen },
         ],
         Client: [
-          { name: 'PendingOrders', component: PendingOrdersScreen },
-          { name: 'DispatchedOrders', component: DispatchedOrdersScreen },
-          { name: 'OnTheWayOrders', component: OnTheWayOrdersScreen },
+          { name: 'PendingOrders', label: 'Pendiente', component: PendingOrdersScreen },
+          { name: 'DispatchedOrders', label: 'Despachado', component: DispatchedOrdersScreen },
+          { name: 'OnTheWayOrders', label: 'En camino', component: OnTheWayOrdersScreen },
         ],
         Delivery: [
-          { name: 'DispatchedOrders', component: DispatchedOrdersScreen },
-          { name: 'OnTheWayOrders', component: OnTheWayOrdersScreen },
-          { name: 'DeliveredOrders', component: DeliveredOrdersScreen },
+          { name: 'DispatchedOrders', label: 'Despachado', component: DispatchedOrdersScreen },
+          { name: 'OnTheWayOrders', label: 'En camino', component: OnTheWayOrdersScreen },
+          { name: 'DeliveredOrders', label: 'Entregado', component: DeliveredOrdersScreen },
         ],
-      };
+    };
 
-      const tabsForCurrentUser = () => {
+    const tabsForCurrentUser = () => {
         switch (user?.rol_id) {
             case 3: return tabsByRole.Client;
             case 2: return tabsByRole.Delivery;
             default: return tabsByRole.Admin;
         }
-      }
+    };
+    const getTabBarLabelStyle = () => {
+        switch (user?.rol_id) {
+            case 3 || 2: // Client || Delivery
+                return { fontSize: 12 };
+            default: // Admin and other roles
+                return { fontSize: 9 };
+        }
+    };
 
   return (
-    <Tab.Navigator>
-        {/* <Tab.Screen name="PendingOrders" component={PendingOrdersScreen} />
-        <Tab.Screen name="DeliveredOrders" component={DeliveredOrdersScreen} />
-        <Tab.Screen name="DispatchedOrders" component={DispatchedOrdersScreen} />
-        <Tab.Screen name="OnTheWayOrders" component={OnTheWayOrdersScreen} /> */}
-        
+    <Tab.Navigator
+        screenOptions={{
+            tabBarActiveTintColor: '#e91e63', // Active tab text color
+            tabBarLabelStyle: getTabBarLabelStyle(), // Tab label style
+            tabBarStyle: { 
+                backgroundColor: '#f5f5f5',
+                height: 60,
+                paddingTop: 10,
+            },
+            tabBarIndicatorStyle: { backgroundColor: '#e91e63' }, // Indicator style
+            tabBarPressColor: '#e91e63', // Ripple color on press for Android
+            swipeEnabled: true, // Enable swipe to change tabs
+        }}
+    >
         {tabsForCurrentUser().map((tab) => (
-            <Tab.Screen key={tab.name} name={tab.name as keyof RootOrdersTopTabParamsList} component={tab.component} />
+            <Tab.Screen 
+                key={tab.name} 
+                name={tab.name as keyof RootOrdersTopTabParamsList} 
+                component={tab.component}
+                options={{ tabBarLabel: tab.label }}
+            />
         ))}
     </Tab.Navigator>
   );
