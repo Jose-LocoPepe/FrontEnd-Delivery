@@ -4,6 +4,8 @@ import { UserContext } from "../../../context/auth/UserContext";
 import * as yup from "yup";
 import { CreateAddressUseCase } from "../../../../Domain/useCases/Address/CreateAddressUseCase";
 
+import * as Location from "expo-location"
+
 interface Values {
     name: string;
     street: string;
@@ -25,12 +27,12 @@ const AddressCreateViewModel = () => {
     });
     const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
-    // add the coordinates state
+    
     const [latitude, setLatitude] = useState<number | null>(null);
     const [longitude, setLongitude] = useState<number | null>(null);
-
     const [addressSelected, setAddressSelected] = useState<boolean | null>(null);
 
+    
     const onChange = (property: string, value: string | number | null) => {
         setValues({ ...values, [property]: value });
     }
@@ -94,6 +96,15 @@ const AddressCreateViewModel = () => {
         return false;
     }
 
+    const requestPermissions = async (): Promise<boolean> => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        console.log(status);
+        if (status !== 'granted') {
+            return false ;
+        }else{
+            return true;
+        }
+    }
 
     return {
         ...values,
@@ -104,6 +115,7 @@ const AddressCreateViewModel = () => {
         setAddressSelected,
         saveAddress,
         changeCoordinates,
+        requestPermissions
     }
 }
 

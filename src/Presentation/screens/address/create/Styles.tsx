@@ -59,9 +59,7 @@ const AddressFormStyles = StyleSheet.create({
         height: 60,
     },
     locationButtonContainer: {
-        left: '40%',
         width: 60,
-        marginTop: 30,
     },
     selectedLocationText: {
         fontSize: 16,

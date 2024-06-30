@@ -48,6 +48,7 @@ Cambiamos los siguientes parámetros en el .env con las variables de entorno ade
 ```bash
 HOST_LOCAL,HOST_EMULATOR = Escribe aquí la dirección Ip de tu red del computador en comillas. Por ejemplo: 'http://192.168.1.1:8081/api'
 ```
+* Copia tu API Key en tu **app.json**, donde se encuentra el campo `android.config.googleMaps.apiKey` y en `ios.config.googleMapsApiKey`
 
 
 Inicia sesión con tu cuenta de expo:

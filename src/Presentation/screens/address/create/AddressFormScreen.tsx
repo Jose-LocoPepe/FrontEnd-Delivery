@@ -29,7 +29,8 @@ export const AddressFormScreen = ({ navigation, route }: Props) => {
         onChange,
         addressSelected,
         saveAddress,
-        changeCoordinates
+        changeCoordinates,
+        requestPermissions
     } = useViewModel();
 
     // Define a function to handle location update
@@ -58,6 +59,18 @@ export const AddressFormScreen = ({ navigation, route }: Props) => {
                 icon: 'success',
             });
             navigation.goBack();
+        }
+    }
+
+    const showMessagePermissions = async () => {
+        const response = await requestPermissions();
+        if(response === false) {
+            showMessage({
+                message: 'Es necesario dar permisos de ubicación para acceder al mapa',
+                type: 'warning',
+            });
+        }else{
+            navigation.navigate('MapScreen');
         }
     }
 
@@ -122,17 +135,34 @@ export const AddressFormScreen = ({ navigation, route }: Props) => {
                 {errorMessages.neighborhood && <Text style={styles.errorText}>{errorMessages.neighborhood}</Text>}
                 
 
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 30, alignSelf: 'center' }}>
+                    {/* Location Screen */}
+                    <View style={styles.locationButtonContainer}>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={() => {
+                                navigation.navigate('LocationSelectScreen');
+                            }}
+                        >
+                            <Image source={require('../../../../../assets/location.png')} style={styles.imageButton} />
+                        </TouchableOpacity>
+                    </View>
 
-                {/* Location Screen */}
-                <View style={styles.locationButtonContainer}>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() => {
-                            navigation.navigate('LocationSelectScreen');
-                        }}
-                    >
-                        <Image source={require('../../../../../assets/location.png')} style={styles.imageButton} />
-                    </TouchableOpacity>
+                    {/* Vertical Separator */}
+                    <View style={{ width: 1, backgroundColor: 'grey', height: '60%', marginHorizontal: 20 }} />
+
+                    {/* Map Screen */}
+                    <View style={styles.locationButtonContainer}>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={() => {
+                                showMessagePermissions();
+                                // navigation.navigate('MapScreen');
+                            }}
+                        >
+                            <Image source={require('../../../../../assets/ref_point.png')} style={styles.imageButton} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 { addressSelected === false && <Text style={styles.errorText}>Por favor elige su punto de referencia</Text>}
 
