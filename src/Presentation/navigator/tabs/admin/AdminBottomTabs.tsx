@@ -53,7 +53,7 @@ export const AdminBottomTabs = () => {
           component={OrdersTopTabs}
           options={{
               title: 'Órdenes',
-              tabBarIcon: ({ size, color }) => <FontAwesome name="list" size={size} color={'#000'} />,
+              tabBarIcon: ({ size, color }) => <FontAwesome name="shopping-cart" size={size} color={'#000'} />,
       }}/>
 
 
