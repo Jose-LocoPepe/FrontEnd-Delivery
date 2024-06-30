@@ -7,12 +7,16 @@ import { ProductsMenuScreen } from '../../../screens/admin/products/ProductsMenu
 import { AdminCategoryNavigator } from './AdminCategoryNavigator';
 import { AdminProductNavigator } from './AdminProductNavigator';
 
+import { OrdersTopTabs } from '../OrdersTopTabs';
+
 export type RootAdminBottomTabParamsList = {
   ProfileInfoScreen: undefined,
   CategoryMenuScreen: undefined,
   ProductsMenuScreen: undefined,
   AdminCategoryNavigator: undefined,
-  AdminProductNavigator: undefined
+  AdminProductNavigator: undefined,
+
+  OrdersTopTabs: undefined,
 }
 
 const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
@@ -42,6 +46,16 @@ export const AdminBottomTabs = () => {
             headerShown: false,
             tabBarIcon: ({ size, color }) => <FontAwesome name="cutlery" size={size} color={'#000'} />,
           }}/>
+
+
+      <Tab.Screen 
+          name="OrdersTopTabs"
+          component={OrdersTopTabs}
+          options={{
+              title: 'Órdenes',
+              tabBarIcon: ({ size, color }) => <FontAwesome name="list" size={size} color={'#000'} />,
+      }}/>
+
 
         
         <Tab.Screen

@@ -5,9 +5,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import { ProfileInfoScreen } from '../../../screens/profile/info/ProfileInfoScreen';
 import AddressListScreen from '../../../screens/address/list/AddressListScreen';
 
+import { OrdersTopTabs } from '../OrdersTopTabs';
 
 export type RootClientBottomTabParamsList = {
-    ProfileInfoScreen: undefined
+    ProfileInfoScreen: undefined;
+    OrdersTopTabs: undefined;
 }
 
 
@@ -28,6 +30,15 @@ export const ClientBottomTabs = () => {
                     title: 'Perfil',
                     tabBarIcon: ({ size, color }) => <FontAwesome name="user" size={size} color={'#000'} />,
                 }}/>
+                
+            <Tab.Screen
+                name="OrdersTopTabs"
+                component={OrdersTopTabs}
+                options={{
+                    title: 'Órdenes',
+                    tabBarIcon: ({ size, color }) => <FontAwesome name="list" size={size} color={'#000'} />,
+            }}/>
+            
                           
         </Tab.Navigator>
     );

@@ -20,10 +20,13 @@ import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScree
 import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
 
 import { CategoriesEditScreen } from '../screens/admin/category/update/UpdateCategory';
+
 import AddressListScreen from '../screens/address/list/AddressListScreen';
 import { AddressFormScreen } from '../screens/address/create/AddressFormScreen';
 import { LocationSelectScreen } from '../screens/address/create/LocationSelectScreen';
 import { MapScreen } from '../screens/address/map/MapScreen';
+
+import { OrdersTopTabs } from './tabs/OrdersTopTabs';
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -54,6 +57,8 @@ export type RootStackParamsList = {
     LocationSelectScreen: undefined,
     MapScreen: undefined,
 
+    OrdersTopTabs: undefined,
+
 }
 
 
@@ -74,6 +79,8 @@ export const MainAppStack = () => {
                 <Stack.Screen name="AddressFormScreen" component={AddressFormScreen} />
                 <Stack.Screen name="LocationSelectScreen" component={LocationSelectScreen} />
                 <Stack.Screen name="MapScreen" component={MapScreen} />
+
+                <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
             </>
         } else if (user?.rol_id === 2) {
             // This Delivery
@@ -81,6 +88,8 @@ export const MainAppStack = () => {
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
+                
+                <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
             </>
         } else {
             // This Admin
@@ -94,6 +103,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="CategoryCreateScreen" component={CategoriesCreateScreen} />
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
 
+                <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
             </>
         }
     }
