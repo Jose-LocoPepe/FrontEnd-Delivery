@@ -1,9 +1,9 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import PendingOrdersScreen from '../../screens/order/manage/pending/PendingOrdersScreen';
-import DeliveredOrdersScreen from '../../screens/order/manage/delivered/DeliveredOrdersScreen';
-import DispatchedOrdersScreen from '../../screens/order/manage/dispatched/DispatchedOrdersScreen';
-import OnTheWayOrdersScreen from '../../screens/order/manage/onTheWay/OnTheWayOrdersScreen';
+import { PendingOrdersScreen } from '../../screens/order/manage/pending/PendingOrdersScreen';
+import { DeliveredOrdersScreen } from '../../screens/order/manage/delivered/DeliveredOrdersScreen';
+import { DispatchedOrdersScreen } from '../../screens/order/manage/dispatched/DispatchedOrdersScreen';
+import { OnTheWayOrdersScreen } from '../../screens/order/manage/onTheWay/OnTheWayOrdersScreen';
 
 import { useContext } from 'react';
 import { UserContext } from '../../context/auth/UserContext';
@@ -49,10 +49,10 @@ export const OrdersTopTabs = () => {
     };
     const getTabBarLabelStyle = () => {
         switch (user?.rol_id) {
-            case 3 || 2: // Client || Delivery
-                return { fontSize: 12 };
-            default: // Admin and other roles
+            case 1: // Admin
                 return { fontSize: 9 };
+            default: // Client || Delivery
+                return { fontSize: 12 };
         }
     };
 

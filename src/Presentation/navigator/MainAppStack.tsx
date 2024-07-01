@@ -27,6 +27,8 @@ import { LocationSelectScreen } from '../screens/address/create/LocationSelectSc
 import { MapScreen } from '../screens/address/map/MapScreen';
 
 import { OrdersTopTabs } from './tabs/OrdersTopTabs';
+import { OrderDetailsScreen } from '../screens/order/manage/details/OrderDetailsScreen';
+
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -58,7 +60,7 @@ export type RootStackParamsList = {
     MapScreen: undefined,
 
     OrdersTopTabs: undefined,
-
+    OrderDetailsScreen: undefined,
 }
 
 
@@ -81,6 +83,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="MapScreen" component={MapScreen} />
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
+                
             </>
         } else if (user?.rol_id === 2) {
             // This Delivery
@@ -104,6 +107,8 @@ export const MainAppStack = () => {
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} options={{ headerTitle: 'Order Details' }} />
+                
             </>
         }
     }
