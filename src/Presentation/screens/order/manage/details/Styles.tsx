@@ -59,6 +59,13 @@ const OrderDetailsStyles = StyleSheet.create({
     right: 0,
     left: 0,
   },
+  productContainer: {
+    flex: 4,
+  },
+  orderDetailsContainer: {
+    flex: 6,
+    width: '100%',
+  },
 });
 
 export default OrderDetailsStyles;
