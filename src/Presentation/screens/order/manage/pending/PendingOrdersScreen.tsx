@@ -3,21 +3,14 @@ import React, { useState } from 'react'
 
 import styles from './Styles'
 
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootOrdersTopTabParamsList } from '../../../../navigator/tabs/OrdersTopTabs';
-
-
-interface Props extends StackScreenProps<RootOrdersTopTabParamsList, 'PendingOrders'> {}
-
-export const PendingOrdersScreen = ({ navigation, route }: Props) => {
+export const PendingOrdersScreen = ({ navigation }) => {
   const [orders, setOrders] = useState([
     { id: '1', clientName: 'John Doe', address: '123 Main St', purchaseDate: '2023-04-01' },
-    // Add more orders as needed
   ]);
 
   const handlePress = () => {
     // Navigate to the details screen with the order's details
-    // navigation.navigate('');
+    navigation.navigate('OrderDetailsScreen');
   };
 
 

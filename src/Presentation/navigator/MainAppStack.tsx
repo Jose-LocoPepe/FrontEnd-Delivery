@@ -107,7 +107,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
-                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} options={{ headerTitle: 'Order Details' }} />
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} options={{ headerTitle: 'Detalles de la orden' }} />
                 
             </>
         }
