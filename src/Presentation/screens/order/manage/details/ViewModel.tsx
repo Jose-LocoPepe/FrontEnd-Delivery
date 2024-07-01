@@ -70,6 +70,7 @@ const OrderDetailsViewModel = () => {
     }
 
     return {
+        user,
         errorMessages,
         loading,
         getDeliveryUsers,

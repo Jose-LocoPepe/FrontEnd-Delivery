@@ -14,6 +14,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
   // Extracting order details passed through the route
   // const { order } = route.params;
   const {
+    user,
     errorMessages,
     loading,
     getDeliveryUsers,
@@ -77,25 +78,29 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
 
         <Text style={styles.title}>ASIGNAR REPARTIDOR</Text>
 
-        <RNPickerSelect
-          onValueChange={(value) => selectDeliveryUser(value)}
-          items={deliveryUsers.map((user: User) => ({
-            label: `${user.name} ${user.lastName}`,
-            value: user.id,
-          }))}
-          style={{
-            inputIOS: styles.pickerSelectIOS,
-            inputAndroid: styles.pickerSelectAndroid,
-          }}
-          placeholder={{
-            label: 'Selecciona un repartidor...',
-            value: null,
-          }}
-        />
-        
-        <TouchableOpacity style={styles.button} onPress={() => handleDispatch()}>
-          <Text style={styles.buttonText}>DESPACHAR</Text>
-        </TouchableOpacity>
+
+        {/* if the role is admin, show the picker */}
+        {user?.rol_id === 1 && (
+          <><RNPickerSelect
+            onValueChange={(value) => selectDeliveryUser(value)}
+            items={deliveryUsers.map((user: User) => ({
+              label: `${user.name} ${user.lastName}`,
+              value: user.id,
+            }))}
+            style={{
+              inputIOS: styles.pickerSelectIOS,
+              inputAndroid: styles.pickerSelectAndroid,
+            }}
+            placeholder={{
+              label: 'Selecciona un repartidor...',
+              value: null,
+            }} />
+            <TouchableOpacity style={styles.button} onPress={() => handleDispatch()}>
+              <Text style={styles.buttonText}>DESPACHAR</Text>
+            </TouchableOpacity>
+          </>
+        )}
+
       </View>
 
       {
