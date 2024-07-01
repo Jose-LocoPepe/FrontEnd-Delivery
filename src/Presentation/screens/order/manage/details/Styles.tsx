@@ -22,6 +22,36 @@ const OrderDetailsStyles = StyleSheet.create({
       fontSize: 16,
       marginBottom: 10,
     },
+    button: {
+      padding: 10,
+      backgroundColor: '#e91e63',
+      borderRadius: 5,
+      marginBottom: 20,
+    },
+    buttonText: {
+      color: 'white',
+      textAlign: 'center',
+    },
+    pickerSelectIOS: {
+      fontSize: 16,
+      paddingVertical: 12,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 4,
+      color: 'black',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    pickerSelectAndroid: {
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 0.5,
+      borderColor: 'purple',
+      borderRadius: 8,
+      color: 'black',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
 });
 
 export default OrderDetailsStyles;
