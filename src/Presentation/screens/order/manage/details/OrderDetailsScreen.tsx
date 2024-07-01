@@ -1,22 +1,34 @@
 import { View, Text, FlatList, } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from './Styles'
+import useViewModel from './ViewModel'
 
 import RNPickerSelect from 'react-native-picker-select';
 
+import { User } from '../../../../../Domain/entities/User';
 
 // Mock data for demonstration
-const deliveryMen = [
-  { id: '1', name: 'John Doe' },
-  { id: '2', name: 'Jane Doe' },
-  // Add more DeliveryMan users here
-];
+// const deliveryMen = [
+//   { id: '1', name: 'John Doe' },
+//   { id: '2', name: 'Jane Doe' },
+//   // Add more DeliveryMan users here
+// ];
 
 export const OrderDetailsScreen = ({ route }) => {
   // Extracting order details passed through the route
   // const { order } = route.params;
+  const {
+    errorMessages,
+    loading,
+    getDeliveryUsers,
+    deliveryUsers,
+  } = useViewModel();
   
+  // Use useEffect to call getDeliveryUsers when the component mounts
+  useEffect(() => {
+    getDeliveryUsers();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -33,9 +45,9 @@ export const OrderDetailsScreen = ({ route }) => {
 
       <RNPickerSelect
         onValueChange={(value) => console.log(value)}
-        items={deliveryMen.map((deliveryMan) => ({
-          label: deliveryMan.name,
-          value: deliveryMan.id,
+        items={deliveryUsers.map((user: User) => ({
+          label: `${user.name} ${user.lastName}`,
+          value: user.id,
         }))}
         style={{
           inputIOS: styles.pickerSelectIOS,
