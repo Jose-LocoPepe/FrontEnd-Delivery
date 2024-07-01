@@ -27,8 +27,6 @@ const PendingOrdersViewModel = () => {
         }
     }
 
-    
-
     return {
         user,
         errorMessages,
