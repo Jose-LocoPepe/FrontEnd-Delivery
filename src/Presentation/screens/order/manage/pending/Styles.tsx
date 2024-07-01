@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const PendingOrderStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: '#FFF',
     },
     imageContainer: {
         flex: 3,
@@ -32,6 +32,7 @@ const PendingOrderStyles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         textAlign: 'center',
+        marginVertical: 50,
     },
     loading: {
         position: 'absolute',
@@ -58,14 +59,7 @@ const PendingOrderStyles = StyleSheet.create({
         width: 60,
         height: 60,
     },
-    locationButtonContainer: {
-        width: 60,
-    },
-    selectedLocationText: {
-        fontSize: 16,
-        color: '#000',
-        marginTop: 10,
-    },
+    
 });
 
 export default PendingOrderStyles;
