@@ -4,7 +4,6 @@ import { ProductRepository } from '../../Domain/repositories/ProductRepository';
 import { LocalStorage } from '../sources/local/LocalStorage';
 import { ApiDelivery } from '../sources/remote/api/ApiDelivery';
 import { ResponseVerifyTokenAPIDelivery } from '../sources/remote/api/models/ResponseVerifyTokenApiDelivery';
-import { ProductPictures } from '../../Domain/entities/ProductPictures';
 import { ResponseAPIDelivery } from '../sources/remote/api/models/ResponseAPIDelivery';
 
 

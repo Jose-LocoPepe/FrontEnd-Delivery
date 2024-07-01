@@ -10,3 +10,9 @@ export interface Product {
     isActive?: boolean;
 
 }
+
+export interface ProductImage {
+
+    id?: string;
+    image: string;
+}

@@ -4,24 +4,35 @@ import { getProductsUseCase } from '../../../../../Domain/useCases/Product/GetPr
 import { ProductContext } from '../../../../context/products/ProductContext';
 import { CategoryContext } from '../../../../context/categories/CategoryContext';
 import { showMessage } from 'react-native-flash-message';
-import { getFirstImageUseCase } from '../../../../../Domain/useCases/Product/GetFirstImageUseCase';
 
 export enum SortBy {
     NAME = "NAME",
     PRICE = "PRICE"
 }
+// Values Image1, Image2, Image3
+interface ImagesValue{
+    product_id: string;
+    image1: string;
+    image2: string;
+    image3: string;
+}
 
 export const useProductViewModel = () => {
     // Get categories from CategoryContext
 
-    const { products, getAllProducts, removeProduct, sortProducts } = useContext(ProductContext);
+    const { products, getProductById,getResponseAllProducts, getAllProducts, removeProduct, sortProducts } = useContext(ProductContext);
     const { categories, getAllCategories } = useContext(CategoryContext);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState<SortBy>(SortBy.NAME);
 
-    
+    const [images, setImages] = useState<{ [productId: string]: string }>({});
+
+
+
+    // Estado para guardar la primera imagen de un producto
     const [firstPic, setFirstPic] = useState<string[] | null>([]);
+
 
     const setCategoryName = (idCategory: string):Promise<string> => {
         return new Promise((resolve, reject) => {
@@ -31,20 +42,42 @@ export const useProductViewModel = () => {
             } 
         });
     }
-
-
-    const firstImage = async (id: string) => {  
+    const fetchImages = async() => {
+        // obtener las primeras imagenes de todos los productos
+        try{
+            const response = await getResponseAllProducts();
+            if(response.data){
+                // obtener las primeras imagenes de todos los productos
+                response.data.forEach((product: Product) => {
+                    setFirstPic(response.data.product.images[0]);
+                });
+            }
+        } catch{
+            console.error("Failed to fetch images");
+            
+        }
+    }
+    const fetchFirstImage = async (productId: string) => {
         try {
-            setLoading(true);
-            console.log("id:", id);
-            const response = await getFirstImageUseCase(id);
-            if (response.success) {
-
-                setFirstPic(response.data.image);
-            } else {
-                setError("Product not found");
+            const response = await getProductById(productId);
+            if (response.data.length > 0) {
+                const imagesProduct = {...images, [productId]: response.data[0].product.images[0]};
+                setImages(imagesProduct);
             }
         } catch (error) {
+            console.error("Failed to fetch first image:", error);
+        }
+    };
+
+    const firstImage = async (id: string) => {
+        try {
+            setLoading(true);
+            const response = await getProductById(id);
+            if (response.data) {
+                setFirstPic(response.data.product.images[0]);
+            }
+        }
+        catch (error) {
             setError("Failed to get first image");
             console.error("Failed to get first image:", error);
         } finally {
@@ -77,7 +110,9 @@ export const useProductViewModel = () => {
     const updateListProducts = async () => {
         try {
             setLoading(true);
+            
             await getAllProducts();
+            
         } catch (error) {
             setError("Failed to update products");
             console.error("Failed to update products:", error);
@@ -98,11 +133,11 @@ export const useProductViewModel = () => {
         }
     };
 
-    // Use ef
+    // Use effect getImages
+    
     
     useEffect(() => {
         updateListProducts();
-        
     }, []);
 
     return { products, firstImage,setCategoryName,firstPic,loading, error, categories, sortProducts, deleteProduct, updateListCategory, getAllCategories, updateListProducts, sortBy, setSortBy };
