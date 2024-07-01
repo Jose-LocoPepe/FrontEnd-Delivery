@@ -59,4 +59,77 @@ export class OrderRepositoryImpl implements OrderRepository {
             return Promise.reject(apiError)
         }
     }
+
+    async getPendingPurchaseOrders(session_token: string, userId: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `order/${userId}/pending`;
+
+            const {data} = await ApiDelivery.get<ResponseAPIDelivery>(path,{
+                headers: {
+                    'Authorization': `Bearer ${session_token}`
+                }   
+            });
+
+            return Promise.resolve(data);
+        } catch (error) {
+            let e = (error as AxiosError);
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
+    async getDispatchedPurchaseOrders(session_token: string, userId: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `order/${userId}/dispatched`;
+
+            const {data} = await ApiDelivery.get<ResponseAPIDelivery>(path,{
+                headers: {
+                    'Authorization': `Bearer ${session_token}`
+                }   
+            });
+
+            return Promise.resolve(data);
+        } catch (error) {
+            let e = (error as AxiosError);
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
+    async getDeliveredPurchaseOrders(session_token: string, userId: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `order/${userId}/delivered`;
+
+            const {data} = await ApiDelivery.get<ResponseAPIDelivery>(path,{
+                headers: {
+                    'Authorization': `Bearer ${session_token}`
+                }   
+            });
+
+            return Promise.resolve(data);
+        } catch (error) {
+            let e = (error as AxiosError);
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
+    async getOnTheWayPurchaseOrders(session_token: string, userId: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `order/${userId}/on-the-way`;
+
+            const {data} = await ApiDelivery.get<ResponseAPIDelivery>(path,{
+                headers: {
+                    'Authorization': `Bearer ${session_token}`
+                }   
+            });
+
+            return Promise.resolve(data);
+        } catch (error) {
+            let e = (error as AxiosError);
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
 }
