@@ -126,6 +126,15 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
           <Text style={styles.detailText}>Repartidor: {order.deliveryUser.name} {order.deliveryUser.lastName}</Text>
         )}
 
+        {/* if the role is client and the order is on the way */}
+        {user?.rol_id === 3 && order.status === 'ENCAMINO' && (
+          <View>
+            <TouchableOpacity style={styles.button} onPress={() => console.log('RASTREAR PEDIDO')}>
+              <Text style={styles.buttonText}>RASTREAR PEDIDO</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
       </View>
 
       {
