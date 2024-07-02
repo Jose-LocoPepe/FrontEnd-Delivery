@@ -23,8 +23,6 @@ export const PendingOrdersScreen = ({ navigation }) => {
     navigation.navigate('OrderDetailsScreen', { order });
   };
 
-
-
   return (
     <View style={styles.container}>
       {

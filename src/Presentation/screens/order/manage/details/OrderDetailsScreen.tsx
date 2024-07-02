@@ -98,7 +98,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
         </View>
 
         {/* if the role is admin, show the picker */}
-        {user?.rol_id === 1 && (
+        {user?.rol_id === 1 && order.status === 'PENDIENTE' && (
           <View>
             <Text style={{...styles.title, marginBottom:0}}>ASIGNAR REPARTIDOR</Text>
           
@@ -122,9 +122,9 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
           </View>
         )}
         {/* Display delivery user name if available */}
-        {/* {item.deliveryUser && (
-          <Text style={styles.orderText}>Delivery User: {item.deliveryUser.name} {item.deliveryUser.lastName}</Text>
-        )} */}
+        {order.deliveryUser && (
+          <Text style={styles.detailText}>Repartidor: {order.deliveryUser.name} {order.deliveryUser.lastName}</Text>
+        )}
 
       </View>
 
