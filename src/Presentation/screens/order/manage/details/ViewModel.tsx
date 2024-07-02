@@ -5,6 +5,14 @@ import { DispatchOrderUseCase } from "../../../../../Domain/useCases/Order/Dispa
 import { GetProductsUseCase } from "../../../../../Domain/useCases/Order/GetProductsUseCase";
 
 
+interface Product {
+    id: number;
+    name: string;
+    quantity: number;
+    images: { image: string }[];
+}
+
+
 const OrderDetailsViewModel = () => {
     const { user } = useContext(UserContext);
     
@@ -15,7 +23,7 @@ const OrderDetailsViewModel = () => {
     const [deliveryUsers, setDeliveryUsers] = useState([]);
     const [selectedDeliveryUser, setSelectedDeliveryUser] = useState('');
 
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
 
     const getDeliveryUsers = async () => {
         try {
@@ -53,14 +61,18 @@ const OrderDetailsViewModel = () => {
         }
     }
 
-    const getProducts = async () => {
+    const getProducts = async ( orderId: string) => {
         try {
-            // Fetch products
             setLoading(true);
             const response = await GetProductsUseCase(user?.session_token as string, orderId);
 
             if(response.success){
-                setProducts(response.data);
+                const transformedProducts: Product[] = response.data.map((product: Product) => ({
+                    ...product,
+                    images: product.images.length > 0 ? [{ image: product.images[0].image }] : [{ image: 'default.jpg' }],
+                }));
+
+                setProducts(transformedProducts);
                 setLoading(false);
             }
         } catch (error) {
@@ -80,6 +92,7 @@ const OrderDetailsViewModel = () => {
         changeOrderId,
         products,
         selectedDeliveryUser,
+        getProducts,
     }
 }
 

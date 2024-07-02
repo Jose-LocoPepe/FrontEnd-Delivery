@@ -2,9 +2,8 @@ import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react
 import React, { useEffect, useState } from 'react'
 
 import styles from './Styles'
-import useViewModel from './ViewModel'
+import useViewModel, { Order } from './ViewModel'
 
-import { PurchaseOrder } from '../../../../../Domain/entities/PurchaseOrder';
 
 export const PendingOrdersScreen = ({ navigation }) => {
   const {
@@ -19,9 +18,9 @@ export const PendingOrdersScreen = ({ navigation }) => {
     getPurchaseOrders();
   }, []);
 
-  const handlePress = ( order: PurchaseOrder ) => {
+  const handlePress = ( order: Order ) => {
     // Navigate to the details screen with the order's details
-    navigation.navigate('OrderDetailsScreen');
+    navigation.navigate('OrderDetailsScreen', { order });
   };
 
 
@@ -30,14 +29,14 @@ export const PendingOrdersScreen = ({ navigation }) => {
     <View style={styles.container}>
       {
         purchaseOrders.length > 0 ? (
-          <FlatList<PurchaseOrder>
+          <FlatList<Order>
             data={purchaseOrders}
             renderItem={({ item}) => (
               <TouchableOpacity onPress={() => handlePress(item)}>
                 <View style={{ padding: 20, margin: 10, backgroundColor: '#f0f0f0' }}>
-                  <Text>Cliente: {item.clientId}</Text>
-                  <Text>Dirección: {item.addressId}</Text>
-                  <Text>Fecha del pedido: {item.date}</Text>
+                  <Text>Cliente: {item.client.name} {item.client.lastName}</Text>
+                  <Text>Dirección: {item.address.street}</Text>
+                  <Text>Fecha del pedido: {new Date(item.date).toLocaleString('es-CL', { month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</Text>
                 </View>
               </TouchableOpacity>
             )}

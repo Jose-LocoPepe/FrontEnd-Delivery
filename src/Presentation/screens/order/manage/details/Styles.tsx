@@ -20,13 +20,14 @@ const OrderDetailsStyles = StyleSheet.create({
   },
   detailText: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   button: {
     padding: 10,
     backgroundColor: '#e91e63',
     borderRadius: 5,
     marginBottom: 20,
+    bottom: 10,
   },
   buttonText: {
     color: 'white',
@@ -65,6 +66,23 @@ const OrderDetailsStyles = StyleSheet.create({
   orderDetailsContainer: {
     flex: 6,
     width: '100%',
+  },
+  item: {
+    backgroundColor: 'lightgray',
+    padding: 10,
+    marginVertical: 4,
+    marginHorizontal: 16,
+    borderRadius: 5,
+    flexDirection: 'row',
+  },
+  itemText: {
+    fontSize: 16,
+    color: '#333', // Dark grey color for the item text
+  },
+  productImage: {
+    width: 100, 
+    height: 100, 
+    resizeMode: 'contain',
   },
 });
 

@@ -2,6 +2,28 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../../../context/auth/UserContext";
 import { GetPendingPurchaseOrdersUseCase } from "../../../../../Domain/useCases/PurchaseOrder/GetPendingPurchaseOrdersUseCase";
 
+export interface DeliveryUser {
+    name: string;
+    lastName: string;
+}
+export interface Order {
+    id: number;
+    date: string;
+    status: string;
+    totalPrice: number;
+    addressId: number;
+    clientId: number;
+    deliveryUserId?: string | null;
+    client: {
+      name: string;
+      lastName: string;
+      phone: string;
+    };
+    address: {
+      street: string;
+    };
+    deliveryUser?:  DeliveryUser | null;
+  }
 
 const PendingOrdersViewModel = () => {
     const { user } = useContext(UserContext);
@@ -9,7 +31,7 @@ const PendingOrdersViewModel = () => {
     const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
     
-    const [purchaseOrders, setPurchaseOrders] = useState([]);
+    const [purchaseOrders, setPurchaseOrders] = useState<Order[]>([]);
 
     
     const getPurchaseOrders = async () => {

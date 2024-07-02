@@ -83,7 +83,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="MapScreen" component={MapScreen} />
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
-                
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
             </>
         } else if (user?.rol_id === 2) {
             // This Delivery
@@ -93,6 +93,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
                 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
             </>
         } else {
             // This Admin
@@ -107,7 +108,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
-                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} options={{ headerTitle: 'Detalles de la orden' }} />
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
                 
             </>
         }
