@@ -60,8 +60,9 @@ const OrderDetailsStyles = StyleSheet.create({
     right: 0,
     left: 0,
   },
-  productContainer: {
+  flatlistContainer: {
     flex: 4,
+    width: '100%',
   },
   orderDetailsContainer: {
     flex: 6,
@@ -74,15 +75,35 @@ const OrderDetailsStyles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 5,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   itemText: {
     fontSize: 16,
-    color: '#333', // Dark grey color for the item text
+    color: '#666', // Dark grey color for the item text
   },
   productImage: {
-    width: 100, 
-    height: 100, 
+    width: 50, 
+    height: 50, 
     resizeMode: 'contain',
+    marginRight: 10,
+  },
+  productContainer: {
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    backgroundColor: '#fff', // White background for the product list
+    shadowColor: '#000', // Shadow for the product container
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  itemDetails: {
+    flex: 1,
+    justifyContent: 'center', // Center the details vertically
   },
 });
 

@@ -24,6 +24,7 @@ const OrderDetailsViewModel = () => {
     const [selectedDeliveryUser, setSelectedDeliveryUser] = useState('');
 
     const [products, setProducts] = useState<Product[]>([]);
+    // const [productos,setProductos] = useState([]);
 
     const getDeliveryUsers = async () => {
         try {
@@ -61,18 +62,20 @@ const OrderDetailsViewModel = () => {
         }
     }
 
-    const getProducts = async ( orderId: string) => {
+    const getProducts = async ( id: string) => {
         try {
             setLoading(true);
-            const response = await GetProductsUseCase(user?.session_token as string, orderId);
-
+            const response = await GetProductsUseCase(user?.session_token as string, id);
+            
             if(response.success){
-                const transformedProducts: Product[] = response.data.map((product: Product) => ({
+                const data = response.data;
+                const transformedProducts = data.map((product: Product) => ({
                     ...product,
                     images: product.images.length > 0 ? [{ image: product.images[0].image }] : [{ image: 'default.jpg' }],
                 }));
 
                 setProducts(transformedProducts);
+                // setProductos(data);
                 setLoading(false);
             }
         } catch (error) {

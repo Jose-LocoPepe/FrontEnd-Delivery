@@ -29,16 +29,16 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
   useEffect(() => {
     getDeliveryUsers();
     
-    if(route.params?.orderId){
+    if(route.params?.order.id){
       handleProductsUpdate(route.params.order.id);
     }
   }, [route.params]);
 
   const handleProductsUpdate = (orderId: number) => {
-    
-    getProducts(orderId);
-    changeOrderId(order.id);
+    getProducts(orderId.toString());
+    changeOrderId(orderId.toString());
     console.log('orderId: ', orderId);
+    console.log('products: ', products);
   }
 
   const handleDispatch = async () => {
@@ -66,17 +66,28 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Detalle de la orden</Text>
-      <View style={styles.productContainer}>
-        <FlatList
-          data={products}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.item}>
-              <Text style={styles.itemText}>{item.name}</Text>
-              <Text style={styles.itemText}>Cantidad: {item.quantity}</Text>
-            </View>
-          )}
-        />
+      <View style={styles.flatlistContainer}>
+        <View style={styles.productContainer}>
+          {/* Display the products in the order */}
+          <FlatList
+            data={products}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.item}>
+                <Image
+                  // source={{ uri: item.images[0].image }}
+                  source={item.images.length > 0 && item.images[0].image ? { uri: item.images[0].image } : require('../../../../../../assets/pedido.png')}
+                  style={styles.productImage}
+                />
+                <View style={styles.itemDetails}>
+                  <Text style={styles.itemText}>{item.name}</Text>
+                  <Text style={styles.itemText}>Cantidad: {item.quantity}</Text>
+                </View>
+              </View>
+            )}
+          />
+        </View>
+        
       </View>
       <View style={styles.orderDetailsContainer}>
         <View style={styles.detailBox}>
