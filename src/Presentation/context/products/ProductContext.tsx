@@ -9,16 +9,16 @@ import { UpdateProductUseCase } from "../../../Domain/useCases/Product/UpdatePro
 import { deleteProductUseCase } from "../../../Domain/useCases/Product/DeleteProductsUseCase";
 import { UpdateFileUseCase } from "../../../Domain/useCases/File/UpdateFileUseCase";
 import { GetProductByIdUseCase } from "../../../Domain/useCases/Product/GetProductByIdUseCase";
-import { getProductImagesUseCase } from "../../../Domain/useCases/Product/GetProductsImages";
-
 interface ProductContextProps {
     products: Product[];
     getAllProducts(): Promise<void>;
+    getResponseAllProducts() : Promise<ResponseAPIDelivery>;
     getProductById(id: string): Promise<ResponseAPIDelivery>;
     createProduct(product: Product, file1: ImagePicker.ImageInfo, file2: ImagePicker.ImageInfo, file3: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery> ;
     //createProduct(product: Product, file: ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
     updateProduct(product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo): Promise<ResponseAPIDelivery>;
     removeProduct(id: string): Promise<ResponseAPIDelivery>;
+
     updateFile?(file: ImagePicker.ImageInfo, collection: string, id: string): Promise<ResponseAPIDelivery>;
     sortProducts(criteria: 'name' | 'price'): void;
 }
@@ -29,6 +29,15 @@ export const ProductProvider = ({ children }: any) => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const { user } = useContext(UserContext);   
+
+    const getResponseAllProducts = async (): Promise<ResponseAPIDelivery>=>{
+        try{
+            const response = await getProductsUseCase(user.session_token);
+            return response;
+        }catch(error){
+            return {success: false, message: "Failed to get Products"};
+        }
+    }
 
     useEffect(() => {
         if(products.length === 0) getAllProducts();
@@ -75,10 +84,7 @@ export const ProductProvider = ({ children }: any) => {
         return response;
     } 
 
-    const obtainFirstImage = async (id: string): Promise<string> => {
-        const response = await getProductImagesUseCase(id);
-        return response.data.image;
-    }
+
 
     const updateProduct = async (product: Product, file1: ImagePicker.ImageInfo,file2: ImagePicker.ImageInfo, file3:ImagePicker.ImageInfo) => {
         
@@ -141,6 +147,7 @@ export const ProductProvider = ({ children }: any) => {
             createProduct, 
             updateProduct, 
             removeProduct,
+            getResponseAllProducts,
             sortProducts,
             getProductById,
         }}>
