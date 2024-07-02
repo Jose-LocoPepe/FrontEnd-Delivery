@@ -3,6 +3,7 @@ import { UserContext } from "../../../../context/auth/UserContext";
 import { GetDeliveryUsersUseCase } from "../../../../../Domain/useCases/User/GetDeliveryUsersUseCase";
 import { DispatchOrderUseCase } from "../../../../../Domain/useCases/Order/DispatchOrderUseCase";
 import { GetProductsUseCase } from "../../../../../Domain/useCases/Order/GetProductsUseCase";
+import { DeliverOrderUseCase } from "../../../../../Domain/useCases/Order/DeliverOrderUseCase";
 
 
 interface Product {
@@ -85,6 +86,26 @@ const OrderDetailsViewModel = () => {
         }
     }
 
+    const deliverOrder = async (orderId: string, deliveryUserId: string) => {
+        console.log('selectedDeliveryUser: ', selectedDeliveryUser);
+        try {
+            setLoading(true);
+            const response = await DeliverOrderUseCase(deliveryUserId, user?.session_token as string, orderId);
+            
+            if(response.success){
+                setLoading(false);
+                return true;
+            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+            return false;
+        }
+    }
+
+
+
+
     return {
         user,
         errorMessages,
@@ -97,6 +118,7 @@ const OrderDetailsViewModel = () => {
         products,
         selectedDeliveryUser,
         getProducts,
+        deliverOrder,
     }
 }
 

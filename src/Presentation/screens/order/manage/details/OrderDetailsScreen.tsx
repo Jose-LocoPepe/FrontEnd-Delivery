@@ -24,6 +24,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
     changeOrderId,
     products,
     getProducts,
+    deliverOrder,
   } = useViewModel();
   
   useEffect(() => {
@@ -131,6 +132,18 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
           <View>
             <TouchableOpacity style={styles.button} onPress={() => console.log('INICIAR ENTREGA')}>
               <Text style={styles.buttonText}>INICIAR ENTREGA</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* if the role is delivery and the order is on the way */}
+        {user?.rol_id === 2 && order.status === 'ENCAMINO' && (
+          <View>
+            <TouchableOpacity style={styles.button} onPress={() => console.log('INICIAR MAPA')}>
+              <Text style={styles.buttonText}>INICIAR MAPA</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => console.log('ENTREGAR PEDIDO')}>
+              <Text style={styles.buttonText}>ENTREGAR PEDIDO</Text>
             </TouchableOpacity>
           </View>
         )}

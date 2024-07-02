@@ -132,4 +132,24 @@ export class OrderRepositoryImpl implements OrderRepository {
         }
     }
 
+    async deliverOrder(deliveryUserId: string, session_token: string, orderId: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `order/${orderId}/deliver`;
+
+            const {data} = await ApiDelivery.patch<ResponseAPIDelivery>(path,{
+                deliveryUserId
+            },{
+                headers: {
+                    'Authorization': `Bearer ${session_token}`
+                }
+            });
+
+            return Promise.resolve(data);
+        } catch (error) {
+            let e = (error as AxiosError);
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
 }
