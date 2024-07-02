@@ -1,5 +1,7 @@
 import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
+
 
 import styles from './Styles'
 import useViewModel, { Order } from './ViewModel'
@@ -14,9 +16,17 @@ export const PendingOrdersScreen = ({ navigation }) => {
     purchaseOrders,
   } = useViewModel();
 
-  useEffect(() => {
-    getPurchaseOrders();
-  }, []);
+  // useEffect(() => {
+  //   getPurchaseOrders();
+  // }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getPurchaseOrders();
+    }, [])
+  );
+
+
 
   const handlePress = ( order: Order ) => {
     // Navigate to the details screen with the order's details

@@ -26,7 +26,7 @@ export class OrderRepositoryImpl implements OrderRepository {
         try {
             const path = `order/${orderId}/dispatch`;
 
-            const {data} = await ApiDelivery.post<ResponseAPIDelivery>(path,{
+            const {data} = await ApiDelivery.patch<ResponseAPIDelivery>(path,{
                 deliveryUserId
             },{
                 headers: {

@@ -50,7 +50,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
       });
     }
 
-    const response = await dispatchOrder();
+    const response = await dispatchOrder(order.id.toString(), selectedDeliveryUser);
 
     if (response) {
       showMessage({

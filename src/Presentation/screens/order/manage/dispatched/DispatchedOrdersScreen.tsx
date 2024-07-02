@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './Styles'
 import useViewModel from './ViewModel'
 import { Order } from '../pending/ViewModel'
+import { useFocusEffect } from '@react-navigation/native'
 
 export const DispatchedOrdersScreen = ({ navigation }) => {
   const {
@@ -14,9 +15,15 @@ export const DispatchedOrdersScreen = ({ navigation }) => {
     purchaseOrders,
   } = useViewModel();
 
-  useEffect(() => {
-    getPurchaseOrders();
-  }, []);
+  // useEffect(() => {
+  //   getPurchaseOrders();
+  // }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getPurchaseOrders();
+    }, [])
+  );
 
   const handlePress = ( order: Order ) => {
     // Navigate to the details screen with the order's details
@@ -41,7 +48,7 @@ export const DispatchedOrdersScreen = ({ navigation }) => {
             keyExtractor={item => item.id.toString()} // Assume each order has a unique 'id'
           />
         ) : (
-          <Text style={styles.formText}>No hay pedidos pendientes</Text>
+          <Text style={styles.formText}>No hay pedidos despachados</Text>
         )
       }
 

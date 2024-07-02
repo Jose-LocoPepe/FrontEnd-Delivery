@@ -46,10 +46,11 @@ const OrderDetailsViewModel = () => {
         setOrderId(orderId);
     }
 
-    const dispatchOrder = async () => {
+    const dispatchOrder = async (orderId: string, deliveryUserId: string) => {
+        console.log('selectedDeliveryUser: ', selectedDeliveryUser);
         try {
             setLoading(true);
-            const response = await DispatchOrderUseCase(selectedDeliveryUser, user?.session_token as string, orderId);
+            const response = await DispatchOrderUseCase(deliveryUserId, user?.session_token as string, orderId);
             
             if(response.success){
                 setLoading(false);
