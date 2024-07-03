@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Product } from '../../../../../Domain/entities/Product';
+import { ShoppingBagContext } from '../../../../context/ShoppingBag/ShoppingBagContext';
 
 const ClientProductDetailViewModel = (product: Product) => {
 /*
@@ -10,10 +11,10 @@ const ClientProductDetailViewModel = (product: Product) => {
     ];*/
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0.0);
-    //const { shoppingBag, saveItem } = useContext(ShoppingBagContext);
-    //console.log('BOLSA DE COMPRAS: ' + JSON.stringify(shoppingBag));
+    const { shoppingBag, saveItem } = useContext(ShoppingBagContext);
+    console.log('BOLSA DE COMPRAS: ' + JSON.stringify(shoppingBag));
    
-   /* useEffect(() => {
+    useEffect(() => {
         const index = shoppingBag.findIndex((p) => p.id == product.id);
         if (index !== -1) { // PRODUCTO SI EXISTE 
             setQuantity(shoppingBag[index].quantity!);
@@ -21,7 +22,6 @@ const ClientProductDetailViewModel = (product: Product) => {
 
     }, [shoppingBag])
     
-*/
     useEffect(() => {
         setPrice(product.price * quantity);
     }, [quantity])
@@ -47,7 +47,7 @@ const ClientProductDetailViewModel = (product: Product) => {
         quantity,
         price,
         //productImageList,
-        //shoppingBag,
+        shoppingBag,
         addItem,
         addToBag,
         removeItem

@@ -20,18 +20,20 @@ const Tab = createBottomTabNavigator<RootClientBottomTabParamsList>();
 export const ClientBottomTabs = () => {
     return (
         <Tab.Navigator
-            initialRouteName='ProfileInfoScreen'
+            initialRouteName='ClientProductNavigator'
             screenOptions={{
                 headerShown: false,
                 tabBarActiveBackgroundColor: '#fff', // Aquí defines el color negro
             }}>
             <Tab.Screen
-                name="ProfileInfoScreen"
-                component={ProfileInfoScreen}
-                options={{
-                    title: 'Perfil',
-                    tabBarIcon: ({ size, color }) => <FontAwesome name="user" size={size} color={'#000'} />,
-                }}/>
+            name='ClientProductNavigator'
+            component={ClientProductNavigator}
+            options={{
+                title: 'Productos',
+                tabBarIcon: ({ size, color }) => <FontAwesome name="shopping-cart" size={size} color={'#000'} />,
+            }}/>
+            
+            
                 
             <Tab.Screen
                 name="OrdersTopTabs"
@@ -40,15 +42,14 @@ export const ClientBottomTabs = () => {
                     title: 'Órdenes',
                     tabBarIcon: ({ size, color }) => <FontAwesome name="shopping-cart" size={size} color={'#000'} />,
             }}/>
-            <Tab.Screen
-                name='ClientProductNavigator'
-                component={ClientProductNavigator}
-                options={{
-                    title: 'Productos',
-                    tabBarIcon: ({ size, color }) => <FontAwesome name="shopping-cart" size={size} color={'#000'} />,
-                }}/>
             
-                          
+            <Tab.Screen
+                name="ProfileInfoScreen"
+                component={ProfileInfoScreen}
+                options={{
+                    title: 'Perfil',
+                    tabBarIcon: ({ size, color }) => <FontAwesome name="user" size={size} color={'#000'} />,
+                }}/>           
         </Tab.Navigator>
     );
 }

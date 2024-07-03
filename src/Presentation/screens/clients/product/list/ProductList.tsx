@@ -11,7 +11,7 @@ import ProductItem from "./Item";
 import { Category } from "../../../../../Domain/entities/Category";
 import { ProductStackParamList } from "../../../../navigator/tabs/admin/AdminProductNavigator";
 import { ClientProductStackParamList } from "../../../../navigator/tabs/client/ClientProductNavigator";
-import { ShoppingCartButton } from "../../../../components/ShoppingCartButton";
+import { BagButton } from "../../../../components/ShoppingBagButton";
 
 interface Props extends StackScreenProps<ClientProductStackParamList, 'ClientProductListScreen'> {}
 
@@ -58,12 +58,7 @@ export const ClientProductListScreen = ({ navigation}: Props) => {
                 )}
      
             </View>
-            <View style={{position: 'absolute', alignContent:'center', width:130,top: 100, right: 12}}>
-                <ShoppingCartButton
-                    text="Agregar Producto"
-                    onPress={() => console.log("XD")}
-                />  
-            </View>
+            
             
         </View>
     );

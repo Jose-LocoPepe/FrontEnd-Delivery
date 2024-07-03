@@ -13,7 +13,7 @@ export const ClientProductSelectScreen = ({navigation, route}: Props) => {
     const {product} = route.params;
     const width = Dimensions.get('window').width;
     const height = Dimensions.get('window').height;
-    const { quantity, price, addToBag, addItem, removeItem } = useViewModel(product);
+    const { shoppingBag,quantity, price, addToBag, addItem, removeItem } = useViewModel(product);
 
     return (
         <View style={styles.container}>

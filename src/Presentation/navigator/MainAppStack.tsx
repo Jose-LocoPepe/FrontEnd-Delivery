@@ -30,6 +30,7 @@ import { OrdersTopTabs } from './tabs/OrdersTopTabs';
 import { OrderDetailsScreen } from '../screens/order/manage/details/OrderDetailsScreen';
 import { ClientProductListScreen } from '../screens/clients/product/list/ProductList';
 import { ClientProductSelectScreen } from '../screens/clients/product/item/ProductDetail';
+import { Product } from '../../Domain/entities/Product';
 
 
 export type RootStackParamsList = {
@@ -55,7 +56,7 @@ export type RootStackParamsList = {
     ClientProductScreen: undefined,
     ClientProductBottomTabs:undefined,
     ClientProductListScreen: undefined,
-    ClientProductSelectScreen: undefined,
+    ClientProductSelectScreen: { product: Product },
 
 
     AddressListScreen: undefined,
