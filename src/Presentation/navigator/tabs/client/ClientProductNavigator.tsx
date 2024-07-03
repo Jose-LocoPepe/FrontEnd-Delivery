@@ -3,11 +3,13 @@ import React from "react";
 import { ProductProvider } from "../../../context/products/ProductContext";
 import { CategoryProvider } from "../../../context/categories/CategoryContext";
 import { ClientProductListScreen } from "../../../screens/clients/product/list/ProductList";
+import { Product } from "../../../../Domain/entities/Product";
+import { ClientProductSelectScreen } from "../../../screens/clients/product/item/ProductDetail";
 
 
 export type ClientProductStackParamList = {
     ClientProductListScreen: undefined,
-    
+    ClientProductSelectScreen: {product: Product}
 }
 
 
@@ -26,6 +28,14 @@ export const ClientProductNavigator = () => {
                             headerShown: false,
                             title: 'Listar Productos'
                         }} />
+                        <Stack.Screen
+                        name="ClientProductSelectScreen"
+                        component={ClientProductSelectScreen}
+                        options={{
+                            headerShown: false,
+                            title: 'Seleccionar Producto'
+                        }} /> 
+
                        
         
                     </Stack.Navigator>

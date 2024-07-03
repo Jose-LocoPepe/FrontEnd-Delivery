@@ -11,6 +11,7 @@ import ProductItem from "./Item";
 import { Category } from "../../../../../Domain/entities/Category";
 import { ProductStackParamList } from "../../../../navigator/tabs/admin/AdminProductNavigator";
 import { ClientProductStackParamList } from "../../../../navigator/tabs/client/ClientProductNavigator";
+import { ShoppingCartButton } from "../../../../components/ShoppingCartButton";
 
 interface Props extends StackScreenProps<ClientProductStackParamList, 'ClientProductListScreen'> {}
 
@@ -37,7 +38,7 @@ export const ClientProductListScreen = ({ navigation}: Props) => {
                 style={styles.imageBackground} 
                 source={require('../../../../../../assets/comidas-rapidas.jpeg')} />
                 
-            <View style={{ top: '10%', left: '0%', position: 'absolute', width: '100%', height: '55%' }}>
+            <View style={{ top: '20%', left: '0%', position: 'absolute', width: '100%', height: '100%' }}>
 
                 {loading && <Text>Loading...</Text>}
                 {!loading && error && <Text>{error}</Text>}
@@ -45,7 +46,7 @@ export const ClientProductListScreen = ({ navigation}: Props) => {
                 <FlatList
                     data={products}
                     renderItem={({item}) => (
-                        <ProductItem product={item}  />
+                        <ProductItem product={item} navigation={navigation} />
                     )}
                     keyExtractor={(item) => item.id!}
                     style={{ padding:10, marginTop: 100, opacity: loading ? 0.5 : 1, borderTopLeftRadius: 40,
@@ -58,31 +59,12 @@ export const ClientProductListScreen = ({ navigation}: Props) => {
      
             </View>
             <View style={{position: 'absolute', alignContent:'center', width:130,top: 100, right: 12}}>
-                <RoundedButton
+                <ShoppingCartButton
                     text="Agregar Producto"
-                    onPress={() => navigation.navigate('CreateProductScreen')}
+                    onPress={() => console.log("XD")}
                 />  
             </View>
-            <View style={{...styles.form, height: '35%'}}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                    Menú Productos
-                </Text>
-                <View style={{marginTop: 20}}/>
-                <RoundedButton
-                    text="Listar Productos"
-                    onPress={updateListProducts}
-                />
-                <View style={{marginTop: 20}}/>
-                <RoundedButton
-                    text="Ordenar por Nombre"
-                    onPress={() => sortProducts('name')}
-                />
-                <View style={{marginTop: 20}}/>
-                <RoundedButton
-                    text="Ordenar por Precio"
-                    onPress={() => sortProducts('price')}
-                />
-            </View>
+            
         </View>
     );
 };
