@@ -18,6 +18,7 @@ export type ProductStackParamList = {
     //AdminProductNavigator: undefined
 }
 
+
 const Stack = createNativeStackNavigator<ProductStackParamList>();
 
 export const AdminProductNavigator = () => {

@@ -28,6 +28,7 @@ import { MapScreen } from '../screens/address/map/MapScreen';
 
 import { OrdersTopTabs } from './tabs/OrdersTopTabs';
 import { OrderDetailsScreen } from '../screens/order/manage/details/OrderDetailsScreen';
+import { ClientProductListScreen } from '../screens/clients/product/list/ProductList';
 
 
 export type RootStackParamsList = {
@@ -49,6 +50,10 @@ export type RootStackParamsList = {
     AdminCategoryMenu: undefined,
     CategoryCreateScreen: undefined,
     CategoryListScreen: undefined,
+
+    ClientProductScreen: undefined,
+    ClientProductBottomTabs:undefined,
+    ClientProductListScreen: undefined,
 
 
     AddressListScreen: undefined,
@@ -74,6 +79,7 @@ export const MainAppStack = () => {
         if (user?.rol_id === 3) {
             // This Client
             return <>
+                <Stack.Screen name="ClientProductListScreen" component={ClientProductListScreen} />
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
