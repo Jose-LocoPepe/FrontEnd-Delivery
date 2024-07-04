@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from './Styles';
 import { View, Text, Button, FlatList, Image, Modal, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
@@ -8,12 +8,14 @@ import { RoundedButton } from "../../../../components/RoundedButton";
 import { ImageButton } from "../../../../components/ImageButton";
 import ProductItem from "./ProductItem";
 import { Category } from "../../../../../Domain/entities/Category";
+import { ProductStackParamList } from "../../../../navigator/tabs/admin/AdminProductNavigator";
 
-interface Props extends StackScreenProps<RootStackParamsList, 'ProductListScreen'> {}
+interface Props extends StackScreenProps<ProductStackParamList, 'ProductListScreen'> {}
 
-export const ProductsListScreen = ({ navigation }: Props) => {
+export const ProductsListScreen = ({ navigation}: Props) => {
     const { products, loading, updateListProducts, sortProducts, error, categories, setSortBy } = useProductViewModel();
     const [isModalVisible, setIsModalVisible] = useState(false);
+
 
     const openModal = () => setIsModalVisible(true);
     const closeModal = () => setIsModalVisible(false);
@@ -41,7 +43,7 @@ export const ProductsListScreen = ({ navigation }: Props) => {
                 <FlatList
                     data={products}
                     renderItem={({item}) => (
-                        <ProductItem product={item} />
+                        <ProductItem product={item}  />
                     )}
                     keyExtractor={(item) => item.id!}
                     style={{ padding:10, marginTop: 100, opacity: loading ? 0.5 : 1, borderTopLeftRadius: 40,

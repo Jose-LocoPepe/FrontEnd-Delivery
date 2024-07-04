@@ -8,6 +8,9 @@ import { CategoryContext } from '../../../../context/categories/CategoryContext'
 import { UserContext } from '../../../../context/auth/UserContext';
 import * as ImagePicker from 'expo-image-picker';
 import { UpdateFileUseCase } from '../../../../../Domain/useCases/File/UpdateFileUseCase';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ProductStackParamList } from '../../../../navigator/tabs/admin/AdminProductNavigator';
 
 
 interface Values {
@@ -28,6 +31,9 @@ const validationCreateCategorySchema = yup.object().shape({
 });
 
 const CreateCategoryViewModel = () => {
+
+    const navigation = useNavigation<StackNavigationProp<ProductStackParamList>>();
+
     
     const [loading, setLoading] = useState<boolean>(false);
     
@@ -101,6 +107,7 @@ const CreateCategoryViewModel = () => {
                         description: 'La categoría se ha creado correctamente',
                         type: 'success',
                     });
+                    navigation.goBack();
                     setValues({
                         name: '',
                         description: '',

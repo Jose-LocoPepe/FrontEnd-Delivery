@@ -1,5 +1,5 @@
 export interface Rol{
-    id: string,
+    id: number,
     name: string,
    // image: string,
    // rooute: string,

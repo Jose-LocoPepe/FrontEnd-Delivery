@@ -47,7 +47,7 @@ export const CategoryItem = ({ category }: Props) => {
                     }}}
                 >
                 <Image
-                 style={{width: 30, height: 30, resizeMode: 'contain'}}
+                 style={{width: 30, height: 30, resizeMode: 'contain', marginRight: 10 }}
                  source={require('../../../../../../assets/edit.png')}
                  />
             </TouchableOpacity>

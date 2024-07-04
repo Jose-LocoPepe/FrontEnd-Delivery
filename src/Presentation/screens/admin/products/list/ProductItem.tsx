@@ -14,34 +14,38 @@ import { ProductStackParamList } from '../../../../navigator/tabs/admin/AdminPro
 
 
 interface Props {
+
     product: Product;
 }
 
 export const ProductItem = ({ product }: Props) => {
+    const [nameCategory, setNameCategory] = useState<string>('');
     const [modalVisible, setModalVisible] = useState(false);
-    const { products, loading, error,deleteProduct } = useProductViewModel(); // Call the hook to get categories and loading state
-
+    const { products, loading, error,firstPic,deleteProduct, setCategoryName,firstImage } = useProductViewModel(); // Call the hook to get categories and loading state
+    setCategoryName(product.categoryId).then((name) => setNameCategory(name));
     const navigation = useNavigation<StackNavigationProp<ProductStackParamList>>();
+    
+
   return (
     <View style={{ margin: 2,padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <View style={{width: '20%'}}>
- 
-                        <Text>Sin imagen</Text>
-                        
-                        
+                <Image
+                    style={{ width: 50, height: 50, resizeMode: 'contain' }}
+                    source={{ uri: firstPic[parseInt(product.id)] ? firstPic[parseInt(product.id)] : 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg' }}
+                />
             </View>
             <View style={{width: '60%'}}>
                 <Text>Nombre: {product.name}</Text>
                 <Text>Descripción: {product.description}</Text>
                 <Text>Precio: {product.price}</Text>
-                <Text>Categoría: {product.categoryId}</Text>
+                <Text>Categoría: {nameCategory}</Text>
             </View>
             <View style={{width:'20%', flexDirection:'row'}}>
             <TouchableOpacity
                     onPress={() => {
-                        if (product.id) {
-                            console.log("Navigating to UpdateProductScreen with productId:", product.id);
-                            navigation.navigate('UpdateProductScreen', { productId: product.id });
+                        if(product.id){
+                            console.log("Navigating to UpdateProductScreen with productId:", product.id)    ;
+                            navigation.navigate('UpdateProductScreen', {  product: product });
                         }
                     }}
                 >

@@ -11,6 +11,6 @@ export interface User {
     confirmPassword?:string;
     image?:          string;
     session_token?:  string;
-    rol_id?:         Rol[];
+    rol_id?:         number;
     address?:         Address;
 }

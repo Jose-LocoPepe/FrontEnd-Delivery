@@ -1,10 +1,8 @@
 import { ResponseAPIDelivery } from "../../Data/sources/remote/api/models/ResponseAPIDelivery";
-import { Address } from "../entities/Address";
+
 
 
 export interface AddressRepository {
     getAddressById(id: string): Promise<ResponseAPIDelivery>
-    createAddress(address: Address, id: string): Promise<ResponseAPIDelivery> 
-
-    
+    createAddress(id: string, name: string, street: string, neighborhood: string, longitude: number, latitude: number, session_token: string): Promise<ResponseAPIDelivery> 
 }

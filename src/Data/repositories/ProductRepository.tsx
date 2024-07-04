@@ -4,7 +4,6 @@ import { ProductRepository } from '../../Domain/repositories/ProductRepository';
 import { LocalStorage } from '../sources/local/LocalStorage';
 import { ApiDelivery } from '../sources/remote/api/ApiDelivery';
 import { ResponseVerifyTokenAPIDelivery } from '../sources/remote/api/models/ResponseVerifyTokenApiDelivery';
-import { ProductPictures } from '../../Domain/entities/ProductPictures';
 import { ResponseAPIDelivery } from '../sources/remote/api/models/ResponseAPIDelivery';
 
 
@@ -50,6 +49,22 @@ export class ProductRepositoryImpl implements ProductRepository {
         }
     }
 
+    //get first picture of product
+    async getFirstPicture(id: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `product/getFirstPicture/${id}`;
+            const { data } = await ApiDelivery.get<ResponseAPIDelivery>(path);
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
     // Get product by id
     async getProductById(id: string, token: string): Promise<ResponseAPIDelivery> {
         try {
@@ -79,12 +94,27 @@ export class ProductRepositoryImpl implements ProductRepository {
                 }
                 
             });
-
             return Promise.resolve(data);
 
         } catch (error) {
             let e = (error as AxiosError);
             // console.log('ERROR: ', JSON.stringify(e.response?.data));
+            const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
+            return Promise.reject(apiError)
+        }
+    }
+
+    // Get product images
+    async getProductImages(id: string): Promise<ResponseAPIDelivery> {
+        try {
+            const path = `product/getImages/${id}`;
+            const { data } = await ApiDelivery.get<ResponseAPIDelivery>(path);
+
+            return Promise.resolve(data);
+
+        } catch (error) {
+            let e = (error as AxiosError);
+            console.log('ERROR: ', JSON.stringify(e.response?.data));
             const apiError: ResponseAPIDelivery = JSON.parse(JSON.stringify(e.response?.data));
             return Promise.reject(apiError)
         }

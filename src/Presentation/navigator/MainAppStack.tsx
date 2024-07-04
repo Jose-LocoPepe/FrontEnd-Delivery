@@ -20,9 +20,18 @@ import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScree
 import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
 
 import { CategoriesEditScreen } from '../screens/admin/category/update/UpdateCategory';
+
 import AddressListScreen from '../screens/address/list/AddressListScreen';
 import { AddressFormScreen } from '../screens/address/create/AddressFormScreen';
+import { LocationSelectScreen } from '../screens/address/create/LocationSelectScreen';
+import { MapScreen } from '../screens/address/map/MapScreen';
 
+import { OrdersTopTabs } from './tabs/OrdersTopTabs';
+import { OrderDetailsScreen } from '../screens/order/manage/details/OrderDetailsScreen';
+import { ClientProductListScreen } from '../screens/clients/product/list/ProductList';
+import { ClientProductSelectScreen } from '../screens/clients/product/item/ProductDetail';
+import { Product } from '../../Domain/entities/Product';
+import { ClientShoppingBagScreen } from '../screens/clients/shopping_bag/ShoppingBag';
 
 
 export type RootStackParamsList = {
@@ -45,10 +54,24 @@ export type RootStackParamsList = {
     CategoryCreateScreen: undefined,
     CategoryListScreen: undefined,
 
+    ClientProductScreen: undefined,
+    ClientProductBottomTabs:undefined,
+    ClientProductListScreen: undefined,
+    ClientProductSelectScreen: { product: Product },
+
+    ClientShoppingBagScreen: undefined,
+
 
     AddressListScreen: undefined,
-    AddressFormScreen: undefined,
+    AddressFormScreen: {
+        latitude: number | null;
+        longitude: number | null;
+    },
+    LocationSelectScreen: undefined,
+    MapScreen: undefined,
 
+    OrdersTopTabs: undefined,
+    OrderDetailsScreen: undefined,
 }
 
 
@@ -59,21 +82,32 @@ export const MainAppStack = () => {
 
     if (status === 'checking') return <LoadingScreen />
     const renderRoleScreen = () => {
-        if (user.rol_id === 3) {
+        if (user?.rol_id === 3) {
             // This Client
             return <>
+                <Stack.Screen name="ClientProductSelectScreen" component={ClientProductSelectScreen} />
+                <Stack.Screen name="ClientProductListScreen" component={ClientProductListScreen} />
+                <Stack.Screen name="ClientShoppingBagScreen" component={ClientShoppingBagScreen} />
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
                 <Stack.Screen name="AddressListScreen" component={AddressListScreen} />
                 <Stack.Screen name="AddressFormScreen" component={AddressFormScreen} />
+                <Stack.Screen name="LocationSelectScreen" component={LocationSelectScreen} />
+                <Stack.Screen name="MapScreen" component={MapScreen} />
+
+                <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
             </>
-        } else if (user.rol_id === 2) {
+        } else if (user?.rol_id === 2) {
             // This Delivery
             return <>
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
+                
+                <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
             </>
         } else {
             // This Admin
@@ -87,8 +121,9 @@ export const MainAppStack = () => {
                 <Stack.Screen name="CategoryCreateScreen" component={CategoriesCreateScreen} />
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
 
-                <Stack.Screen name="CreateProductScreen" component={ProductsCreateScreen} />
-                <Stack.Screen name="ProductListScreen" component={ProductsListScreen} />
+                <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
+                <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+                
             </>
         }
     }

@@ -7,14 +7,17 @@ import { ProductsListScreen } from "../../../screens/admin/products/list/ListPro
 import { ProductsCreateScreen } from "../../../screens/admin/products/create/CreateProductScreen";
 import { CategoryProvider } from "../../../context/categories/CategoryContext";
 import { UpdateProductScreen } from "../../../screens/admin/products/update/UpdateProducts";
+import { Product } from "../../../../Domain/entities/Product";
+import { Category } from "../../../../Domain/entities/Category";
 
 
 export type ProductStackParamList = {
     ProductListScreen: undefined,
     CreateProductScreen: undefined,
-    UpdateProductScreen: {productId: string}
+    UpdateProductScreen: {product: Product}
     //AdminProductNavigator: undefined
 }
+
 
 const Stack = createNativeStackNavigator<ProductStackParamList>();
 

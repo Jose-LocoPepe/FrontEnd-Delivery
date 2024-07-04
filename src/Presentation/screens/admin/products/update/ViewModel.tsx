@@ -7,12 +7,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { ValidationError } from 'yup';
 import { CategoryContext } from '../../../../context/categories/CategoryContext';
 
-interface Values {
-  name: string;
-  description: string;
-  price: string;
-  categoryId: string;
-}
 
 interface ImagesValue{
     image1: string;
@@ -24,13 +18,14 @@ interface ImagesValue{
 const validationSchema = yup.object().shape({
   name: yup.string().required('El nombre del producto es requerido'),
   description: yup.string().required('La descripción del producto es requerida'),
-  price: yup.string().required('El precio del producto es requerido'),
+  price: yup.number().required('El precio del producto es requerido'),
   categoryId: yup.string().required('La categoría del producto es requerida'),
 });
 
 
 
-const useUpdateProductViewModel = (productId: string) => {
+const useUpdateProductViewModel = (product: Product) => {
+  const [values, setValues] = useState(product);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<ImagePicker.ImageInfo | null>(null);
@@ -47,30 +42,23 @@ const useUpdateProductViewModel = (productId: string) => {
   const { categories } = useContext(CategoryContext);
   const { getProductById, updateProduct } = useContext(ProductContext);
 
-  const [values, setValues] = useState<Values>({
-    name: '',
-    description: '',
-    price: '',
-    categoryId: ''
-  });
-
-  const fetchProductById = async (id: string) => {
+/*
+  const fetchProductById = async (productId: string) => {
     try {
       setLoading(true);
-      setSelectedCategoryName("");
-      const product = await getProductById(id);
+      const product = await getProductById(productId);
       if (product) {
         setValues({
           name: product.data.name,
           description: product.data.description,
-          price: product.data.price,
+          price: product.data.price.toString(),
           categoryId: product.data.categoryId
         });
-        
+        setSelectedCategoryName(product.data.categoryId!); // Set the category name in the state
       }
     } catch (error) {
-      setError("Error fetching product");
-      console.error("Error fetching product:", error);
+      console.error('Error fetching product:', error);
+      setError('Error al obtener el producto');
     } finally {
       setLoading(false);
     }
@@ -79,10 +67,20 @@ const useUpdateProductViewModel = (productId: string) => {
   useEffect(() => {
     fetchProductById(productId);
   }, [productId]);
+*/
+const onChange = (property: string, value: any) => {
 
-  const onChange = (property: string, value: any) => {
-    setValues({ ...values, [property]: value });
-  };
+  if(property === 'price'){
+      const numericValue = parseFloat(value);
+      // Verificar que no tenga una letra
+      
+      if(!isNaN(numericValue) && numericValue >= 0 && numericValue <= 999999){
+          setValues({ ...values, [property]: value });
+      }
+  } else {
+  setValues({ ...values, [property]: value });
+  }
+};
 
   const pickImage = async (numberImage: number) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -143,13 +141,13 @@ const onChangeImage = (property: string, value: any) => {
       setLoading(true);
       if (await isValidForm()) {
         const product: Product = {
-          id: productId,
+          id: values.id,
           name: values.name,
           description: values.description,
           price: values.price,
           categoryId: values.categoryId
         };
-        const response = await updateProduct(product, file1!,file2!,file3!,productId);
+        const response = await updateProduct(product, file1!,file2!,file3!);
         if (response.success) {
           showMessage({
             message: 'Producto actualizado',
@@ -182,10 +180,10 @@ const onChangeImage = (property: string, value: any) => {
         setErrorMessages(errors);
         return false;
       }
-      console.error(error);
       return false;
     }
   };
+  
 
   return {
     ...images,

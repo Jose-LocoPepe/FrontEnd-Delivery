@@ -12,9 +12,10 @@ import { ImageButton } from "../../../../components/ImageButton";
 import { ScrollView } from "react-native-gesture-handler";
 import { ModalPickImage } from "../../../../components/ModalPickImage";
 import { ModalPickMultipleImage } from "../../../../components/ModalPickMultipleImage";
+import { ProductStackParamList } from "../../../../navigator/tabs/admin/AdminProductNavigator";
 
 
-interface Props extends StackScreenProps<RootStackParamsList, 'CreateProductScreen'> { }
+interface Props extends StackScreenProps<ProductStackParamList, 'CreateProductScreen'> { }
 
 export const ProductsCreateScreen = ({ navigation, route }: Props) => {
     const {

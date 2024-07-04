@@ -76,3 +76,4 @@ web-build/
 dist/
 
 # @end expo-cli
+src/Data/sources/remote/api/ApiDelivery.tsx

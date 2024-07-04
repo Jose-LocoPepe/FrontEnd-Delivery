@@ -11,6 +11,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as yup from 'yup';
 
 import { showMessage } from 'react-native-flash-message';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ProductStackParamList } from '../../../../navigator/tabs/admin/AdminProductNavigator';
 
 interface ImagesValue{
     image1: string;
@@ -32,6 +35,7 @@ const validationCreateProductSchema = yup.object().shape({
     categoryId: yup.string().required('La categoría del producto es requerida')
 });
 export const useCreateProductViewModel = () => {
+    const navigation = useNavigation<StackNavigationProp<ProductStackParamList>>();
 
     
     const [loading, setLoading] = useState<boolean>(false);
@@ -78,7 +82,7 @@ export const useCreateProductViewModel = () => {
                         price: '',
                         categoryId: '',
                     });
-                    
+                    navigation.goBack();
                 } else {
                     setError('Error al crear producto');
                 }
