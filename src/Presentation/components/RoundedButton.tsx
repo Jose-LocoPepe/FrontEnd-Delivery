@@ -7,7 +7,7 @@ interface Props {
     onPress: () => void
 }
 
-export const RoundedButton = ({ text, onPress,}: Props) => {
+export const RoundedButton = ({ text, onPress }: Props) => {
     return (
         <TouchableOpacity
             activeOpacity={0.7}

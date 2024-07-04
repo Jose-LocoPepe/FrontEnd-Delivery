@@ -11,8 +11,9 @@ import { RoundedButton } from '../../../../components/RoundedButton';
 import { ImageButton } from '../../../../components/ImageButton';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { ModalPickImage } from '../../../../components/ModalPickImage';
+import { CategoryStackParamList } from '../../../../navigator/tabs/admin/AdminCategoryNavigator';
 
-interface Props extends StackScreenProps<RootStackParamsList, 'CategoryCreateScreen'> {}
+interface Props extends StackScreenProps<CategoryStackParamList, 'CategoryCreateScreen'> {}
 
 export const CategoriesCreateScreen = ({ navigation }: Props) => {
     const { 

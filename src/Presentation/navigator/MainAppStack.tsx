@@ -14,8 +14,6 @@ import { CategoriesCreateScreen } from '../screens/admin/category/create/CreateC
 import { ProfileInfoScreen } from '../screens/profile/info/ProfileInfoScreen';
 import { CategoryMenuScreen } from '../screens/admin/category/CategoryMenu';
 
-import { AdminProductBottomTabs } from './tabs/admin/AdminProductBottomTabs';
-import { AdminCategoryBottomTabs } from './tabs/admin/AdminCategoryBottomTabs';
 import PasswordUpdateScreen from '../screens/password/update/PasswordUpdateScreen';
 import { CategoriesListScreen } from '../screens/admin/category/list/ListCategory';
 
@@ -53,6 +51,7 @@ export type RootStackParamsList = {
     AdminCategoryMenu: undefined,
     CategoryCreateScreen: undefined,
     CategoryListScreen: undefined,
+    CategoryEditScreen: { categoryId: string },
 
     ClientProductScreen: undefined,
     ClientProductBottomTabs:undefined,
@@ -114,12 +113,11 @@ export const MainAppStack = () => {
             return <> 
 
                 <Stack.Screen name="AdminBottomTabs" component={AdminBottomTabs} />
-                <Stack.Screen name="AdminProductBottomTabs" component={AdminProductBottomTabs} />
-                <Stack.Screen name="AdminCategoryBottomTabs" component={AdminCategoryBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
                 <Stack.Screen name="CategoryCreateScreen" component={CategoriesCreateScreen} />
                 <Stack.Screen name="CategoryListScreen" component={CategoriesListScreen} />
+                <Stack.Screen name="CategoryEditScreen" component={CategoriesEditScreen} />
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
                 <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />

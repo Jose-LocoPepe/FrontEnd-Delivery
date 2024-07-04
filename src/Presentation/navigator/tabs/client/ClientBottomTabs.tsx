@@ -7,6 +7,9 @@ import AddressListScreen from '../../../screens/address/list/AddressListScreen';
 
 import { OrdersTopTabs } from '../OrdersTopTabs';
 import { ClientProductNavigator } from './ClientProductNavigator';
+import { ShoppingBagProvider } from '../../../context/ShoppingBag/ShoppingBagContext';
+import { ProductProvider } from '../../../context/products/ProductContext';
+import { CategoryProvider } from '../../../context/categories/CategoryContext';
 
 export type RootClientBottomTabParamsList = {
     ProfileInfoScreen: undefined;
@@ -19,6 +22,7 @@ const Tab = createBottomTabNavigator<RootClientBottomTabParamsList>();
 
 export const ClientBottomTabs = () => {
     return (
+        
         <Tab.Navigator
             initialRouteName='ClientProductNavigator'
             screenOptions={{
@@ -53,3 +57,31 @@ export const ClientBottomTabs = () => {
         </Tab.Navigator>
     );
 }
+
+
+const ShoppingBagState = ({children}: any) => {
+    return (
+      <ShoppingBagProvider>
+        {children}
+      </ShoppingBagProvider>
+    )
+  }
+
+
+const ProductState = ({children}: any) => {
+    return (
+        <CategoryProvider>
+            <ProductProvider>
+                {children}
+            </ProductProvider>
+        </CategoryProvider>
+    )
+  }
+
+  const CategoryState = ({children}: any) => {
+    return (
+      <CategoryProvider>
+        {children}
+      </CategoryProvider>
+    )
+  }
