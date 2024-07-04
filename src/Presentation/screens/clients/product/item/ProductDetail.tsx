@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import useViewModel from './ViewModel';
 import { RoundedButton } from '../../../../components/RoundedButton';
 import { ClientProductStackParamList } from '../../../../navigator/tabs/client/ClientProductNavigator';
+
 interface Props extends StackScreenProps<ClientProductStackParamList, 'ClientProductSelectScreen'>{};
 
 export const ClientProductSelectScreen = ({navigation, route}: Props) => {
@@ -17,6 +18,7 @@ export const ClientProductSelectScreen = ({navigation, route}: Props) => {
 
     return (
         <View style={styles.container}>
+            
 
             <View style={styles.productDetail}>
                 <View style={styles.productInfo}>
