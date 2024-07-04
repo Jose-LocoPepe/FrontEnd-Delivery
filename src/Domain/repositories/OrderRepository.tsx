@@ -8,5 +8,5 @@ export interface OrderRepository {
     getDispatchedPurchaseOrders(session_token: string, userId: string): Promise<ResponseAPIDelivery>;
     getDeliveredPurchaseOrders(session_token: string, userId: string): Promise<ResponseAPIDelivery>;
     getOnTheWayPurchaseOrders(session_token: string, userId: string): Promise<ResponseAPIDelivery>;
-    deliverOrder(deliveryUserId: string, session_token: string, orderId: string): Promise<ResponseAPIDelivery>;
+    deliverOrder(session_token: string, orderId: string): Promise<ResponseAPIDelivery>;
 }
