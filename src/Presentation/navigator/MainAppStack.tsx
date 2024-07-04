@@ -31,6 +31,7 @@ import { OrderDetailsScreen } from '../screens/order/manage/details/OrderDetails
 import { ClientProductListScreen } from '../screens/clients/product/list/ProductList';
 import { ClientProductSelectScreen } from '../screens/clients/product/item/ProductDetail';
 import { Product } from '../../Domain/entities/Product';
+import { ClientShoppingBagScreen } from '../screens/clients/shopping_bag/ShoppingBag';
 
 
 export type RootStackParamsList = {
@@ -58,6 +59,8 @@ export type RootStackParamsList = {
     ClientProductListScreen: undefined,
     ClientProductSelectScreen: { product: Product },
 
+    ClientShoppingBagScreen: undefined,
+
 
     AddressListScreen: undefined,
     AddressFormScreen: {
@@ -84,6 +87,7 @@ export const MainAppStack = () => {
             return <>
                 <Stack.Screen name="ClientProductSelectScreen" component={ClientProductSelectScreen} />
                 <Stack.Screen name="ClientProductListScreen" component={ClientProductListScreen} />
+                <Stack.Screen name="ClientShoppingBagScreen" component={ClientShoppingBagScreen} />
                 <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />

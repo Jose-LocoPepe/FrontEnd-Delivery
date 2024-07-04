@@ -27,7 +27,8 @@ export const ClientProductNavigator = () => {
                     name="ClientProductListScreen" 
                     component={ClientProductListScreen}
                     options={({route,navigation}) => ({
-                      headerRight: () => <BagButton navigation={navigation.navigate('ShoppingBagScreen')}/>,
+                      title: 'Productos',
+                      headerRight: () => <BagButton navigation={navigation.navigate('ClientShoppingBagScreen')}/>,
                       headerShown: true,
                   })}/>
                     
