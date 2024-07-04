@@ -48,7 +48,7 @@ export const ProductProvider = ({ children }: any) => {
            
             if(response.data){
                 setProducts(response.data);
-               
+                
             }
         }catch(error){
             setProducts([]);
@@ -57,7 +57,7 @@ export const ProductProvider = ({ children }: any) => {
     const getProductById = async (id: string): Promise<ResponseAPIDelivery> => {
         try {
             const response = await GetProductByIdUseCase(id, user.session_token);
-            console.log('response:', response);
+            
             return response;
         } catch (error) {
             console.log('error:', error);

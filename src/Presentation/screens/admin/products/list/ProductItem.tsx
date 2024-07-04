@@ -4,7 +4,7 @@ import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
 import { Category } from '../../../../../Domain/entities/Category'
 import { useNavigation } from '@react-navigation/native';
 import { CategoryStackParamList } from '../../../../navigator/tabs/admin/AdminCategoryNavigator';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { ModalConfirmation } from '../../../../components/ModalConfirmation';
 import { Product } from '../../../../../Domain/entities/Product';
 import { useProductViewModel } from './ViewModel';
@@ -29,10 +29,23 @@ export const ProductItem = ({ product }: Props) => {
   return (
     <View style={{ margin: 2,padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <View style={{width: '20%'}}>
-                <Image
+                {product.images && product.images.length > 0 && (
+                        <Image
+                            source={{ uri: product.images[0].image }}
+                            style={{ width: 70, height: 70, resizeMode: 'contain' }}
+                        />
+                    )}
+            {/*<FlatList
+                        data={product.images}
+                        keyExtractor={(img) => img.id}
+                        renderItem={({ item: img }) => (
+                            <Image source={{ uri: img.image }} style={{ width: 80, height: 80, resizeMode: 'contain' }} />
+                        )}
+                    />
+                {<Image
                     style={{ width: 50, height: 50, resizeMode: 'contain' }}
                     source={{ uri: firstPic[parseInt(product.id)] ? firstPic[parseInt(product.id)] : 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg' }}
-                />
+                />*/}
             </View>
             <View style={{width: '60%'}}>
                 <Text>Nombre: {product.name}</Text>

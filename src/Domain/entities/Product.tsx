@@ -8,7 +8,7 @@ export interface Product {
     categoryId: string;
     categoryName?: string;
     isActive?: boolean;
-
+    images?: ProductImage[]; // Agregar esta línea
 }
 
 export interface ProductImage {

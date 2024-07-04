@@ -13,7 +13,7 @@ export type RootAdminBottomTabParamsList = {
   ProductsMenuScreen: undefined,
   CreateProductScreen: undefined
 
-  ProductsListScreen: undefined,
+  ProductListScreen: undefined,
 }
 
 const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
