@@ -48,7 +48,7 @@ export const ProductProvider = ({ children }: any) => {
            
             if(response.data){
                 setProducts(response.data);
-               
+                
             }
         }catch(error){
             setProducts([]);

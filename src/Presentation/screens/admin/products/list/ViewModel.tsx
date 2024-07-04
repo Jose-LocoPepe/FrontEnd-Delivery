@@ -110,6 +110,7 @@ export const useProductViewModel = () => {
     const updateListProducts = async () => {
         try {
             setLoading(true);
+            console.log(products);
             
             await getAllProducts();
             

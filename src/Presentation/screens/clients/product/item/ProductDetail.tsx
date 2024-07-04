@@ -67,8 +67,7 @@ export const ClientProductSelectScreen = ({navigation, route}: Props) => {
 
                 </View>
             </View>
-
-
+{/* 
             <TouchableOpacity
                 onPress={() => navigation.pop()}
                 style={ styles.back }
@@ -77,7 +76,7 @@ export const ClientProductSelectScreen = ({navigation, route}: Props) => {
                     style={styles.backImage}        
                     source={require('../../../../../../assets/back.png')}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
         </View>
     )
 }

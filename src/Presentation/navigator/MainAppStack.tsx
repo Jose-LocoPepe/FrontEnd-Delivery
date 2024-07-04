@@ -58,13 +58,6 @@ export type RootStackParamsList = {
     CategoryListScreen: undefined,
     CategoryEditScreen: { categoryId: string },
 
-    ClientProductScreen: undefined,
-    ClientProductBottomTabs:undefined,
-    ClientProductListScreen: undefined,
-    ClientProductSelectScreen: { product: Product },
-
-    ClientShoppingBagScreen: undefined,
-
 
     AddressListScreen: undefined,
     AddressFormScreen: {
@@ -92,10 +85,7 @@ export const MainAppStack = () => {
         if (user?.rol_id === 3) {
             // This Client
             return <>
-                <Stack.Screen name="ClientProductSelectScreen" component={ClientProductSelectScreen} />
-                <Stack.Screen name="ClientProductListScreen" component={ClientProductListScreen} />
-                <Stack.Screen name="ClientShoppingBagScreen" component={ClientShoppingBagScreen} />
-                <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
+               <Stack.Screen name="ClientBottomTabs" component={ClientBottomTabs} />
                 <Stack.Screen name="ProfileUpdateScreen" component={ProfileUpdateScreen} />
                 <Stack.Screen name="PasswordUpdateScreen" component={PasswordUpdateScreen} />
                 <Stack.Screen name="AddressListScreen" component={AddressListScreen} />
