@@ -168,8 +168,8 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
             </TouchableOpacity>
           </View>
         )}
-        {/* Display delivery user name if available */}
-        {order.deliveryUser && (
+        {/* Display delivery user name if available and only if the user is not a delivery*/}
+        {order.deliveryUser && user?.rol_id !== 2 && (
           <Text style={styles.detailText}>Repartidor: {order.deliveryUser.name} {order.deliveryUser.lastName}</Text>
         )}
 
