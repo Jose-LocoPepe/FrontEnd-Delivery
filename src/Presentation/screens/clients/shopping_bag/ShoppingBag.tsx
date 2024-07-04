@@ -34,9 +34,6 @@ export const ClientShoppingBagScreen = ({navigation, route}: Props) => {
             <Text>${ total }</Text>
           </View>
 
-          <View style={styles.buttonAdd}>
-            <RoundedButton text='CONFIRMAR ORDEN' onPress={() => navigation.navigate('ClientAddressListScreen')} />
-          </View>
         </View>
     </View>
   )

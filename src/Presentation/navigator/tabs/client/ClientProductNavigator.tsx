@@ -7,13 +7,15 @@ import { Product } from "../../../../Domain/entities/Product";
 import { ClientProductSelectScreen } from "../../../screens/clients/product/item/ProductDetail";
 import { ShoppingBagProvider } from "../../../context/ShoppingBag/ShoppingBagContext";
 import { BagButton } from "../../../components/ShoppingBagButton";
+import { RootAdminBottomTabParamsList } from "../admin/AdminBottomTabs";
+import { ClientShoppingBagScreen } from "../../../screens/clients/shopping_bag/ShoppingBag";
 
 
 export type ClientProductStackParamList = {
     ClientProductListScreen: undefined,
-    ClientProductSelectScreen: {product: Product}
+    ClientProductSelectScreen: {product: Product},
+    ClientShoppingBagScreen: undefined
 }
-
 
 const Stack = createNativeStackNavigator<ClientProductStackParamList>();
 export const ClientProductNavigator = () => {
@@ -28,8 +30,11 @@ export const ClientProductNavigator = () => {
                     component={ClientProductListScreen}
                     options={({route,navigation}) => ({
                       title: 'Productos',
-                      headerRight: () => <BagButton navigation={navigation.navigate('ClientShoppingBagScreen')}/>,
                       headerShown: true,
+                      //Bag button
+                      headerRight: () => (
+                        <BagButton onPress={() => navigation.navigate('ClientShoppingBagScreen')} />
+                      )
                   })}/>
                     
                     <Stack.Screen
@@ -40,6 +45,13 @@ export const ClientProductNavigator = () => {
                       title: 'Seleccione Articulos'
                   
                 }} />
+                <Stack.Screen
+                name="ClientShoppingBagScreen"
+                component={ClientShoppingBagScreen}
+                options={{
+                  headerShown: true,
+                  title: 'Carrito de compras'
+                }}/>
                     
             </Stack.Navigator>
           </ProductState>

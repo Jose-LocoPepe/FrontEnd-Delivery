@@ -43,7 +43,9 @@ export const AdminCategoryNavigator = () => {
                 />
                 <Stack.Screen
                 name="CategoryEditScreen"
-                component={CategoriesEditScreen}
+                component={CategoriesEditScreen
+                    
+                }
                 options={{
                     headerShown: false,
                     title: 'Editar Categoria'

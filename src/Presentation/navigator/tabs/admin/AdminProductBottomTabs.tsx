@@ -11,6 +11,8 @@ export type RootAdminBottomTabParamsList = {
   ProfileInfoScreen: undefined,
   CategoryMenuScreen: undefined,
   ProductsMenuScreen: undefined,
+  CreateProductScreen: undefined
+
   ProductsListScreen: undefined,
 }
 
@@ -19,7 +21,7 @@ const Tab = createBottomTabNavigator<RootAdminBottomTabParamsList>();
 export const AdminProductBottomTabs = () => {
   return (
     <Tab.Navigator
-    initialRouteName='CategoryMenuScreen'
+    initialRouteName='CreateProductScreen'
     screenOptions={{
       headerShown: false
     }}>
@@ -32,7 +34,7 @@ export const AdminProductBottomTabs = () => {
         }}
         />
         <Tab.Screen
-          name="ListProductScreen"
+          name="ProductListScreen"
           component={ProductsListScreen}
           options={{
             title:"Listar",
