@@ -33,6 +33,10 @@ import { ClientProductSelectScreen } from '../screens/clients/product/item/Produ
 import { Product } from '../../Domain/entities/Product';
 import { ClientShoppingBagScreen } from '../screens/clients/shopping_bag/ShoppingBag';
 
+import { ProductsCreateScreen } from '../screens/admin/products/create/CreateProductScreen';
+
+
+
 
 export type RootStackParamsList = {
     Home: undefined,
@@ -72,6 +76,8 @@ export type RootStackParamsList = {
 
     OrdersTopTabs: undefined,
     OrderDetailsScreen: undefined,
+
+    ProductsCreateScreen: undefined,
 }
 
 
@@ -123,6 +129,8 @@ export const MainAppStack = () => {
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
                 <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+
+                {/* <Stack.Screen name="CreateProductScreen" component={ProductsCreateScreen} /> */}
                 
             </>
         }
