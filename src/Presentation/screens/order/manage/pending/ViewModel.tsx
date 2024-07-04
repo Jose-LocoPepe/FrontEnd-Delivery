@@ -11,7 +11,7 @@ export interface Order {
     date: string;
     status: string;
     totalPrice: number;
-    addressId: number;
+    // addressId: number;
     clientId: number;
     deliveryUserId?: string | null;
     client: {
@@ -21,6 +21,8 @@ export interface Order {
     };
     address: {
       street: string;
+      latitude: number;
+      longitude: number;
     };
     deliveryUser?:  DeliveryUser | null;
   }

@@ -26,6 +26,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
     getProducts,
     deliverOrder,
     startDelivery,
+    requestPermissions,
   } = useViewModel();
   
   useEffect(() => {
@@ -109,6 +110,18 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
     }
   }
 
+  const handleStartMap = async () => {
+    const response = await requestPermissions();
+    if(response === false) {
+      showMessage({
+          message: 'Es necesario dar permisos de ubicación para acceder al mapa',
+          type: 'warning',
+      });
+    }else{
+      // navigate to map screen
+      navigation.navigate('OrderTrackingScreen', { order });
+    }
+  }
 
   return (
     <View style={styles.container}>

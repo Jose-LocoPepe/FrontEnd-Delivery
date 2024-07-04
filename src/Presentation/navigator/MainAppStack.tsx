@@ -34,6 +34,7 @@ import { Product } from '../../Domain/entities/Product';
 import { ClientShoppingBagScreen } from '../screens/clients/shopping_bag/ShoppingBag';
 
 import { ProductsCreateScreen } from '../screens/admin/products/create/CreateProductScreen';
+import { OrderTrackingScreen } from '../screens/order/map/OrderTrackingScreen';
 
 
 
@@ -76,6 +77,7 @@ export type RootStackParamsList = {
 
     OrdersTopTabs: undefined,
     OrderDetailsScreen: undefined,
+    OrderTrackingScreen: undefined,
 
     ProductsCreateScreen: undefined,
 }
@@ -104,6 +106,7 @@ export const MainAppStack = () => {
 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
                 <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+                <Stack.Screen name="OrderTrackingScreen" component={OrderTrackingScreen} />
             </>
         } else if (user?.rol_id === 2) {
             // This Delivery
@@ -114,6 +117,8 @@ export const MainAppStack = () => {
                 
                 <Stack.Screen name="OrdersTopTabs" component={OrdersTopTabs} />
                 <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+                <Stack.Screen name="OrderTrackingScreen" component={OrderTrackingScreen} />
+                
             </>
         } else {
             // This Admin

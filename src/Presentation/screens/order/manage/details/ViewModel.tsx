@@ -6,6 +6,7 @@ import { GetProductsUseCase } from "../../../../../Domain/useCases/Order/GetProd
 import { DeliverOrderUseCase } from "../../../../../Domain/useCases/Order/DeliverOrderUseCase";
 import { StartDeliveryUseCase } from "../../../../../Domain/useCases/Order/StartDeliveryUseCase";
 
+import * as Location from "expo-location"
 
 interface Product {
     id: number;
@@ -119,6 +120,17 @@ const OrderDetailsViewModel = () => {
         }
     }
 
+    const requestPermissions = async (): Promise<boolean> => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        console.log(status);
+        if (status !== 'granted') {
+            return false ;
+        }else{
+            return true;
+        }
+    }
+
+
     return {
         user,
         errorMessages,
@@ -132,7 +144,8 @@ const OrderDetailsViewModel = () => {
         selectedDeliveryUser,
         getProducts,
         deliverOrder,
-        startDelivery
+        startDelivery,
+        requestPermissions
     }
 }
 
