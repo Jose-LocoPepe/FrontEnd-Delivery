@@ -25,6 +25,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
     products,
     getProducts,
     deliverOrder,
+    startDelivery,
   } = useViewModel();
   
   useEffect(() => {
@@ -46,20 +47,65 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
     if(!selectedDeliveryUser){
       showMessage({
         message: 'Debe asignar un repartidor',
+        type: 'warning',
+        icon: 'warning',
+      });
+    } else {
+      const response = await dispatchOrder(order.id.toString(), selectedDeliveryUser);
+
+      if (response) {
+        showMessage({
+          message: 'Orden despachada correctamente',
+          type: 'success',
+          icon: 'success',
+        });
+        navigation.goBack();
+      } else {
+        showMessage({
+          message: 'Error al despachar la orden',
+          type: 'danger',
+          icon: 'danger',
+        });
+      }
+    }
+  }
+
+  const handleStartDelivery = async () => {
+    const response = await startDelivery(order.id.toString());
+
+    if (response) {
+      showMessage({
+        message: 'Entrega iniciada correctamente',
+        type: 'success',
+        icon: 'success',
+      });
+      // navigate to on the way screen
+      navigation.navigate('OnTheWayOrders');
+    } else {
+      showMessage({
+        message: 'Error al iniciar la entrega',
         type: 'danger',
         icon: 'danger',
       });
     }
+  }
 
-    const response = await dispatchOrder(order.id.toString(), selectedDeliveryUser);
+  const handleDeliverOrder = async () => {
+    const response = await deliverOrder(order.id.toString());
 
     if (response) {
       showMessage({
-        message: 'Orden despachada correctamente',
+        message: 'Pedido entregado correctamente',
         type: 'success',
         icon: 'success',
       });
       navigation.goBack();
+    } else {
+      showMessage({
+        message: 'Error al entregar el pedido',
+        type: 'danger',
+        icon: 'danger',
+      });
     }
   }
 
@@ -130,7 +176,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
         {/* if the role is delivery and the order is dispatched */}
         {user?.rol_id === 2 && order.status === 'DESPACHADO' && (
           <View>
-            <TouchableOpacity style={styles.button} onPress={() => console.log('INICIAR ENTREGA')}>
+            <TouchableOpacity style={styles.button} onPress={() => handleStartDelivery()}>
               <Text style={styles.buttonText}>INICIAR ENTREGA</Text>
             </TouchableOpacity>
           </View>
@@ -142,7 +188,7 @@ export const OrderDetailsScreen = ({ navigation, route }) => {
             <TouchableOpacity style={styles.button} onPress={() => console.log('INICIAR MAPA')}>
               <Text style={styles.buttonText}>INICIAR MAPA</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => console.log('ENTREGAR PEDIDO')}>
+            <TouchableOpacity style={styles.button} onPress={() => handleDeliverOrder()}>
               <Text style={styles.buttonText}>ENTREGAR PEDIDO</Text>
             </TouchableOpacity>
           </View>

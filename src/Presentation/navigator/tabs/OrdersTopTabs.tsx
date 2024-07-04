@@ -24,9 +24,9 @@ export const OrdersTopTabs = () => {
     const tabsByRole = {
         Admin: [
           { name: 'PendingOrders', label: 'Pendiente', component: PendingOrdersScreen },
-          { name: 'DeliveredOrders', label: 'Entregado', component: DeliveredOrdersScreen },
           { name: 'DispatchedOrders', label: 'Despachado', component: DispatchedOrdersScreen },
           { name: 'OnTheWayOrders', label: 'En camino', component: OnTheWayOrdersScreen },
+          { name: 'DeliveredOrders', label: 'Entregado', component: DeliveredOrdersScreen },
         ],
         Client: [
           { name: 'PendingOrders', label: 'Pendiente', component: PendingOrdersScreen },

@@ -4,6 +4,7 @@ import { GetDeliveryUsersUseCase } from "../../../../../Domain/useCases/User/Get
 import { DispatchOrderUseCase } from "../../../../../Domain/useCases/Order/DispatchOrderUseCase";
 import { GetProductsUseCase } from "../../../../../Domain/useCases/Order/GetProductsUseCase";
 import { DeliverOrderUseCase } from "../../../../../Domain/useCases/Order/DeliverOrderUseCase";
+import { StartDeliveryUseCase } from "../../../../../Domain/useCases/Order/StartDeliveryUseCase";
 
 
 interface Product {
@@ -102,8 +103,21 @@ const OrderDetailsViewModel = () => {
         }
     }
 
-
-
+    const startDelivery = async (orderId: string) => {
+        try {
+            setLoading(true);
+            const response = await StartDeliveryUseCase(user?.session_token as string, orderId);
+            
+            if(response.success){
+                setLoading(false);
+                return true;
+            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+            return false;
+        }
+    }
 
     return {
         user,
@@ -118,6 +132,7 @@ const OrderDetailsViewModel = () => {
         selectedDeliveryUser,
         getProducts,
         deliverOrder,
+        startDelivery
     }
 }
 
