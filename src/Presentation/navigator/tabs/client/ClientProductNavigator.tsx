@@ -14,7 +14,9 @@ export type ClientProductStackParamList = {
     ClientProductSelectScreen: {product: Product}
 }
 
-
+const auxNavigation = {
+  navigate: (screen: string) => {}
+}
 const Stack = createNativeStackNavigator<ClientProductStackParamList>();
 export const ClientProductNavigator = () => {
     return (
