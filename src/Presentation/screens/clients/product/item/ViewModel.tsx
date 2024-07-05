@@ -1,18 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Product } from '../../../../../Domain/entities/Product';
 import { ShoppingBagContext } from '../../../../context/ShoppingBag/ShoppingBagContext';
+import { add } from 'react-native-reanimated';
 
 const ClientProductDetailViewModel = (product: Product) => {
-/*
+
     const productImageList: string[] = [
-        product.image1,
-        product.image2,
-        product.image3,
-    ];*/
+        product.images[0].image,
+        product.images[1].image,
+        product.images[2].image,
+    ];
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0.0);
     const { shoppingBag, saveItem } = useContext(ShoppingBagContext);
-    console.log('BOLSA DE COMPRAS: ' + JSON.stringify(shoppingBag));
+    //console.log('BOLSA DE COMPRAS: ' + JSON.stringify(shoppingBag));
+    const [productImage, setProductImage] = useState<string>('');
+
+
+    const addImage = (image: string) => {
+        setProductImage(image);
+    }
+
    
     useEffect(() => {
         const index = shoppingBag.findIndex((p) => p.id == product.id);
@@ -46,7 +54,7 @@ const ClientProductDetailViewModel = (product: Product) => {
     return {
         quantity,
         price,
-        //productImageList,
+        productImageList,
         shoppingBag,
         addItem,
         addToBag,
