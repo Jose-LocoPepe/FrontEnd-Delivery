@@ -45,7 +45,7 @@ const ClientProductDetailViewModel = (product: Product) => {
     return {
         quantity,
         price,
-        productImageList,
+        
         shoppingBag,
         addItem,
         addToBag,

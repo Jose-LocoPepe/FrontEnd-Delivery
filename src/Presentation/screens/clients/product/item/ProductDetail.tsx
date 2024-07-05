@@ -14,20 +14,16 @@ export const ClientProductSelectScreen = ({navigation, route}: Props) => {
     const {product} = route.params;
     const width = Dimensions.get('window').width;
     const height = Dimensions.get('window').height;
-    const { shoppingBag,productImageList,quantity, price, addToBag, addItem, removeItem } = useViewModel(product);
+    const { shoppingBag,quantity, price, addToBag, addItem, removeItem } = useViewModel(product);
 
     return (
         <View style={styles.container}>
 
             <View style={styles.productImage}>
-                <FlatList
-                    data={productImageList}
-                    keyExtractor={(img) => img}
-                    horizontal
-                    renderItem={({ item: img }) => (
-                        <Image source={{ uri: img ? img : 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg' }} style={{ width: width, height: height * 0.5, resizeMode: 'contain' }} />
-                    )}
-                />
+               
+                        <Image source={{ uri: product.images[0].image ? product.images[0].image : 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg' }} style={{ width: width, height: height * 0.5, resizeMode: 'contain' }} />
+                    
+                
             </View>
             <View style={styles.productDetail}>
             
