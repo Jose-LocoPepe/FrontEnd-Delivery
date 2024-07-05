@@ -26,13 +26,16 @@ import { MapScreen } from '../screens/address/map/MapScreen';
 
 import { OrdersTopTabs } from './tabs/OrdersTopTabs';
 import { OrderDetailsScreen } from '../screens/order/manage/details/OrderDetailsScreen';
+import { OrderTrackingScreen } from '../screens/order/map/OrderTrackingScreen';
+
 import { ClientProductListScreen } from '../screens/clients/product/list/ProductList';
 import { ClientProductSelectScreen } from '../screens/clients/product/item/ProductDetail';
 import { Product } from '../../Domain/entities/Product';
 import { ClientShoppingBagScreen } from '../screens/clients/shopping_bag/ShoppingBag';
 
 import { ProductsCreateScreen } from '../screens/admin/products/create/CreateProductScreen';
-import { OrderTrackingScreen } from '../screens/order/map/OrderTrackingScreen';
+
+import { ProductsListScreen } from '../screens/admin/products/list/ListProducts';
 
 
 
@@ -79,6 +82,7 @@ export type RootStackParamsList = {
     OrderTrackingScreen: undefined,
 
     ProductsCreateScreen: undefined,
+    ProductsListScreen: undefined,
 }
 
 
@@ -134,6 +138,7 @@ export const MainAppStack = () => {
                 <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
 
                 {/* <Stack.Screen name="CreateProductScreen" component={ProductsCreateScreen} /> */}
+                {/* <Stack.Screen name="ListProductScreen" component={ProductsListScreen} /> */}
                 
             </>
         }

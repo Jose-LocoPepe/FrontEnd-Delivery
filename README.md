@@ -48,7 +48,7 @@ Cambiamos los siguientes parámetros en el .env con las variables de entorno ade
 ```bash
 HOST_LOCAL,HOST_EMULATOR = Escribe aquí la dirección Ip de tu red del computador en comillas junto con el puerto en donde tienes ejecutanse tu backend. Por ejemplo: 'http://192.168.1.1:8081/api' o entrar en el archivo ApiDelivery.tsx en la carpeta src/Data/sources/remote/api/ApiDelivery y escribir directamente en baseURL: 'http://192.168.0.15:3307/api/'
 
-GOOGLE_MAPS_API_KEY = Escribe una key válida de google
+GOOGLE_MAPS_API_KEY = Escribe una key válida de google maps
 ```
 * Copia tu API Key de google maps en tu **app.json**, donde se encuentra el campo `android.config.googleMaps.apiKey` y en `ios.config.googleMapsApiKey`
 
@@ -68,6 +68,7 @@ npx expo start
 
 Una vez que aparezca el código QR, utiliza tu aplicación de Expo Go para escanearlo.
 
+* Si no logras ejecutar el proyecto con el código QR, intenta ingresar manualmente tu URL. EJ: exp://IP_ADDRESS:PORT - PORT es el puerto en donde se está ejecutando Metro, - IP_ADDRESS es la dirección ip asignada a tu computador
 
 ## Versionado 📌
 
