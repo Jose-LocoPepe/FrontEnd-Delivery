@@ -1,75 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from './Styles';
-import { View, Text, Button, FlatList, Image } from 'react-native';
+import { View, Text, Button, FlatList, Image, Modal, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamsList } from "../../../../navigator/MainAppStack";
 import { useProductViewModel, SortBy } from './ViewModel';
-import { ProductWithPictures } from './ViewModel';
-import { ProductPictures } from '../../../../../Domain/entities/ProductPictures';
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { ImageButton } from "../../../../components/ImageButton";
+import ProductItem from "./ProductItem";
+import { Category } from "../../../../../Domain/entities/Category";
+import { ProductStackParamList } from "../../../../navigator/tabs/admin/AdminProductNavigator";
 
-interface Props extends StackScreenProps<RootStackParamsList, 'AdminProductBottomTabs'> {}
+interface Props extends StackScreenProps<ProductStackParamList, 'ProductListScreen'> {}
 
-export const ProductsListScreen = ({ navigation }: Props) => {
-    const { products, loading, fetchProducts, sortBy, setSortBy } = useProductViewModel();
+export const ProductsListScreen = ({ navigation}: Props) => {
+    const { products, loading, updateListProducts, sortProducts, error, categories, setSortBy } = useProductViewModel();
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const renderProductItem = ({ item }: { item: ProductWithPictures }) => (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
-            <Text>Nombre: {item.name}</Text>
-            <Text>Descripcion: {item.description}</Text>
-            <Text>Precio: {item.price}</Text>
-            <Text>Categoria: {item.categoryName}</Text>
-            <Text>Pictures:</Text>
-             {item.pictures.length > 0 ? (
-              item.pictures.map((picture: ProductPictures) => (
-            <Text key={picture.id}>image: {picture.image}</Text> // Display the image string as text
-    ))
-) : (
-    <Text>No pictures available</Text>
-)}
-            <Text>-------------</Text>
-        </View>
+
+    const openModal = () => setIsModalVisible(true);
+    const closeModal = () => setIsModalVisible(false);
+    const renderCategoryItem = ({ item }: { item: Category }) => (
+        <TouchableOpacity onPress={() => {
+            //onChange('categoryId', item.id);
+            //setSelectedCategoryName(item.name);
+            closeModal();
+        }}>
+            <Text>{item.name}</Text>
+        </TouchableOpacity>
     );
 
     return (
-        
         <View style={styles.container}>
-            
-            {loading && <Text>Loading...</Text>}
-            {!loading && (
+            <Image 
+                style={styles.imageBackground} 
+                source={require('../../../../../../assets/comidas-rapidas.jpeg')} />
+                
+            <View style={{ top: '10%', left: '0%', position: 'absolute', width: '100%', height: '55%' }}>
+
+                {loading && <Text>Loading...</Text>}
+                {!loading && error && <Text>{error}</Text>}
                 
                 <FlatList
                     data={products}
-                    renderItem={renderProductItem}
-                    keyExtractor={(item) => item.id?.toString() || item.name}
-                    style={{ marginTop: 80 }}
+                    renderItem={({item}) => (
+                        <ProductItem product={item}  />
+                    )}
+                    keyExtractor={(item) => item.id!}
+                    style={{ padding:10, marginTop: 100, opacity: loading ? 0.5 : 1, borderTopLeftRadius: 40,
+                        borderTopRightRadius: 40, backgroundColor: 'white'}}
                 />
-            )}
-            
-            <View style={{...styles.form}}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
-                Menu Listado Productos
-            </Text>
-            <View style={{marginTop: 20}}/>
-            <RoundedButton
-                text="Listar Productos"
-                onPress={fetchProducts}
-            />
-            <View style={{marginTop: 20}}/>
-            <RoundedButton
-                    text="Ordenar por Nombre"
-                    onPress={() => setSortBy(SortBy.NAME)}
+                
+                {!loading && Array.isArray(products) && products.length === 0 && (
+                    <Text style={{ textAlign: "center" }}>No hay productos disponibles.</Text>
+                )}
+     
+            </View>
+            <View style={{position: 'absolute', alignContent:'center', width:130,top: 100, right: 12}}>
+                <RoundedButton
+                    text="Agregar Producto"
+                    onPress={() => navigation.navigate('CreateProductScreen')}
+                />  
+            </View>
+            <View style={{...styles.form, height: '35%'}}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', margin: 10 }}>
+                    Menú Productos
+                </Text>
+                <View style={{marginTop: 20}}/>
+                <RoundedButton
+                    text="Listar Productos"
+                    onPress={updateListProducts}
                 />
                 <View style={{marginTop: 20}}/>
-            <RoundedButton
-                    text="Ordenar por Precio"
-                    onPress={() => setSortBy(SortBy.PRICE)}
+                <RoundedButton
+                    text="Ordenar por Nombre"
+                    onPress={() => sortProducts('name')}
                 />
-        
+                <View style={{marginTop: 20}}/>
+                <RoundedButton
+                    text="Ordenar por Precio"
+                    onPress={() => sortProducts('price')}
+                />
             </View>
-            
         </View>
-    )
-    
-}
+    );
+};

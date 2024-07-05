@@ -12,7 +12,7 @@ import { RoundedButton } from '../../../components/RoundedButton';
 import { RootStackParamsList } from '../../../navigator/MainAppStack';
 
 
-interface Props extends StackScreenProps<RootStackParamsList, 'AdminBottomTabs'> { };
+interface Props extends StackScreenProps<RootStackParamsList, 'ProfileInfoScreen'> { };
 
 export const ProfileInfoScreen = ({ navigation, route }: Props) => {
 
@@ -74,7 +74,15 @@ export const ProfileInfoScreen = ({ navigation, route }: Props) => {
                         <Text>{user?.phone}</Text>
                     </View>
                 </View>
+                
+                {user?.rol_id === 3 && (
+                <RoundedButton
+                    text="Direcciones"
+                    onPress={() => navigation.navigate('AddressListScreen')}
+                />
+                )}
 
+                <View style={{ height: 20 }} />
                 <RoundedButton
                     text="Actualizar Perfil"
                     onPress={() => navigation.navigate('ProfileUpdateScreen')}

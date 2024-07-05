@@ -12,7 +12,7 @@ npm-debug.*
 web-build/
 .env
 ios
-
+/src/Data/sources/remote/api/ApiDelivery.tsx
 # macOS
 .DS_Store
 
@@ -76,3 +76,4 @@ web-build/
 dist/
 
 # @end expo-cli
+

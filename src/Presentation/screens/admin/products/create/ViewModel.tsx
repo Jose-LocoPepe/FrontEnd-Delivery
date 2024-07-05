@@ -1,125 +1,191 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { CreateProductUseCase } from '../../../../../Domain/useCases/Product/CreateProductUseCase';
 import { Product } from '../../../../../Domain/entities/Product';
-import { useCategoryViewModel } from '../../category/list/ViewModel'; // Import Category ViewModel
-import { Category } from '../../../../../Domain/entities/Category'; // Import Category entity
 
-interface CreateProductViewModel {
-    loading: boolean;
-    error: string | null;
-    createProduct: () => void;
+import { Category } from '../../../../../Domain/entities/Category'; // Import Category entity
+import { GetCategorysUseCase } from '../../../../../Domain/useCases/Category/GetCategoryUseCase';
+import { CategoryContext } from '../../../../context/categories/CategoryContext';
+import { ProductContext } from '../../../../context/products/ProductContext';
+import { ImagePickerAsset } from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import * as yup from 'yup';
+
+import { showMessage } from 'react-native-flash-message';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ProductStackParamList } from '../../../../navigator/tabs/admin/AdminProductNavigator';
+
+interface ImagesValue{
+    image1: string;
+    image2: string;
+    image3: string;
+
+}
+interface Values{
     name: string;
     description: string;
     price: string;
     categoryId: string;
-    onChange: (property: string, value: any) => void;
-    errorMessages: Record<string, string>;
-    categories: Category[]; // Add categories
-    selectedCategoryName: string; // Add selectedCategoryName
 }
 
-export const useCreateProductViewModel = (): CreateProductViewModel => {
+const validationCreateProductSchema = yup.object().shape({
+    name: yup.string().required('El nombre del producto es requerido'),
+    description: yup.string().required('La descripción del producto es requerida'),
+    price: yup.string().required('El precio del producto es requerido'),
+    categoryId: yup.string().required('La categoría del producto es requerida')
+});
+export const useCreateProductViewModel = () => {
+    const navigation = useNavigation<StackNavigationProp<ProductStackParamList>>();
 
+    
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [name, setName] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-    const [price, setPrice] = useState<string>('');
-    const [categoryId, setCategoryId] = useState<string>('');
-    const [categories, setCategories] = useState<Category[]>([]); // State for categories
-    const [selectedCategoryName, setSelectedCategoryName] = useState<string>(''); // State for selected category name
+    const [file1, setFile1] = useState<ImagePicker.ImageInfo>();
+    const [file2, setFile2] = useState<ImagePicker.ImageInfo>();
+    const [file3, setFile3] = useState<ImagePicker.ImageInfo>();
+    const [images, setImages] = useState<ImagesValue>({
+        image1: '',
+        image2: '',
+        image3: ''
+    });
+    const [values, setValues] = useState<Values>({
+        name: '',
+        description: '',
+        price: '',
+        categoryId: '',
+    });
+   
+    const { categories } = useContext(CategoryContext);
 
+    const { products, createProduct } = useContext(ProductContext);
+
+    const [selectedCategoryName, setSelectedCategoryName] = useState<string>(''); // State for selected category name
+    const [selectedIdCategory, setSelectedIdCategory] = useState<string>(''); // State for selected category id
     const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
 
-    const { category, loading: categoryLoading, error: categoryError, fetchCategory } = useCategoryViewModel(); // Fetch category list
-
-    useEffect(() => {
-        fetchCategory(); // Fetch categories on component mount
-    }, []);
-
-    useEffect(() => {
-        if (!categoryLoading && !categoryError) {
-            setCategories(category); // Set categories if fetched successfully
-        }
-    }, [categoryLoading, categoryError, category]);
-
-    useEffect(() => {
-        if (categoryId) {
-            const selectedCategory = categories.find(cat => cat.id === categoryId);
-            if (selectedCategory) {
-                setSelectedCategoryName(selectedCategory.name);
+    //Crear producto
+    const create = async () => {
+        const validForm = await isValidForm();
+        if (validForm) {
+            try {
+                setLoading(true);
+                const {...data } = values;
+                const response = await createProduct(data, file1!, file2!, file3!);
+                if (response) {
+                    showMessage({
+                        message: 'Producto creado',
+                        type: 'success',
+                    });
+                    setValues({
+                        name: '',
+                        description: '',
+                        price: '',
+                        categoryId: '',
+                    });
+                    navigation.goBack();
+                } else {
+                    setError('Error al crear producto');
+                }
+                setLoading(false);
+            } catch (error) {
+                console.log("xd",error);
+                setLoading(false);
             }
         }
-    }, [categoryId, categories]);
+    }
+    const pickImage = async (numberImage: number) => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1
+        });
 
+        if (!result.canceled) {
+
+            if (numberImage == 1) {
+                onChangeImage('image1', result.assets[0].uri); 
+                setFile1(result.assets[0]);
+            }
+            else if (numberImage == 2) {
+
+                onChangeImage('image2', result.assets[0].uri); 
+                setFile2(result.assets[0]);
+            }
+            else if (numberImage == 3) {
+
+                onChangeImage('image3', result.assets[0].uri); 
+                setFile3(result.assets[0]);
+            }
+
+        }
+    }
+    
+    const takePhoto = async (numberImage: number) => {
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1
+        });
+
+        if (!result.canceled) {
+            if (numberImage == 1) {
+                onChangeImage('image1', result.assets[0].uri); 
+                setFile1(result.assets[0]);
+            }
+            else if (numberImage == 2) {
+                onChangeImage('image2', result.assets[0].uri); 
+                setFile2(result.assets[0]);
+            }
+            else if (numberImage == 3) {
+                onChangeImage('image3', result.assets[0].uri); 
+                setFile3(result.assets[0]);
+            }
+        }
+    }
+    
+    //Validar formulario
+    const isValidForm = async () => {
+        try {
+            await validationCreateProductSchema.validate(values, { abortEarly: false });
+            setErrorMessages({});
+            return true;
+        } catch (error) {
+            const errors: Record<string, string> = {};
+            error.inner.forEach((error: yup.ValidationError) => {
+                errors[error.path!] = error.message;
+            });
+            setErrorMessages(errors);
+            return false;
+        }
+    }
+    const onChangeImage = (property: string, value: any) => {
+        setImages({ ...images, [property]: value });
+    }
+    
     const onChange = (property: string, value: any) => {
-        if (property === 'price') {
+        if(property === 'price'){
             const numericValue = parseFloat(value);
-            if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 999999) {
-                setPrice(value);
+            if(!isNaN(numericValue) && numericValue >= 0 && numericValue <= 999999){
+                setValues({ ...values, [property]: value });
             }
         } else {
-            switch (property) {
-                case 'name':
-                    setName(value);
-                    break;
-                case 'description':
-                    setDescription(value);
-                    break;
-                case 'categoryId':
-                    setCategoryId(value);
-                    break;
-                default:
-                    break;
-            }
+        setValues({ ...values, [property]: value });
         }
     };
-
-    const createProduct = async () => {
-        if (!name || !description || !price || !categoryId) {
-            setError('All fields are required.');
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            const newProduct: Product = {
-                name,
-                description,
-                price: parseFloat(price),
-                categoryId,
-            };
-            const success = await CreateProductUseCase(newProduct);
-            if (success) {
-                setName('');
-                setDescription('');
-                setPrice('');
-                setCategoryId('');
-                setError(null);
-                setErrorMessages({});
-                console.log('Product created successfully.');
-            } else {
-                setError('Failed to create product.');
-            }
-        } catch (error) {
-            setError('An error occurred while creating product.');
-        } finally {
-            setLoading(false);
-        }
-    };
+    
 
     return {
+        ...values,
+        ...images,
         loading,
         error,
-        createProduct,
-        name,
-        description,
-        price,
-        categoryId,
         onChange,
+        pickImage,
+        takePhoto,
+        create,
         errorMessages,
         categories,
         selectedCategoryName,
+        setSelectedCategoryName
     };
 };

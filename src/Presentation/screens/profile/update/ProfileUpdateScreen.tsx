@@ -74,7 +74,7 @@ const ProfileUpdateScreen = ({ navigation }: Props) => {
                   style={styles.logo}
                   source={{ uri: user?.image }}
                 />
-                <Text style={styles.logoText}>Seleccione una image</Text>
+                <Text style={styles.logoText}>Seleccione una imagen</Text>
                 {
                   errorMessages.image && (
                     <Text style={{

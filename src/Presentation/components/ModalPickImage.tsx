@@ -1,4 +1,4 @@
-import { View, Text, Modal, StyleSheet } from 'react-native'
+import { View, Text, Modal, StyleSheet, Button } from 'react-native'
 import React from 'react'
 import { RoundedButton } from './RoundedButton'
 
@@ -39,6 +39,12 @@ export const ModalPickImage = ({modalUseState,setModalUseState,openGallery,openC
                                     setModalUseState(!modalUseState);
                                 }}/>
                         </View>
+                        <View style={styles.buttonContainer}>
+                            <Button
+
+                                title='Cancelar'
+                                onPress={() => setModalUseState(!modalUseState)}/>
+                            </View>
                     </View>
                 </View>
             </Modal>
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 20,
-        height: 220,
+        height: 240,
         margin: 20,
         paddingTop: 35,
         paddingHorizontal: 25,

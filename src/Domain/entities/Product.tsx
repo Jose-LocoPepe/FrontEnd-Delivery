@@ -4,8 +4,15 @@ export interface Product {
     id?: string;
     name: string;
     description: string;
-    price: number;
+    price: string;
     categoryId: string;
     categoryName?: string;
+    isActive?: boolean;
+    images?: ProductImage[]; // Agregar esta línea
+}
 
+export interface ProductImage {
+
+    id?: string;
+    image: string;
 }

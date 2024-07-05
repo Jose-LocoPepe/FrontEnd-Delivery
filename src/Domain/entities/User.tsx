@@ -8,9 +8,9 @@ export interface User {
     phone:           string;
     email:           string;
     password:        string;
-    confirmPassword?: string;
+    confirmPassword?:string;
     image?:          string;
     session_token?:  string;
-    rol_id?:        Rol[];
-    //address:         Address;
+    rol_id?:         number;
+    address?:         Address;
 }

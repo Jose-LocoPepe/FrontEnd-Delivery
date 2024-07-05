@@ -1,35 +1,78 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { AdminCategoryCreateScreen } from "../../../screens/admin/category/create/CreateCategory";
-import { AdminCategoryListScreen } from "../../../screens/admin/category/list/ListCategory";
+import {  } from "../../../screens/admin/category/create/CreateCategory";
+import { CategoriesListScreen } from "../../../screens/admin/category/list/ListCategory";
+import { ProductProvider } from "../../../context/products/ProductContext";
+import { ProductsListScreen } from "../../../screens/admin/products/list/ListProducts";
+import { ProductsCreateScreen } from "../../../screens/admin/products/create/CreateProductScreen";
+import { CategoryProvider } from "../../../context/categories/CategoryContext";
+import { UpdateProductScreen } from "../../../screens/admin/products/update/UpdateProducts";
+import { Product } from "../../../../Domain/entities/Product";
+import { Category } from "../../../../Domain/entities/Category";
 
 
-export type CategoryStackParamList = {
-    AdminCategoryListScreen: undefined,
-    AdminCategoryCreateScreen: undefined,
+export type ProductStackParamList = {
+    ProductListScreen: undefined,
+    CreateProductScreen: undefined,
+    UpdateProductScreen: {product: Product}
     //AdminProductNavigator: undefined
 }
 
-const Stack = createNativeStackNavigator<CategoryStackParamList>();
 
-export const AdminCategoryNavigator = () => {
+const Stack = createNativeStackNavigator<ProductStackParamList>();
+
+export const AdminProductNavigator = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen 
-            name="AdminCategoryListScreen" 
-            component={AdminCategoryListScreen}
-            options={{
-                headerShown: true,
-                title: 'Listar Categorias'
-            }} />
-            <Stack.Screen 
-            name="AdminCategoryCreateScreen" 
-            component={AdminCategoryCreateScreen} 
-            options={{
-                headerShown: true,
-                title: 'Crear Categoria'
-            }}
-            />
-        </Stack.Navigator>
+        <CategoryState>
+        <ProductState>
+            
+            <Stack.Navigator
+                >
+                <Stack.Screen 
+                name="ProductListScreen" 
+                component={ProductsListScreen}
+                options={{
+                    headerShown: false,
+                    title: 'Listar Categorias'
+                }} />
+                <Stack.Screen 
+                name="CreateProductScreen" 
+                component={ProductsCreateScreen} 
+                options={{
+                    headerShown: false,
+                    title: 'Crear Categoria'
+                }}
+                />
+                <Stack.Screen
+                name="UpdateProductScreen"
+                component={UpdateProductScreen}
+                options={{
+                    headerShown: false,
+                    title: 'Actualizar Producto'
+                }}
+                />
+
+            </Stack.Navigator>
+            
+        </ProductState>
+        </CategoryState>
     );
 }
+
+
+
+const ProductState = ({children}: any) => {
+    return (
+      <ProductProvider>
+        {children}
+      </ProductProvider>
+    )
+  }
+
+  const CategoryState = ({children}: any) => {
+    return (
+      <CategoryProvider>
+        {children}
+      </CategoryProvider>
+    )
+  }
