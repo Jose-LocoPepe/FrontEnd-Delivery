@@ -13,6 +13,12 @@ export const ShoppingBagItem = ({product, addItem, subtractItem, deleteItem}: Pr
   return (
     <View style={styles.container}>
         
+        <View style={styles.imageContainer}>
+            <Image
+                style={styles.image}
+                source={{ uri: product.images[0].image }}
+            />
+        </View>
         <View style={styles.productInfo}>
             <View style={{flexDirection: 'row'}}>
                 <Text style={styles.title}>{product.name}</Text>

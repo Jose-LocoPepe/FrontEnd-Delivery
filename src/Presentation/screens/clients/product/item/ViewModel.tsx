@@ -5,21 +5,12 @@ import { add } from 'react-native-reanimated';
 
 const ClientProductDetailViewModel = (product: Product) => {
 
-    const productImageList: string[] = [
-        product.images[0].image,
-        product.images[1].image,
-        product.images[2].image,
-    ];
+  
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0.0);
     const { shoppingBag, saveItem } = useContext(ShoppingBagContext);
     //console.log('BOLSA DE COMPRAS: ' + JSON.stringify(shoppingBag));
-    const [productImage, setProductImage] = useState<string>('');
 
-
-    const addImage = (image: string) => {
-        setProductImage(image);
-    }
 
    
     useEffect(() => {
