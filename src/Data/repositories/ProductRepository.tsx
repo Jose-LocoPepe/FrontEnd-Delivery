@@ -18,7 +18,7 @@ export class ProductRepositoryImpl implements ProductRepository {
                     Authorization: `Bearer ${token}`
                 }
             });
-            
+        
             return Promise.resolve(data);
 
         } catch (error) {

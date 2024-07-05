@@ -30,11 +30,13 @@ export const ProductItem = ({ product, navigation }: Props) => {
     }
     }>
     <View style={ styles.container }>
-           <Image
-                    style={{ width: 50, height: 50, resizeMode: 'contain' }}
-                    source={{ uri: firstPic[parseInt(product.id)] ? firstPic[parseInt(product.id)] : 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg' }}
-                />
-            
+        {product.images && product.images.length > 0 && (
+            <Image
+                source={{ uri: product.images[0].image ? product.images[0].image : 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg'   }}
+                style={{ width: 70, height: 70, resizeMode: 'contain' }}
+            />
+            )}
+          
             <View style={styles.info}>
                 <Text style={styles.title}>{ product.name }</Text>
                 <Text style={styles.description}>{ product.description }</Text>
